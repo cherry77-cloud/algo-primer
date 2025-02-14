@@ -1,7 +1,7 @@
 func longestConsecutive(nums []int) int {
     ans := 0
     has := map[int]bool{}
-    for _, nums := range nums {
+    for _, num := range nums {
         has[num] = true  // 把 nums 转换成哈希集合
     }
 
