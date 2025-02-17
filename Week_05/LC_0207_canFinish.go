@@ -30,3 +30,31 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
     // 如果所有课程都能被完成，numCourses会减少到0
     return numCourses == 0
 }
+
+
+func canFinish(numCourses int, prerequisites [][]int) bool {
+    g := make([][]int, numCourses)
+    for _, p := range prerequisites {
+        g[p[1]] = append(g[p[1]], p[0])
+    }
+
+    colors := make([]int, numCourses)
+    var dfs func(int) bool
+    dfs = func(x int) bool {
+        colors[x] = 1        // x 正在访问中
+        for _, y := range g[x] {
+            if colors[y] == 1 || colors[y] == 0 && dfs(y) {
+                return true  // 找到了环
+            }
+        }
+        colors[x] = 2        // x 完全访问完毕
+        return false         // 没有找到环
+    }
+
+    for i, c := range colors {
+        if c == 0 && dfs(i) {
+            return false     // 有环
+        }
+    }
+    return true              // 没有环
+}
