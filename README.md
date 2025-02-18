@@ -1,1 +1,1 @@
-# Rookie2025_03
+#### Rookie2025_03  LeetCode-hot100
