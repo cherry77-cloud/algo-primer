@@ -1,6 +1,6 @@
 ### 哈希
 - [1. 两数之和](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0001_twoSum.go) ✅
-- [49. 字母异位词分组](https://leetcode.cn/problems/group-anagrams/)
+- [49. 字母异位词分组](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0049_groupAnagrams.go) ✅
 - [128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
 
 ### 双指针
