@@ -22,7 +22,7 @@ public:
 
 ---
 
-## 'go' 实现
+## `go`实现
 ```go
 func longestConsecutive(nums []int) int {
     has := map[int]bool{}
