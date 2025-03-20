@@ -1,4 +1,3 @@
-## `C++`实现
 ```c++
 class Solution {
 public:
@@ -22,7 +21,7 @@ public:
 
 ---
 
-## `go`实现
+
 ```go
 func groupAnagrams(strs []string) [][]string {
     m := map[string][]string{}
