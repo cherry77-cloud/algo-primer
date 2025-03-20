@@ -1,3 +1,28 @@
+## `C++`版本
+```c++
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int left = 0, right = height.size() - 1, ans = 0;
+        while (left < right) {
+            int area = (right - left) * min(height[left], height[right]);
+            ans = max(ans, area);
+            if (height[left] < height[right]) {
+                left += 1;
+            } else {
+                right -= 1;
+            }
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+`go` 版本
+
+```go
 func maxArea(height []int) int {
     ans := 0
     left, right := 0, len(height) - 1
@@ -14,3 +39,4 @@ func maxArea(height []int) int {
     }
     return ans
 }
+```
