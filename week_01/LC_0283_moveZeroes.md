@@ -1,5 +1,3 @@
-## `C++`实现
-
 ```c++
 class Solution {
 public:
@@ -17,8 +15,6 @@ public:
 ```
 
 ---
-
-## `go` 实现
 
 ```go
 func moveZeroes(nums []int)  {
