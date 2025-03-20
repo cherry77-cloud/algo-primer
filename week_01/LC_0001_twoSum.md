@@ -1,4 +1,4 @@
-## `C++`实现
+
 ```c++
 class Solution {
 public:
@@ -17,7 +17,6 @@ public:
 ```
 ---
 
-## `go`实现
 ```go
 func twoSum(nums []int, target int) []int {
     hashtable := map[int]int{}
@@ -30,4 +29,3 @@ func twoSum(nums []int, target int) []int {
     return nil
 }
 ```
----
