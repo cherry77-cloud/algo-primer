@@ -1,4 +1,4 @@
-## `c++`实现
+## `C++`实现
 ```c++
 class Solution {
 public:
