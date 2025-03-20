@@ -31,15 +31,3 @@ func twoSum(nums []int, target int) []int {
 }
 ```
 ---
-
-## `python`实现
-```python
-class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hashtable = defaultdict(int)
-        for i, x in enumerate(nums):
-            if target - x in hashtable:
-                return [i, hashtable[target - x]]
-            hashtable[x] = i
-        return []
-```
