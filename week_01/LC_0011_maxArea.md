@@ -1,4 +1,4 @@
-## `C++`版本
+
 ```c++
 class Solution {
 public:
@@ -20,7 +20,6 @@ public:
 
 ---
 
-`go` 版本
 
 ```go
 func maxArea(height []int) int {
