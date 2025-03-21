@@ -7,7 +7,7 @@
 - [283. 移动零](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0283_moveZeroes.md) ✅
 - [11. 盛最多水的容器](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0011_maxArea.md) ✅
 - [15. 三数之和](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0015_threeSum.md) ✅
-- [42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+- [42. 接雨水](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/LC_0042_trap.md) ✅
 
 ### 滑动窗口
 - [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
