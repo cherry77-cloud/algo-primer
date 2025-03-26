@@ -1,3 +1,32 @@
+```cpp
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        int cnt[26]{};
+        for (char c : p)  cnt[c - 'a']++;
+
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            int  c = s[right] - 'a';
+            cnt[c]--;
+            while (cnt[c] < 0) {
+                cnt[s[left] - 'a']++;
+                left++;
+            }
+            if (right - left + 1 == p.length()) {
+                ans.push_back(left);
+            }
+        }
+
+        return ans;
+    }
+};
+```
+
+---
+
+```go
 func findAnagrams(s string, p string) []int {
     ans, cntP, cntS := []int{}, [26]int{}, [26]int{}
     for _, c := range p {  // 统计 s 的长为 len(p) 的子串 s' 的每种字母的出现次数
@@ -16,3 +45,4 @@ func findAnagrams(s string, p string) []int {
     }
     return ans
 }
+```
