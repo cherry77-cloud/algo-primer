@@ -15,7 +15,7 @@
 
 ## 滑动窗口
 - [3. 无重复字符的最长子串](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_02/lengthOfLongestSubstring.md) ✅
-- [438. 找到字符串中所有字母异位词](https://leetcode.cn/problems/find-all-anagrams-in-a-string/)
+- [438. 找到字符串中所有字母异位词](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_02/findAnagrams.md) ✅
 
 ---
 
