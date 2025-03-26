@@ -79,3 +79,4 @@
 
 - [279. 完全平方数](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_06/numSquares.md) ✅
 - [300. 最长递增子序列](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_05/lengthOfLIS.md) ✅
+- [322. 零钱兑换](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_09/coinChange.md) ✅
