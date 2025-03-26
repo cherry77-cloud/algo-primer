@@ -64,4 +64,5 @@
 ## 回溯
 - [17. 电话号码的数字组合](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_12/letterCombinations.md) ✅
 - [22. 括号生成](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_07/generateParenthesis.md) ✅
+- [46. 全排列](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_09/permute.md) ✅
 - [131. 分割回文串](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_11/partition.md) ✅
