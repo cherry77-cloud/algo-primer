@@ -63,3 +63,4 @@
 
 ## 回溯
 - [17. 电话号码的数字组合](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_12/LC_letterCombinations.md) ✅
+- [22. 括号生成](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_07/LC_generateParenthesis.md) ✅
