@@ -72,3 +72,9 @@
 ## 堆
 
 - [347. 前K个高频元素](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/topKFrequent.md) ✅
+
+---
+
+## 动态规划
+
+- [279. 完全平方数](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_06/numSquares.md) ✅
