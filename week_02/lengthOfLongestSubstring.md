@@ -1,3 +1,28 @@
+```cpp
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.length(), ans = 0, left = 0;
+        unordered_set<char> window;
+
+        for (int right = 0; right < n; right++) {
+            char c = s[right];
+            while (window.contains(c)) {
+                window.erase(s[left]);
+                left += 1;
+            }
+            window.insert(c);
+            ans = max(ans, right - left + 1);
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+
+```go
 func lengthOfLongestSubstring(s string) int {
     ans := 0
     window := [128]bool{}
@@ -14,3 +39,4 @@ func lengthOfLongestSubstring(s string) int {
     }         
     return ans
 }
+```
