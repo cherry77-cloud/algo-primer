@@ -6,10 +6,10 @@
 ---
 
 ## 双指针
-- [283. 移动零](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/moveZeroes.md) ✅
 - [11. 盛最多水的容器](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/maxArea.md) ✅
 - [15. 三数之和](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/threeSum.md) ✅
 - [42. 接雨水](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/trap.md) ✅
+- [283. 移动零](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/moveZeroes.md) ✅
 
 ---
 
