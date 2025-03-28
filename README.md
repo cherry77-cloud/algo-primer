@@ -28,7 +28,7 @@
 
 ## 普通数组
 - [53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
-- [56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
+- [56. 合并区间](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_02/merge.md) ✅
 - [189. 轮转数组](https://leetcode.cn/problems/rotate-array/)
 - [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/)
 - [41. 缺失的第一个正数](https://leetcode.cn/problems/first-missing-positive/)
