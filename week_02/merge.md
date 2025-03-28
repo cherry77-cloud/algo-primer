@@ -1,3 +1,24 @@
+```cpp
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        ranges::sort(intervals);
+        vector<vector<int>> ans;
+        for (auto& p : intervals) {
+            if (!ans.empty() && p[0] <= ans.back()[1]) {
+                ans.back()[1] = max(ans.back()[1], p[1]);
+            } else {
+                ans.emplace_back(p);
+            }
+        }
+        return ans;
+    }
+};
+```
+
+---
+
+```go
 func merge(intervals [][]int) [][]int {
     ans := [][]int{}
     slices.SortFunc(intervals, func(p, q []int) int { 
@@ -13,3 +34,4 @@ func merge(intervals [][]int) [][]int {
     }
     return ans
 }
+```
