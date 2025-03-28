@@ -44,6 +44,8 @@
 ---
 
 ## 链表
+- [23. 合并 K 个升序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/mergeKLists.md) ✅
+- [148. 排序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/sortList.md) ✅
 - [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 - [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 - [234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list/)
@@ -55,8 +57,6 @@
 - [24. 两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/)
 - [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
 - [138. 随机链表的复制](https://leetcode.cn/problems/copy-list-with-random-pointer/)
-- [148. 排序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/sortList.md) ✅
-- [23. 合并 K 个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)
 - [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/)
 
 ---
