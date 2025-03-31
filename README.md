@@ -45,6 +45,7 @@
 
 ## 链表
 - [2. 两数相加](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_06/addTwoNumbers.md) ✅
+- [21. 合并两个有序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_08/mergeTwoLists.md) ✅
 - [23. 合并 K 个升序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/mergeKLists.md) ✅
 - [148. 排序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/sortList.md) ✅
 - [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
@@ -52,7 +53,6 @@
 - [234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list/)
 - [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
 - [142. 环形链表 II](https://leetcode.cn/problems/linked-list-cycle-ii/)
-- [21. 合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
 - [19. 删除链表的倒数第 N 个结点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/)
 - [24. 两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/)
 - [25. K 个一组翻转链表](https://leetcode.cn/problems/reverse-nodes-in-k-group/)
