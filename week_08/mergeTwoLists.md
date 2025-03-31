@@ -1,10 +1,28 @@
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
+```cpp
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        ListNode dummy;
+        auto cur = &dummy;
+        while (list1 && list2) {
+            if (list1->val <= list2->val) {
+                cur->next = list1;
+                list1 = list1->next;
+            } else {
+                cur->next = list2;
+                list2 = list2->next;
+            }
+            cur = cur->next;
+        }
+        cur->next = list1 == nullptr ? list2 : list1;
+        return dummy.next;
+    }
+};
+```
+
+---
+
+```go
 func mergeTwoLists(list1, list2 *ListNode) *ListNode {
     dummy := ListNode{} // 用哨兵节点简化代码逻辑
     cur := &dummy // cur 指向新链表的末尾
@@ -26,3 +44,4 @@ func mergeTwoLists(list1, list2 *ListNode) *ListNode {
     }
     return dummy.Next
 }
+```
