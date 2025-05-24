@@ -48,7 +48,7 @@
 - [21. 合并两个有序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_08/mergeTwoLists.md) ✅
 - [23. 合并 K 个升序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/mergeKLists.md) ✅
 - [148. 排序链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_13/sortList.md) ✅
-- [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+- [160. 相交链表](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_06/getIntersectionNode.md) ✅
 - [206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/)
 - [234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list/)
 - [141. 环形链表](https://leetcode.cn/problems/linked-list-cycle/)
