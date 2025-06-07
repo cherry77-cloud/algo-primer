@@ -1,7 +1,7 @@
 ## 哈希
 - [1. 两数之和](https://github.com/cherry77-cloud/rookie-hot100-diary/blob/main/group_01/twoSum.cpp) ✅
 - [49. 字母异位词分组](https://github.com/cherry77-cloud/rookie-hot100-diary/blob/main/group_01/groupAnagrams.cpp) ✅
-- [128. 最长连续序列](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/longestConsecutive.md) ✅
+- [128. 最长连续序列](https://github.com/cherry77-cloud/rookie-hot100-diary/blob/main/group_01/longestConsecutive.cpp) ✅
 
 ---
 
