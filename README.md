@@ -1,5 +1,5 @@
 ## 哈希
-- [1. 两数之和](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/twoSum.md) ✅
+- [1. 两数之和](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/group_01/twoSum.cpp) ✅
 - [49. 字母异位词分组](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/groupAnagrams.md) ✅
 - [128. 最长连续序列](https://github.com/cherry77-cloud/Rookie2025_03/blob/main/week_01/longestConsecutive.md) ✅
 
