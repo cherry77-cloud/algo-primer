@@ -23,7 +23,7 @@ class Solution:
            carry //= 10
            cur = cur.next
        return dummy.next
-   
+
    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
        """
        删除链表的倒数第N个节点 - LeetCode 19
