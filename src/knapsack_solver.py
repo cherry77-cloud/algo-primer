@@ -1,4 +1,5 @@
-from typing import List
+from collections import deque
+from typing import List, Tuple
 
 
 class KnapsackToolkit:
@@ -78,4 +79,30 @@ class KnapsackToolkit:
         for vol, val in items:
             for j in range(capacity, vol - 1, -1):
                 dp[j] = max(dp[j], dp[j - vol] + val)
+        return dp[capacity]
+
+    # --------------------------------------------------------
+    #  多重背包 · 单调队列优化 —— AcWing 4 进阶
+    # --------------------------------------------------------
+    @staticmethod
+    def knapsack_multiple_queue(volumes: List[int], values: List[int], counts: List[int], capacity: int) -> int:
+        """
+        思路：把同一物品按体积 vol 的 同余下标 分组, j = k*vol + r，滑动窗口大小 = counts[i]  
+            用单调队列把复杂度由 O(N·V·cnt) 降到 O(N·V)
+        """
+        dp = [0] * (capacity + 1)
+        for vol, val, cnt in zip(volumes, values, counts):
+            for r in range(vol):
+                q: deque[Tuple[int, int]] = deque()      # (k, dp[j] - k*val)
+                k, j = 0, r
+                while j <= capacity:
+                    cur_val = dp[j] - k * val
+                    while q and q[-1][1] <= cur_val:
+                        q.pop()
+                    q.append((k, cur_val))
+                    while q[0][0] < k - cnt:
+                        q.popleft()
+                    dp[j] = q[0][1] + k * val
+                    k += 1
+                    j += vol  
         return dp[capacity]
