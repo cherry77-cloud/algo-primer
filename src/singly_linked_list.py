@@ -139,3 +139,19 @@ class Solution:
        left = self.sortList(head)
        right = self.sortList(slow)
        return self.mergeTwoLists(left, right)
+
+   def swapPairsRecursive(self, head: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       两两交换链表中的节点 - LeetCode 24
+       功能：两两交换链表中相邻的节点
+       """
+       if head is None or head.next is None:  # 递归边界
+           return head  # 不足两个节点，无需交换
+          
+       node1 = head
+       node2 = head.next
+       node3 = node2.next
+      
+       node1.next = self.swapPairsRecursive(node3)  # 1 指向递归返回的链表头
+       node2.next = node1  # 2 指向 1
+       return node2  # 返回交换后的链表头节点
