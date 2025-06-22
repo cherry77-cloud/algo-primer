@@ -7,7 +7,7 @@ class KnapsackToolkit:
     #  0-1 背包  ——  AcWing 2
     # --------------------------------------------------------
     @staticmethod
-    def knapsack_01(volumes: List[int], values:  List[int], capacity: int) -> int:
+    def knapsack_01(volumes: List[int], values: List[int], capacity: int) -> int:
         """
         0-1 背包 - AcWing 2
         功能：每件物品最多选一次，在容量 capacity 限制下获得最大价值
@@ -20,10 +20,10 @@ class KnapsackToolkit:
         return dp[capacity]
 
     # --------------------------------------------------------
-    #  完全背包（Unbounded）——  AcWing 3
+    #  完全背包 ——  AcWing 3
     # --------------------------------------------------------
     @staticmethod
-    def knapsack_complete(volumes: List[int], values:  List[int], capacity: int) -> int:
+    def knapsack_complete(volumes: List[int], values: List[int], capacity: int) -> int:
         """
         功能：每件物品可选任意次（无限件），在容量 capacity 内取得最大价值  
         关键：内层体积 j **正序** 遍历，允许当轮再次使用当前物品
@@ -38,7 +38,7 @@ class KnapsackToolkit:
     #  二维 0-1 背包  ——  AcWing 8
     # --------------------------------------------------------
     @staticmethod
-    def knapsack_2d(volumes: List[int], weights: List[int], values:  List[int], max_volume: int, max_weight: int) -> int:
+    def knapsack_2d(volumes: List[int], weights: List[int], values: List[int], max_volume: int, max_weight: int) -> int:
         """
         二维费用背包（体积 + 重量）- 0-1 约束 · AcWing 8  
         功能：每件物品只能选一次，体积 ≤ max_volume 且重量 ≤ max_weight 时获得的最大价值
@@ -52,3 +52,30 @@ class KnapsackToolkit:
                 for w in range(max_weight, wgt - 1, -1):
                     dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)
         return dp[max_volume][max_weight]
+
+    # --------------------------------------------------------
+    #  多重背包（Binary Split）——  AcWing 4
+    # --------------------------------------------------------
+    @staticmethod
+    def knapsack_multiple(volumes: List[int], values: List[int], counts: List[int], capacity: int) -> int:
+        """
+        功能：每件物品最多有 counts[i] 件；在容量 capacity 内取得最大价值  
+        思路：把数量 s 拆成 1,2,4,… 的二进制块，转化为若干 0-1 物品
+        """
+        # ---------- 二进制拆分 ----------
+        items: List[Tuple[int, int]] = []
+        for v, w, s in zip(volumes, values, counts):
+            k = 1
+            while k <= s:
+                items.append((v * k, w * k))
+                s -= k
+                k <<= 1
+            if s:
+                items.append((v * s, w * s))
+
+        # ---------- 0-1 背包 ----------
+        dp = [0] * (capacity + 1)
+        for vol, val in items:
+            for j in range(capacity, vol - 1, -1):
+                dp[j] = max(dp[j], dp[j - vol] + val)
+        return dp[capacity]
