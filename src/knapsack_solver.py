@@ -33,3 +33,22 @@ class KnapsackToolkit:
             for j in range(vol, capacity + 1):              # 正序，允许重复选
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
+
+    # --------------------------------------------------------
+    #  二维 0-1 背包  ——  AcWing 8
+    # --------------------------------------------------------
+    @staticmethod
+    def knapsack_2d(volumes: List[int], weights: List[int], values:  List[int], max_volume: int, max_weight: int) -> int:
+        """
+        二维费用背包（体积 + 重量）- 0-1 约束 · AcWing 8  
+        功能：每件物品只能选一次，体积 ≤ max_volume 且重量 ≤ max_weight 时获得的最大价值
+        """
+        # dp[v][w] = 体积不超过 v，重量不超过 w 时的最大价值
+        dp = [[0] * (max_weight + 1) for _ in range(max_volume + 1)]
+
+        for vol, wgt, val in zip(volumes, weights, values):
+            # 倒序遍历两维，确保同一件物品只选一次
+            for v in range(max_volume, vol - 1, -1):
+                for w in range(max_weight, wgt - 1, -1):
+                    dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)
+        return dp[max_volume][max_weight]
