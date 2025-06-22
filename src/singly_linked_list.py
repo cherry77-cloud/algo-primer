@@ -222,7 +222,7 @@ class Solution:
            cur = cur.next
        return dummy.next
    
-   def mergeKListsDivideConquer(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+   def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
        """
        合并K个升序链表 - LeetCode 23
        功能：合并k个已排序的链表。分治法，时间复杂度 O(nlogk)
