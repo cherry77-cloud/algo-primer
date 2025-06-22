@@ -85,7 +85,7 @@ class KnapsackToolkit:
     #  多重背包 · 单调队列优化 —— AcWing 4 进阶
     # --------------------------------------------------------
     @staticmethod
-    def knapsack_multiple_queue(volumes: List[int], values: List[int], counts: List[int], capacity: int) -> int:
+    def knapsack_multiple(volumes: List[int], values: List[int], counts: List[int], capacity: int) -> int:
         """
         思路：把同一物品按体积 vol 的 同余下标 分组, j = k*vol + r，滑动窗口大小 = counts[i]  
             用单调队列把复杂度由 O(N·V·cnt) 降到 O(N·V)
