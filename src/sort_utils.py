@@ -11,7 +11,6 @@ class SortUtils:
     @staticmethod
     def quickSort(arr: List[int], left: int, right: int) -> None:
         """
-        快速排序 - AcWing 789
         功能：对 arr[left:right] 区间进行原地升序快速排序（Hoare 分区）
         """
         if left >= right:
@@ -38,7 +37,6 @@ class SortUtils:
     @staticmethod
     def mergeSort(arr: List[int], left: int, right: int) -> None:
         """
-        归并排序 - AcWing 789
         功能：分治＋双指针合并，对 arr[left:right] 区间做原地升序排序
         """
         if left == right:
@@ -69,7 +67,6 @@ class SortUtils:
     @staticmethod
     def findKthLargest(nums: List[int], k: int) -> int:
         """
-        第 k 大元素 - LeetCode 215
         功能：快速选择，平均 O(n) 时间返回数组中的第 k 大值
         """
         def quickselect(left: int, right: int, idx: int) -> int:
