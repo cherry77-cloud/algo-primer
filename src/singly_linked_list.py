@@ -44,7 +44,7 @@ class Solution:
         left.next = left.next.next
         return dummy.next
     
-    def mergeTwoListsRecursive(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         """
         合并两个有序链表 - LeetCode 21 (递归版本)
         功能: 将两个升序链表合并为一个新的升序链表
@@ -79,7 +79,7 @@ class Solution:
         cur.next = list1 or list2
         return dummy.next
     
-    def reverseListRecursive(self, head: Optional[ListNode]) -> Optional[ListNode]:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         """
         反转链表 - LeetCode 206 (递归版本)
         功能: 反转单链表
@@ -231,7 +231,7 @@ class Solution:
         node2.next = node1  # 2 指向 1
         return node2  # 返回交换后的链表头节点
 
-    def mergeKListsHeap(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         """
         合并K个升序链表 - LeetCode 23 (堆方法)
         功能: 合并k个已排序的链表。最小堆，时间复杂度 O(nlogk)
