@@ -1,5 +1,6 @@
 from collections import deque
 from typing import List, Tuple
+from functools import cache
 
 
 class KnapsackToolkit:
@@ -106,3 +107,24 @@ class KnapsackToolkit:
                     k += 1
                     j += vol  
         return dp[capacity]
+        
+    # ========================================================
+    #  零钱兑换（完全背包）—— LeetCode 322
+    # ========================================================
+    @staticmethod
+    def coinChange(coins: List[int], amount: int) -> int:
+       """
+       功能：用最少的硬币数凑出 amount，硬币可以无限使用
+       """
+       @cache
+       def dfs(i: int, c: int) -> int:
+           if i < 0:
+               return 0 if c == 0 else float('inf')
+           not_take = dfs(i - 1, c)
+           take = float('inf')
+           if c >= coins[i]:
+               take = dfs(i, c - coins[i]) + 1
+           return min(not_take, take)
+       
+       ans = dfs(len(coins) - 1, amount)
+       return ans if ans < float('inf') else -1
