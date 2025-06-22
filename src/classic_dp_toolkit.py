@@ -101,9 +101,12 @@ class KnapsackToolkit:
 # 2.  Grid‑style DP routines
 # =============================================================================
 class GridToolkit:
-    # ░░░░░░░░░░░░░░ 120. Triangle minimum path sum ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 120 · 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minimumTotal(triangle: List[List[int]]) -> int:
+        """
+        功能：从三角形顶部到底部的最小路径和
+        """
         n = len(triangle)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -111,10 +114,13 @@ class GridToolkit:
                 return triangle[i][j]
             return min(dfs(i + 1, j), dfs(i + 1, j + 1)) + triangle[i][j]
         return dfs(0, 0)
-
-    # ░░░░░░░░░░░░░░  64. Minimum path sum ░░░░░░░░░░░░░░
+    
+    # ░░░░░░░░░░░░░░ LeetCode 64 · 最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minPathSum(grid: List[List[int]]) -> int:
+        """
+        功能：从左上角到右下角的最小路径和，只能向右或向下
+        """
         m, n = len(grid), len(grid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -124,10 +130,13 @@ class GridToolkit:
                 return grid[0][0]
             return min(dfs(i - 1, j), dfs(i, j - 1)) + grid[i][j]
         return dfs(m - 1, n - 1)
-
-    # ░░░░░░░░░░░░░░ 931. Minimum falling path sum ░░░░░░░░░░░░░░
+    
+    # ░░░░░░░░░░░░░░ LeetCode 931 · 下降路径最小和 ░░░░░░░░░░░░░░
     @staticmethod
     def minFallingPathSum(matrix: List[List[int]]) -> int:
+        """
+        功能：从第一行任意位置开始，到最后一行的最小路径和
+        """
         n = len(matrix)
         @cache
         def dfs(r: int, c: int) -> int:
@@ -137,10 +146,13 @@ class GridToolkit:
                 return matrix[0][c]
             return min(dfs(r - 1, c - 1), dfs(r - 1, c), dfs(r - 1, c + 1)) + matrix[r][c]
         return min(dfs(n - 1, col) for col in range(n))
-
-    # ░░░░░░░░░░░░░░  62. Unique paths ░░░░░░░░░░░░░░
+    
+    # ░░░░░░░░░░░░░░ LeetCode 62 · 不同路径 ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePaths(m: int, n: int) -> int:
+        """
+        功能：从左上角到右下角的不同路径数，只能向右或向下
+        """
         @cache
         def dfs(i: int, j: int) -> int:
             if i < 0 or j < 0:
@@ -149,10 +161,13 @@ class GridToolkit:
                 return 1
             return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
-
-    # ░░░░░░░░░░░░░░  63. Unique paths with obstacles ░░░░░░░░░░░░░░
+    
+    # ░░░░░░░░░░░░░░ LeetCode 63 · 不同路径 II ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
+        """
+        功能：从左上角到右下角的不同路径数，包含障碍物
+        """
         m, n = len(obstacleGrid), len(obstacleGrid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -162,3 +177,26 @@ class GridToolkit:
                 return 1
             return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
+    
+    # ░░░░░░░░░░░░░░ LeetCode 329 · 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
+    @staticmethod
+    def longestIncreasingPath(matrix: List[List[int]]) -> int:
+        """
+        功能：找出矩阵中最长递增路径的长度
+        """
+        DIRS = [(-1, 0), (0, -1), (0, 1), (1, 0)]
+        
+        if not matrix or not matrix[0]:
+            return 0
+        m, n = len(matrix), len(matrix[0])
+        
+        @cache
+        def dfs(i: int, j: int) -> int:
+            best = 1
+            for dx, dy in DIRS:
+                x, y = i + dx, j + dy
+                if 0 <= x < m and 0 <= y < n and matrix[x][y] < matrix[i][j]:
+                    best = max(best, 1 + dfs(x, y))
+            return best
+        
+        return max(dfs(i, j) for i in range(m) for j in range(n))
