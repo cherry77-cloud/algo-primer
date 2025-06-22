@@ -2,18 +2,12 @@ from typing import List, Optional
 from heapq import heapify, heappush, heappop
 
 
-# ============================================================
-#  基础结点定义
-# ============================================================
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
 
-# ============================================================
-#  链表算法工具箱
-# ============================================================
 class LinkedListToolkit:
 
     # --------------------------------------------------------
@@ -101,6 +95,7 @@ class LinkedListToolkit:
         """
         if head is None or head.next is None:
             return head
+            
         new_head = self.reverseList_recursive(head.next)
         head.next.next = head
         head.next = None
