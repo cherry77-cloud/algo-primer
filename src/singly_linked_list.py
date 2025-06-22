@@ -204,3 +204,34 @@ class Solution:
        node1.next = self.swapPairsRecursive(node3)  # 1 指向递归返回的链表头
        node2.next = node1  # 2 指向 1
        return node2  # 返回交换后的链表头节点
+
+   def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+       """
+       合并K个升序链表 - LeetCode 23
+       功能：合并k个已排序的链表。最小堆，时间复杂度 O(nlogk)
+       """
+       ListNode.__lt__ = lambda a, b : a.val < b.val
+       cur = dummy = ListNode()
+       h = [head for head in lists if head]
+       heapify(h)
+       while h:
+           node = heappop(h)
+           if node.next:
+               heappush(h, node.next)
+           cur.next = node
+           cur = cur.next
+       return dummy.next
+   
+   def mergeKListsDivideConquer(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+       """
+       合并K个升序链表 - LeetCode 23
+       功能：合并k个已排序的链表。分治法，时间复杂度 O(nlogk)
+       """
+       m = len(lists)
+       if m == 0:
+           return None
+       if m == 1:
+           return lists[0]
+       left = self.mergeKListsDivideConquer(lists[:m//2])
+       right = self.mergeKListsDivideConquer(lists[m//2:])
+       return self.mergeTwoLists(left, right)
