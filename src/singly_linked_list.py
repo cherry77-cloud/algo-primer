@@ -63,10 +63,8 @@ class LinkedListToolkit:
         功能: 将两个升序链表合并为一个新的升序链表
         方法: 递归比较两个链表的头节点, 选择较小节点
         """
-        if list1 is None:
-            return list2
-        if list2 is None:
-            return list1
+        if list1 is None:  return list2
+        if list2 is None:  return list1
         if list1.val < list2.val:
             list1.next = self.mergeTwoLists_recursive(list1.next, list2)
             return list1
@@ -155,8 +153,7 @@ class LinkedListToolkit:
     # --------------------------------------------------------
     #  LeetCode 160 · 相交链表
     # --------------------------------------------------------
-    def getIntersectionNode(self, headA: ListNode,
-                            headB: ListNode) -> Optional[ListNode]:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
         """
         功能: 找到两个单链表相交的起始节点
         技巧: 双指针法
@@ -211,7 +208,8 @@ class LinkedListToolkit:
         """
         if not head or not head.next:
             return head
-        # 找中点
+            
+        # 找中点, 断链
         prev = None
         slow = fast = head
         while fast and fast.next:
@@ -219,6 +217,7 @@ class LinkedListToolkit:
             slow = slow.next
             fast = fast.next.next
         prev.next = None
+        
         left = self.sortList(head)
         right = self.sortList(slow)
         return self.mergeTwoLists_iterative(left, right)
@@ -236,9 +235,11 @@ class LinkedListToolkit:
         while node1 and node1.next:
             node2 = node1.next
             node3 = node2.next
+            
             node0.next = node2
             node2.next = node1
             node1.next = node3
+            
             node0 = node1
             node1 = node3
         return dummy.next
@@ -250,9 +251,11 @@ class LinkedListToolkit:
         """
         if head is None or head.next is None:
             return head
+            
         node1 = head
         node2 = head.next
         node3 = node2.next
+        
         node1.next = self.swapPairs_recursive(node3)
         node2.next = node1
         return node2
