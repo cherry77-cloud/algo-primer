@@ -4,7 +4,10 @@ class SortUtils:
     # ------------------ Quick Sort ------------------
     @staticmethod
     def quickSort(arr: List[int], left: int, right: int) -> None:
-        # https://www.acwing.com/problem/content/description/789/
+        """
+        快速排序 - AcWing 789
+        功能：对 arr[left:right] 区间进行原地升序快速排序（Hoare 分区）
+        """
         if left >= right:  
             return
         
@@ -26,7 +29,10 @@ class SortUtils:
     # ------------------ Merge Sort ------------------
     @staticmethod
     def mergeSort(arr: List[int], left: int, right: int) -> None:
-        # https://www.acwing.com/problem/content/description/789/
+        """
+        归并排序 - AcWing 789
+        功能：分治＋双指针合并，对 arr[left:right] 区间做原地升序排序
+        """
         if left == right:  
             return
         
@@ -52,7 +58,10 @@ class SortUtils:
     # ------------- Quick Select (k-th largest) -------------
     @staticmethod
     def findKthLargest(nums: List[int], k: int) -> int:
-        # LeetCode 215. 数组中的第K个最大元素
+        """
+        第 k 大元素 - LeetCode 215
+        功能：快速选择，平均 O(n) 时间返回数组中的第 k 大值
+        """
         def quickselect(left: int, right: int, idx: int) -> int:
             if left == right:  
                 return nums[idx]
@@ -73,5 +82,6 @@ class SortUtils:
             if idx <= j:
                 return quickselect(left, j, idx)
             return quickselect(i, right, idx)
+
         n = len(nums)
         return quickselect(0, n - 1, n - k)
