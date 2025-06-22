@@ -114,33 +114,33 @@ class KnapsackToolkit:
     # ========================================================
     @staticmethod
     def coinChange(coins: List[int], amount: int) -> int:
-       """
-       功能：用最少的硬币数凑出 amount，硬币可以无限使用
-       """
-       @cache
-       def dfs(i: int, c: int) -> int:
-           if i < 0:
-               return 0 if c == 0 else float('inf')
-           not_take = dfs(i - 1, c)
-           take = float('inf')
-           if c >= coins[i]:
-               take = dfs(i, c - coins[i]) + 1
-           return min(not_take, take)
+        """
+        功能：用最少的硬币数凑出 amount，硬币可以无限使用
+        """
+        @cache
+        def dfs(i: int, c: int) -> int:
+            if i < 0:
+                return 0 if c == 0 else float('inf')
+            not_take = dfs(i - 1, c)
+            take = float('inf')
+            if c >= coins[i]:
+                take = dfs(i, c - coins[i]) + 1
+            return min(not_take, take)
        
-       ans = dfs(len(coins) - 1, amount)
-       return ans if ans < float('inf') else -1
+        ans = dfs(len(coins) - 1, amount)
+        return ans if ans < float('inf') else -1
 
     # ========================================================
     #  完全平方数（完全背包）—— LeetCode 279
     # ========================================================
     @staticmethod
     def numSquares(n: int) -> int:
-       """
-       完全背包问题 - 最少完全平方数
-       功能：返回和为 n 的完全平方数的最少数量
-       """
-       f = [0] + [float('inf')] * n
-       for i in range(1, isqrt(n) + 1):
-           for j in range(i * i, n + 1):
-               f[j] = min(f[j], f[j - i * i] + 1)
-       return f[n]
+        """
+        完全背包问题 - 最少完全平方数
+        功能：返回和为 n 的完全平方数的最少数量
+        """
+        f = [0] + [float('inf')] * n
+        for i in range(1, isqrt(n) + 1):
+            for j in range(i * i, n + 1):
+                f[j] = min(f[j], f[j - i * i] + 1)
+        return f[n]
