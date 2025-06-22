@@ -118,3 +118,24 @@ class Solution:
            if slow is fast:
                return True
        return False
+
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       排序链表 - LeetCode 148
+       方法：归并排序，使用快慢指针找中点
+       """
+       if not head or not head.next:
+           return head
+       
+       # 找中点并断链 - 使用快慢指针，需要记录慢指针的前一个节点
+       prev = None
+       slow = fast = head
+       while fast and fast.next:
+           prev = slow
+           slow = slow.next
+           fast = fast.next.next
+       prev.next = None
+       
+       left = self.sortList(head)
+       right = self.sortList(slow)
+       return self.mergeTwoLists(left, right)
