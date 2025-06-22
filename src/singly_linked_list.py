@@ -66,3 +66,15 @@ class Solution:
        head.next.next = head
        head.next = None
        return new_head
+
+   def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       链表的中间结点 - LeetCode 876
+       功能：返回链表的中间节点，如果有两个中间节点，返回第二个
+       技巧：快慢指针，快指针走两步，慢指针走一步
+       """
+       slow = fast = head
+       while fast and fast.next:
+           slow = slow.next
+           fast = fast.next.next
+       return slow
