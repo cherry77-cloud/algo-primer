@@ -9,7 +9,7 @@ class ListNode:
         self.next = next
 
 
-class Solution:
+class LinkedListToolkit:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         """
         两数相加 - LeetCode 2
