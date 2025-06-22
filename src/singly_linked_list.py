@@ -151,6 +151,23 @@ class Solution:
                return True
        return False
 
+   def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       环形链表 II - LeetCode 142
+       功能：返回链表开始入环的第一个节点，如果无环返回 None
+       原理：快慢指针相遇后，从头节点和相遇点同时出发，再次相遇点即为环入口
+       """
+       slow = fast = head
+       while fast and fast.next:
+           slow = slow.next
+           fast = fast.next.next
+           if fast is slow:  # 相遇
+               while slow is not head:  # 再走 a 步
+                   slow = slow.next
+                   head = head.next
+               return slow
+       return None
+
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
        """
        排序链表 - LeetCode 148
