@@ -47,7 +47,6 @@ class KnapsackToolkit:
                 k <<= 1
             if s:
                 items.append((v * s, w * s))
-
         dp = [0] * (capacity + 1)
         for vol, val in items:
             for j in range(capacity, vol - 1, -1):
@@ -79,26 +78,22 @@ class KnapsackToolkit:
         @cache
         def dfs(i: int, c: int) -> int:
             if i < 0:
-                return 0 if c == 0 else inf
+                return 0 if c == 0 else float('inf')
             not_take = dfs(i - 1, c)
-            take = inf
+            take = float('inf')
             if c >= coins[i]:
-                res = dfs(i, c - coins[i])
-                if res != inf:
-                    take = res + 1
-            return min(take, not_take)
-
+                take = dfs(i, c - coins[i]) + 1
+            return min(not_take, take)
         ans = dfs(len(coins) - 1, amount)
-        return -1 if ans == inf else ans
+        return ans if ans < float('inf') else -1
 
     # ░░░░░░░░░░░░░░ 完全平方数（完全背包）—— LeetCode 279 ░░░░░░░░░░░░░░
     @staticmethod
     def numSquares(n: int) -> int:
-        f = [0] + [inf] * n
+        f = [0] + [float('inf')] * n
         for i in range(1, isqrt(n) + 1):
-            sq = i * i
-            for j in range(sq, n + 1):
-                f[j] = min(f[j], f[j - sq] + 1)
+            for j in range(i * i, n + 1):
+                f[j] = min(f[j], f[j - i * i] + 1)
         return f[n]
 
 
