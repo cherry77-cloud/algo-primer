@@ -53,6 +53,24 @@ class Solution:
        else:
            list2.next = self.mergeTwoLists(list1, list2.next)
            return list2
+
+   def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       合并两个有序链表 - LeetCode 21
+       功能：将两个升序链表合并为一个新的升序链表
+       方法：迭代法，使用哨兵节点
+       """
+       cur = dummy = ListNode()
+       while list1 and list2:
+           if list1.val < list2.val:
+               cur.next = list1
+               list1 = list1.next
+           else:
+               cur.next = list2
+               list2 = list2.next
+           cur = cur.next
+       cur.next = list1 or list2
+       return dummy.next
    
    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
        """
@@ -66,6 +84,20 @@ class Solution:
        head.next.next = head
        head.next = None
        return new_head
+
+   def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+       """
+       反转链表 - LeetCode 206
+       功能：反转单链表
+       方法：迭代法，双指针
+       """
+       pre, cur = None, head
+       while cur:
+           nxt = cur.next
+           cur.next = pre     # 反转指向
+           pre = cur          # pre 前进
+           cur = nxt          # cur 前进
+       return pre
 
    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
        """
