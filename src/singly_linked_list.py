@@ -79,7 +79,7 @@ class Solution:
            fast = fast.next.next
        return slow
 
-   def isPalindrome(self, head: Optional[ListNode]) -> bool:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
        """
        回文链表 - LeetCode 234
        功能：判断链表是否是回文链表
@@ -92,3 +92,15 @@ class Solution:
            head = head.next
            latter = latter.next
        return True
+
+   def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+       """
+       相交链表 - LeetCode 160
+       功能：找到两个单链表相交的起始节点
+       技巧：双指针法，当一个指针到达尾部时切换到另一个链表头部
+       """
+       p, q = headA, headB
+       while p is not q:
+           p = p.next if p else headB
+           q = q.next if q else headA
+       return p
