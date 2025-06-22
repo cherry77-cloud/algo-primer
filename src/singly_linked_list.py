@@ -104,3 +104,17 @@ class Solution:
            p = p.next if p else headB
            q = q.next if q else headA
        return p
+
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+       """
+       环形链表 - LeetCode 141
+       功能：判断链表中是否有环
+       技巧：快慢指针，如果有环，快指针最终会追上慢指针
+       """
+       slow = fast = head
+       while fast and fast.next:
+           slow = slow.next
+           fast = fast.next.next
+           if slow is fast:
+               return True
+       return False
