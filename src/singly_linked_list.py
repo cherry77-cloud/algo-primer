@@ -78,3 +78,17 @@ class Solution:
            slow = slow.next
            fast = fast.next.next
        return slow
+
+   def isPalindrome(self, head: Optional[ListNode]) -> bool:
+       """
+       回文链表 - LeetCode 234
+       功能：判断链表是否是回文链表
+       方法：找到中点，反转后半部分，然后比较
+       """
+       latter = self.reverseList(self.middleNode(head))
+       while latter:
+           if head.val != latter.val:
+               return False
+           head = head.next
+           latter = latter.next
+       return True
