@@ -1,0 +1,35 @@
+from typing import List
+
+
+class KnapsackToolkit:
+  
+    # --------------------------------------------------------
+    #  0-1 背包  ——  AcWing 2
+    # --------------------------------------------------------
+    @staticmethod
+    def knapsack_01(volumes: List[int], values:  List[int], capacity: int) -> int:
+        """
+        0-1 背包 - AcWing 2
+        功能：每件物品最多选一次，在容量 capacity 限制下获得最大价值
+        """
+        dp = [0] * (capacity + 1)
+        for vol, val in zip(volumes, values):
+            # 体积 j 需倒序遍历，防止同一轮把同件物品选多次
+            for j in range(capacity, vol - 1, -1):
+                dp[j] = max(dp[j], dp[j - vol] + val)
+        return dp[capacity]
+
+    # --------------------------------------------------------
+    #  完全背包（Unbounded）——  AcWing 3
+    # --------------------------------------------------------
+    @staticmethod
+    def knapsack_complete(volumes: List[int], values:  List[int], capacity: int) -> int:
+        """
+        功能：每件物品可选任意次（无限件），在容量 capacity 内取得最大价值  
+        关键：内层体积 j **正序** 遍历，允许当轮再次使用当前物品
+        """
+        dp = [0] * (capacity + 1)
+        for vol, val in zip(volumes, values):
+            for j in range(vol, capacity + 1):              # 正序，允许重复选
+                dp[j] = max(dp[j], dp[j - vol] + val)
+        return dp[capacity]
