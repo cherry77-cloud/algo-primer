@@ -1,6 +1,7 @@
 from collections import deque
 from typing import List, Tuple
 from functools import cache
+from math import isqrt
 
 
 class KnapsackToolkit:
@@ -128,3 +129,18 @@ class KnapsackToolkit:
        
        ans = dfs(len(coins) - 1, amount)
        return ans if ans < float('inf') else -1
+
+    # ========================================================
+    #  完全平方数（完全背包）—— LeetCode 279
+    # ========================================================
+    @staticmethod
+    def numSquares(n: int) -> int:
+       """
+       完全背包问题 - 最少完全平方数
+       功能：返回和为 n 的完全平方数的最少数量
+       """
+       f = [0] + [float('inf')] * n
+       for i in range(1, isqrt(n) + 1):
+           for j in range(i * i, n + 1):
+               f[j] = min(f[j], f[j - i * i] + 1)
+       return f[n]
