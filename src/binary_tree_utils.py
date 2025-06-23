@@ -42,3 +42,43 @@ class BinaryTreeUtils:
             res.append(node.val)           # 访问根
             node = node.right              # 转向右子树
         return res
+
+    # ░░░░░░░░░░░ LeetCode 145 —— 二叉树后序遍历 ░░░░░░░░░░░
+    @staticmethod
+    def postorder(root: Optional[TreeNode]) -> List[int]:
+        """左-右-根；双栈反序输出"""
+        if not root:  return []
+        stack1: List[TreeNode] = [root]
+        stack2: List[TreeNode] = []
+
+        while stack1:
+            node = stack1.pop()
+            stack2.append(node)
+            if node.left:
+                stack1.append(node.left)
+            if node.right:
+                stack1.append(node.right)
+        return [node.val for node in reversed(stack2)
+
+    # ░░░░░░░░░░░ LeetCode 145 —— 二叉树后序遍历（单栈版） ░░░░░░░░░░░
+    @staticmethod
+    def postorder(root: Optional[TreeNode]) -> List[int]:
+        """左-右-根；单栈 + prev 指针"""
+        if not root:  return []
+        stack: List[TreeNode] = []
+        res:   List[int]      = []
+        node, prev = root, None
+
+        while stack or node:
+            while node:                      # 一路压左孩子
+                stack.append(node)
+                node = node.left
+            node = stack[-1]                 # 查看栈顶
+            if not node.right or node.right is prev:
+                stack.pop()
+                res.append(node.val)         # 访问根
+                prev = node                  # 记录已访问
+                node = None                  # 回溯继续
+            else:
+                node = node.right            # 转向右子树
+        return res
