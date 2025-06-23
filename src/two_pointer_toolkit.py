@@ -35,3 +35,38 @@ class SlidingWindowUtils:
             if right - left + 1 == len(p):
                 ans.append(left)
         return ans
+
+
+# =============================================================================
+# 2.  Prefix-Suffix Two-Pointer
+# =============================================================================
+class PrefixSuffixTwoPointerUtils:
+    # ░░░░░░░░░░░ LeetCode 42 —— 接雨水 ░░░░░░░░░░░
+    @staticmethod
+    def trap(height: List[int]) -> int:
+        ans = pre_max = suf_max = 0
+        left, right = 0, len(height) - 1
+        while left < right:
+            pre_max = max(pre_max, height[left])
+            suf_max = max(suf_max, height[right])
+            if pre_max < suf_max:
+                ans += pre_max - height[left]
+                left += 1
+            else:
+                ans += suf_max - height[right]
+                right -= 1
+        return ans
+
+    # ░░░░░░░░░░░ LeetCode 11 —— 盛最多水的容器 ░░░░░░░░░░░
+    @staticmethod
+    def maxArea(height: List[int]) -> int:
+        left, right = 0, len(height) - 1
+        max_area = 0
+        while left < right:
+            area = (right - left) * min(height[left], height[right])
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+            max_area = max(max_area, area)
+        return max_area
