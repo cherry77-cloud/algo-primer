@@ -2,6 +2,7 @@ from collections import deque
 from functools import cache
 from math import inf, isqrt
 from typing import List, Tuple
+from bisect import bisect_left
 
 # =============================================================================
 # 1.  Knapsack‑family templates
@@ -104,9 +105,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 120 · 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minimumTotal(triangle: List[List[int]]) -> int:
-        """
-        功能：从三角形顶部到底部的最小路径和
-        """
+        """ 功能：从三角形顶部到底部的最小路径和 """
         n = len(triangle)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -118,9 +117,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 64 · 最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minPathSum(grid: List[List[int]]) -> int:
-        """
-        功能：从左上角到右下角的最小路径和，只能向右或向下
-        """
+        """ 功能：从左上角到右下角的最小路径和，只能向右或向下 """
         m, n = len(grid), len(grid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -134,9 +131,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 931 · 下降路径最小和 ░░░░░░░░░░░░░░
     @staticmethod
     def minFallingPathSum(matrix: List[List[int]]) -> int:
-        """
-        功能：从第一行任意位置开始，到最后一行的最小路径和
-        """
+        """ 功能：从第一行任意位置开始，到最后一行的最小路径和 """
         n = len(matrix)
         @cache
         def dfs(r: int, c: int) -> int:
@@ -150,9 +145,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 62 · 不同路径 ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePaths(m: int, n: int) -> int:
-        """
-        功能：从左上角到右下角的不同路径数，只能向右或向下
-        """
+        """ 功能: 从左上角到右下角的不同路径数，只能向右或向下 """
         @cache
         def dfs(i: int, j: int) -> int:
             if i < 0 or j < 0:
@@ -165,9 +158,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 63 · 不同路径 II ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
-        """
-        功能：从左上角到右下角的不同路径数，包含障碍物
-        """
+        """ 功能: 从左上角到右下角的不同路径数，包含障碍物 """
         m, n = len(obstacleGrid), len(obstacleGrid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -181,9 +172,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 329 · 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
     @staticmethod
     def longestIncreasingPath(matrix: List[List[int]]) -> int:
-        """
-        功能：找出矩阵中最长递增路径的长度
-        """
+        """ 功能: 找出矩阵中最长递增路径的长度 """
         DIRS = [(-1, 0), (0, -1), (0, 1), (1, 0)]
         
         if not matrix or not matrix[0]:
@@ -200,3 +189,21 @@ class GridToolkit:
             return best
         
         return max(dfs(i, j) for i in range(m) for j in range(n))
+
+
+# =============================================================================
+# 3.  Subsequence-style DP routines
+# =============================================================================
+class SubsequenceDPToolkit:
+    # ░░░░░░░░░░░ LeetCode 300 —— 最长递增子序列 ░░░░░░░░░░░
+    @staticmethod
+    def lengthOfLIS(nums: List[int]) -> int:
+        """二分 + 贪心求最长递增子序列长度 O(n log n)"""
+        tails: List[int] = []                     # tails[k] 表示长度为 k+1 的所有递增子序列中最小的结尾元素
+        for x in nums:
+            idx = bisect_left(tails, x)           # 找到首个 ≥ x 的位置
+            if idx == len(tails):
+                tails.append(x)                   # x 比所有结尾都大，能扩展最长序列
+            else:
+                tails[idx] = x                    # 用更小的 x 更新结尾，利于后续拼接
+        return len(tails)
