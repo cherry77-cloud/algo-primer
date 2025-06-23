@@ -99,3 +99,10 @@ class BinaryTreeUtils:
                     q.append(node.right)
             res.append(level_vals)
         return res
+
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        """计算二叉树最大深度"""
+        if not root:  return 0
+        l_depth = self.maxDepth(root.left)
+        r_depth = self.maxDepth(root.right)
+        return max(l_depth, r_depth) + 1
