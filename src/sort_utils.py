@@ -1,11 +1,14 @@
 from typing import List
 
+
 class SortUtils:
-    # ░░░░░░░░░░░░░░ Quick Sort —— AcWing 789 ░░░░░░░░░░░░░░
-    def quickSort(self, arr: List[int], left: int, right: int) -> None:
+    # ░░░░░░░░░░░░░░ AcWing 785 —— 快速排序 ░░░░░░░░░░░░░░
+    @staticmethod
+    def quickSort(arr: List[int], left: int, right: int) -> None:
         """Hoare 分区，原地升序快速排序"""
-        if left >= right:  return
-            
+        if left >= right:
+            return
+
         pivot = arr[(left + right) >> 1]
         i, j = left, right
         while i <= j:
@@ -17,18 +20,20 @@ class SortUtils:
                 arr[i], arr[j] = arr[j], arr[i]
                 i += 1
                 j -= 1
-                
-        self.quickSort(arr, left, j)
-        self.quickSort(arr, i, right)
 
-    # ░░░░░░░░░░░░░░ Merge Sort —— AcWing 789 ░░░░░░░░░░░░░░
-    def mergeSort(self, arr: List[int], left: int, right: int) -> None:
+        SortUtils.quickSort(arr, left, j)
+        SortUtils.quickSort(arr, i, right)
+
+    # ░░░░░░░░░░░░░░ AcWing 787 —— 归并排序 ░░░░░░░░░░░░░░
+    @staticmethod
+    def mergeSort(arr: List[int], left: int, right: int) -> None:
         """分治＋双指针合并，原地升序排序"""
-        if left == right:  return
+        if left == right:
+            return
 
         mid = (left + right) // 2
-        self.mergeSort(arr, left, mid)
-        self.mergeSort(arr, mid + 1, right)
+        SortUtils.mergeSort(arr, left, mid)
+        SortUtils.mergeSort(arr, mid + 1, right)
 
         merged, i, j = [], left, mid + 1
         while i <= mid and j <= right:
@@ -40,11 +45,14 @@ class SortUtils:
         merged.extend(arr[j:right + 1])
         arr[left:right + 1] = merged
 
-    # ░░░░░░░░░░░░░░ Quick Select (k-th Largest) —— LeetCode 215 ░░░░░░░░░░░░░░
-    def findKthLargest(self, nums: List[int], k: int) -> int:
+    # ░░░░░░░░░░░░░░ LeetCode 215 —— 数组中的第 K 个最大元素 ░░░░░░░░░░░░░░
+    @staticmethod
+    def findKthLargest(nums: List[int], k: int) -> int:
         """平均 O(n) 快速选择返回第 k 大元素"""
         def quickselect(left: int, right: int, idx: int) -> int:
-            if left == right:  return nums[idx]
+            if left == right:
+                return nums[idx]
+
             pivot = nums[(left + right) >> 1]
             i, j = left, right
             while i <= j:
@@ -56,6 +64,7 @@ class SortUtils:
                     nums[i], nums[j] = nums[j], nums[i]
                     i += 1
                     j -= 1
+
             return quickselect(left, j, idx) if idx <= j else quickselect(i, right, idx)
 
         n = len(nums)
