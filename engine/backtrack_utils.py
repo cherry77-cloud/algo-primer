@@ -156,3 +156,26 @@ class BacktrackingToolkit:
         
         dfs(0, 0)
         return ans
+
+    # ░░░░░░░░░░░ LeetCode 17 —— 电话号码的字母组合 ░░░░░░░░░░░
+    @staticmethod
+    def letterCombinations(digits: str) -> List[str]:
+        """电话号码字母组合；回溯枚举"""
+        if not digits:  return []
+            
+        MAPPING = "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        ans: List[str] = []
+        chosen: List[str] = []
+
+        def dfs(i: int) -> None:
+            if i == len(digits):
+                ans.append(''.join(chosen))
+                return
+            idx = ord(digits[i]) - ord('0')
+            for ch in MAPPING[idx]:
+                chosen.append(ch)
+                dfs(i + 1)
+                chosen.pop()
+
+        dfs(0)
+        return ans
