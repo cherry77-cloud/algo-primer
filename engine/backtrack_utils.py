@@ -133,3 +133,26 @@ class BacktrackingToolkit:
         
         dfs(0, 0, 0)
         return result
+
+    # ░░░░░░░░░░░ LeetCode 22 —— 括号生成 ░░░░░░░░░░░
+    @staticmethod
+    def generateParenthesis(n: int) -> List[str]:
+        """生成所有有效括号组合: 回溯枚举"""
+        ans: List[str] = []
+        chosen: List[str] = []
+
+        def dfs(i: int, open_count: int) -> None:
+            if i == n * 2:
+                ans.append(''.join(chosen))
+                return
+            if open_count < n:
+                chosen.append('(')
+                dfs(i + 1, open_count + 1)
+                chosen.pop()
+            if i - open_count < open_count:
+                chosen.append(')')
+                dfs(i + 1, open_count)
+                chosen.pop()
+        
+        dfs(0, 0)
+        return ans
