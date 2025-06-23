@@ -8,7 +8,7 @@ from bisect import bisect_left
 # 1.  Knapsack-family templates
 # =============================================================================
 class KnapsackToolkit:
-    # ░░░░░░░░░░░░░░ 0-1 背包 —— AcWing 2 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 2 —— 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_01(volumes: List[int], values: List[int], capacity: int) -> int:
         """0-1 背包一维 DP"""
@@ -18,7 +18,7 @@ class KnapsackToolkit:
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ 完全背包 —— AcWing 3 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 3 —— 完全背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_complete(volumes: List[int], values: List[int], capacity: int) -> int:
         """完全背包一维 DP"""
@@ -28,7 +28,7 @@ class KnapsackToolkit:
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ 二维 0-1 背包 —— AcWing 8 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 8 —— 二维 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_2d(volumes: List[int], weights: List[int],
                     values: List[int], max_volume: int, max_weight: int) -> int:
@@ -40,7 +40,7 @@ class KnapsackToolkit:
                     dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)
         return dp[max_volume][max_weight]
 
-    # ░░░░░░░░░░░░░░ 多重背包（Binary Split）—— AcWing 4 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 4 —— 多重背包（二进制拆分） ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_multiple_binary(volumes: List[int], values: List[int],
                                  counts: List[int], capacity: int) -> int:
@@ -60,7 +60,7 @@ class KnapsackToolkit:
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ 多重背包·单调队列优化 —— AcWing 4 进阶 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包·单调队列优化 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_multiple_queue(volumes: List[int], values: List[int],
                                 counts: List[int], capacity: int) -> int:
@@ -81,7 +81,7 @@ class KnapsackToolkit:
                     k += 1
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ 零钱兑换（完全背包）—— LeetCode 322 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包） ░░░░░░░░░░░░░░
     @staticmethod
     def coinChange(coins: List[int], amount: int) -> int:
         """完全背包记忆化 DFS"""
@@ -97,7 +97,7 @@ class KnapsackToolkit:
         ans = dfs(len(coins) - 1, amount)
         return ans if ans < inf else -1
 
-    # ░░░░░░░░░░░░░░ 完全平方数（完全背包）—— LeetCode 279 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数（完全背包） ░░░░░░░░░░░░░░
     @staticmethod
     def numSquares(n: int) -> int:
         """完全背包平方拆分"""
@@ -112,7 +112,7 @@ class KnapsackToolkit:
 # 2.  Grid-style DP routines
 # =============================================================================
 class GridToolkit:
-    # ░░░░░░░░░░░░░░ LeetCode 120 · 三角形最小路径和 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 120 —— 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minimumTotal(triangle: List[List[int]]) -> int:
         """记忆化 DFS"""
@@ -124,7 +124,7 @@ class GridToolkit:
             return min(dfs(i + 1, j), dfs(i + 1, j + 1)) + triangle[i][j]
         return dfs(0, 0)
 
-    # ░░░░░░░░░░░░░░ LeetCode 64 · 最小路径和 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 64 —— 最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minPathSum(grid: List[List[int]]) -> int:
         """记忆化 DFS"""
@@ -138,7 +138,7 @@ class GridToolkit:
             return min(dfs(i - 1, j), dfs(i, j - 1)) + grid[i][j]
         return dfs(m - 1, n - 1)
 
-    # ░░░░░░░░░░░░░░ LeetCode 931 · 下降路径最小和 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 931 —— 下降路径最小和 ░░░░░░░░░░░░░░
     @staticmethod
     def minFallingPathSum(matrix: List[List[int]]) -> int:
         """记忆化 DFS"""
@@ -152,7 +152,7 @@ class GridToolkit:
             return min(dfs(r - 1, c - 1), dfs(r - 1, c), dfs(r - 1, c + 1)) + matrix[r][c]
         return min(dfs(n - 1, col) for col in range(n))
 
-    # ░░░░░░░░░░░░░░ LeetCode 62 · 不同路径 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 62 —— 不同路径 ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePaths(m: int, n: int) -> int:
         """记忆化 DFS"""
@@ -165,7 +165,7 @@ class GridToolkit:
             return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
 
-    # ░░░░░░░░░░░░░░ LeetCode 63 · 不同路径 II ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 63 —— 不同路径 II ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
         """记忆化 DFS"""
@@ -179,7 +179,7 @@ class GridToolkit:
             return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
 
-    # ░░░░░░░░░░░░░░ LeetCode 329 · 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 329 —— 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
     @staticmethod
     def longestIncreasingPath(matrix: List[List[int]]) -> int:
         """记忆化 DFS"""
