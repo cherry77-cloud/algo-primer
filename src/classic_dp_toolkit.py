@@ -4,6 +4,7 @@ from math import inf, isqrt
 from typing import List, Tuple
 from bisect import bisect_left
 
+
 # =============================================================================
 # 1.  Knapsack-family templates
 # =============================================================================
@@ -11,7 +12,7 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 2 —— 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_01(volumes: List[int], values: List[int], capacity: int) -> int:
-        """0-1 背包一维 DP"""
+        """求最大价值；逆序容量的一维 0-1 DP"""
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
             for j in range(capacity, vol - 1, -1):
@@ -21,7 +22,7 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 3 —— 完全背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_complete(volumes: List[int], values: List[int], capacity: int) -> int:
-        """完全背包一维 DP"""
+        """求最大价值；顺序容量的一维完全背包 DP"""
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
             for j in range(vol, capacity + 1):
@@ -32,7 +33,7 @@ class KnapsackToolkit:
     @staticmethod
     def knapsack_2d(volumes: List[int], weights: List[int],
                     values: List[int], max_volume: int, max_weight: int) -> int:
-        """二维 0-1 背包二维 DP"""
+        """求最大价值；体积重量双维度倒序 0-1 DP"""
         dp = [[0] * (max_weight + 1) for _ in range(max_volume + 1)]
         for vol, wgt, val in zip(volumes, weights, values):
             for v in range(max_volume, vol - 1, -1):
@@ -44,7 +45,7 @@ class KnapsackToolkit:
     @staticmethod
     def knapsack_multiple_binary(volumes: List[int], values: List[int],
                                  counts: List[int], capacity: int) -> int:
-        """多重背包二进制拆分"""
+        """求最大价值；二进制拆分转 0-1 背包"""
         items: List[Tuple[int, int]] = []
         for v, w, s in zip(volumes, values, counts):
             k = 1
@@ -60,11 +61,11 @@ class KnapsackToolkit:
                 dp[j] = max(dp[j], dp[j - vol] + val)
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包·单调队列优化 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包·队列优化 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_multiple_queue(volumes: List[int], values: List[int],
                                 counts: List[int], capacity: int) -> int:
-        """多重背包单调队列优化"""
+        """求最大价值；同余分组 + 单调队列优化"""
         dp = [0] * (capacity + 1)
         for vol, val, cnt in zip(volumes, values, counts):
             for r in range(vol):
@@ -81,10 +82,10 @@ class KnapsackToolkit:
                     k += 1
         return dp[capacity]
 
-    # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换（完全背包） ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换 ░░░░░░░░░░░░░░
     @staticmethod
     def coinChange(coins: List[int], amount: int) -> int:
-        """完全背包记忆化 DFS"""
+        """求最少硬币数；完全背包 + 记忆化 DFS"""
         @cache
         def dfs(i: int, c: int) -> int:
             if i < 0:
@@ -97,10 +98,10 @@ class KnapsackToolkit:
         ans = dfs(len(coins) - 1, amount)
         return ans if ans < inf else -1
 
-    # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数（完全背包） ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数 ░░░░░░░░░░░░░░
     @staticmethod
     def numSquares(n: int) -> int:
-        """完全背包平方拆分"""
+        """求最少平方数数目；完全背包转移"""
         f = [0] + [inf] * n
         for i in range(1, isqrt(n) + 1):
             for j in range(i * i, n + 1):
@@ -115,7 +116,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 120 —— 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minimumTotal(triangle: List[List[int]]) -> int:
-        """记忆化 DFS"""
+        """自顶向下最小路径和；记忆化 DFS"""
         n = len(triangle)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -127,7 +128,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 64 —— 最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minPathSum(grid: List[List[int]]) -> int:
-        """记忆化 DFS"""
+        """右下角最小路径和；记忆化 DFS"""
         m, n = len(grid), len(grid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -141,7 +142,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 931 —— 下降路径最小和 ░░░░░░░░░░░░░░
     @staticmethod
     def minFallingPathSum(matrix: List[List[int]]) -> int:
-        """记忆化 DFS"""
+        """任意起点下降路径最小和；三向转移 + 记忆化"""
         n = len(matrix)
         @cache
         def dfs(r: int, c: int) -> int:
@@ -155,7 +156,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 62 —— 不同路径 ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePaths(m: int, n: int) -> int:
-        """记忆化 DFS"""
+        """从左上到右下路径计数；组合数或 DFS"""
         @cache
         def dfs(i: int, j: int) -> int:
             if i < 0 or j < 0:
@@ -168,7 +169,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 63 —— 不同路径 II ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
-        """记忆化 DFS"""
+        """含障碍路径计数；记忆化 DFS"""
         m, n = len(obstacleGrid), len(obstacleGrid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -182,7 +183,7 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 329 —— 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
     @staticmethod
     def longestIncreasingPath(matrix: List[List[int]]) -> int:
-        """记忆化 DFS"""
+        """矩阵最长递增路径；四方向 DFS + 记忆化"""
         DIRS = [(-1, 0), (0, -1), (0, 1), (1, 0)]
         if not matrix or not matrix[0]:
             return 0
@@ -205,7 +206,7 @@ class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 300 —— 最长递增子序列 ░░░░░░░░░░░
     @staticmethod
     def lengthOfLIS(nums: List[int]) -> int:
-        """贪心 + 二分"""
+        """LIS 长度；贪心 + 二分 tails"""
         tails: List[int] = []
         for x in nums:
             idx = bisect_left(tails, x)
@@ -215,6 +216,20 @@ class SubsequenceDPToolkit:
                 tails[idx] = x
         return len(tails)
 
+    # ░░░░░░░░░░░ LeetCode 1143 —— 最长公共子序列 ░░░░░░░░░░░
+    @staticmethod
+    def longestCommonSubsequence(text1: str, text2: str) -> int:
+        """LCS 长度；二维状态 DFS + 记忆化"""
+        m, n = len(text1), len(text2)
+        @cache
+        def dfs(i: int, j: int) -> int:
+            if i < 0 or j < 0:
+                return 0
+            if text1[i] == text2[j]:
+                return dfs(i - 1, j - 1) + 1
+            return max(dfs(i - 1, j), dfs(i, j - 1))
+        return dfs(m - 1, n - 1)
+
 
 # =============================================================================
 # 4.  Subarray-style DP routines
@@ -223,7 +238,7 @@ class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
     @staticmethod
     def maxSubArray(nums: List[int]) -> int:
-        """Kadane 一维 DP"""
+        """连续子数组最大和；Kadane 一维 DP"""
         f = [0] * len(nums)
         f[0] = nums[0]
         for i in range(1, len(nums)):
