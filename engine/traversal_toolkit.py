@@ -3,10 +3,10 @@ from typing import List, Deque, Tuple
 
 
 class GridGraphSearch:
-    # ░░░░░░░░░░░░░░░ LeetCode 200 —— 岛屿数量（BFS Flood Fill） ░░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░░ LeetCode 200 —— 岛屿数量（Flood Fill） ░░░░░░░░░░░░░░░
     @staticmethod
     def num_islands_bfs(grid: List[List[str]]) -> int:
-        """LeetCode 200：使用 BFS Flood Fill 算法在网格图上统计连通岛屿数量"""
+        """使用 Flood Fill 算法在网格图上统计连通岛屿数量"""
         if not grid or not grid[0]:
             return 0
         m, n = len(grid), len(grid[0])
