@@ -230,6 +230,21 @@ class SubsequenceDPToolkit:
             return max(dfs(i - 1, j), dfs(i, j - 1))
         return dfs(m - 1, n - 1)
 
+    # ░░░░░░░░░░░ LeetCode 72 —— 编辑距离 ░░░░░░░░░░░
+    @staticmethod
+    def minDistance(word1: str, word2: str) -> int:
+        """单词转换最少操作数；三向 DFS 记忆化"""
+        m, n = len(word1), len(word2)
+        @cache
+        def dfs(i: int, j: int) -> int:
+            if i < 0:
+                return j + 1
+            if j < 0:
+                return i + 1
+            if word1[i] == word2[j]:
+                return dfs(i - 1, j - 1)
+            return min(dfs(i - 1, j), dfs(i, j - 1), dfs(i - 1, j - 1)) + 1
+        return dfs(m - 1, n - 1)
 
 # =============================================================================
 # 4.  Subarray-style DP routines
