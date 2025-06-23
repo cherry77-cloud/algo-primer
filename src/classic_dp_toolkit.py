@@ -207,3 +207,18 @@ class SubsequenceDPToolkit:
             else:
                 tails[idx] = x                    # 用更小的 x 更新结尾，利于后续拼接
         return len(tails)
+
+
+# =============================================================================
+# 4.  Subarray-style DP routines
+# =============================================================================
+class SubarrayDPToolkit:
+    # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
+    @staticmethod
+    def maxSubArray(nums: List[int]) -> int:
+        """Kadane 算法：返回连续子数组的最大和"""
+        f = [0] * len(nums)
+        f[0] = nums[0]
+        for i in range(1, len(nums)):
+            f[i] = max(f[i - 1], 0) + nums[i]
+        return max(f)
