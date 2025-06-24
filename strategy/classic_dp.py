@@ -5,9 +5,6 @@ from typing import List, Tuple
 from bisect import bisect_left
 
 
-# =============================================================================
-# 1.  Knapsack-family templates
-# =============================================================================
 class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 2 —— 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
@@ -109,9 +106,6 @@ class KnapsackToolkit:
         return f[n]
 
 
-# =============================================================================
-# 2.  Grid-style DP routines
-# =============================================================================
 class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 120 —— 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
@@ -199,9 +193,6 @@ class GridToolkit:
         return max(dfs(i, j) for i in range(m) for j in range(n))
 
 
-# =============================================================================
-# 3.  Subsequence-style DP routines
-# =============================================================================
 class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 300 —— 最长递增子序列 ░░░░░░░░░░░
     @staticmethod
@@ -247,9 +238,6 @@ class SubsequenceDPToolkit:
         return dfs(m - 1, n - 1)
 
 
-# =============================================================================
-# 4.  Subarray-style DP routines
-# =============================================================================
 class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
     @staticmethod
