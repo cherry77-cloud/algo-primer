@@ -149,5 +149,31 @@ class StackAlgoUtils:
         for row in matrix:
             for j, val in enumerate(row):
                 heights[j] = heights[j] + 1 if val == '1' else 0
-            max_area = max(max_area, largestRectangleArea(heights))
+            max_area = max(max_area, largestRectangleArea(heights[:]))
         return max_area
+
+    # ░░░░░░░░░░░ LeetCode 221 —— 最大正方形 ░░░░░░░░░░░
+    @staticmethod
+    def maximalSquare(matrix: List[List[str]]) -> int:
+        """返回只包含 '1' 的最大正方形面积"""
+        def largestSquareEdge(heights: List[int]) -> int:
+            heights.append(0)  # 哨兵：强制清空栈
+            stack: List[int] = [-1]  # 哨兵：左边界起点
+            max_edge: int = 0
+            for right, h in enumerate(heights):
+                while len(stack) > 1 and h <= heights[stack[-1]]:
+                    i = stack.pop()
+                    left = stack[-1]
+                    edge = min(heights[i], right - left - 1)  # 正方形边长 = min(高度, 宽度)
+                    max_edge = max(max_edge, edge)
+                stack.append(right)
+            return max_edge
+        
+        n_cols: int = len(matrix[0])
+        heights: List[int] = [0] * n_cols
+        max_edge: int = 0
+        for row in matrix:
+            for j, val in enumerate(row):
+                heights[j] = heights[j] + 1 if val == '1' else 0
+            max_edge = max(max_edge, largestSquareEdge(heights[:]))
+        return max_edge * max_edge
