@@ -36,3 +36,35 @@ class GridGraphSearch:
                     islands += 1
                     bfs(i, j)
         return islands
+
+    # ░░░░░░░░░░░░░░░ LeetCode 994 —— 腐烂的橘子（BFS） ░░░░░░░░░░░░░░░
+    @staticmethod
+    def orangesRotting(grid: List[List[int]]) -> int:
+        """使用 BFS 计算所有橘子腐烂所需的最小分钟数"""
+        if not grid or not grid[0]:
+            return 0
+        
+        m, n = len(grid), len(grid[0])
+        fresh = 0
+        queue: Deque[Tuple[int, int]] = deque()
+        
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    fresh += 1
+                elif grid[i][j] == 2:
+                    queue.append((i, j))
+        
+        minutes = 0
+        while queue and fresh:
+            for _ in range(len(queue)):
+                x, y = queue.popleft()
+                for dx, dy in (-1, 0), (0, -1), (1, 0), (0, 1):
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < m and 0 <= ny < n and grid[nx][ny] == 1:
+                        grid[nx][ny] = 2
+                        fresh -= 1
+                        queue.append((nx, ny))
+            minutes += 1
+        
+        return -1 if fresh else minutes
