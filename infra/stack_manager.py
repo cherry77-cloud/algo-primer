@@ -88,9 +88,23 @@ class MonotonicStackTemplates:
 
 
 class StackAlgoUtils:
+    # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
+    @staticmethod
+    def dailyTemperatures(temperatures: List[int]) -> List[int]:
+        """返回距离下一次更高温度的天数，若不存在则为 0"""
+        n = len(temperatures)
+        ans: List[int] = [0] * n
+        stack: List[int] = []  # 下标栈，自底→顶温度递减
+        for i, temp in enumerate(temperatures):
+            while stack and temp > temperatures[stack[-1]]:
+                prev = stack.pop()
+                ans[prev] = i - prev
+            stack.append(i)
+        return ans
+
     # ░░░░░░░░░░░ LeetCode 84 —— 柱状图中最大的矩形 ░░░░░░░░░░░
     @staticmethod
-    def largest_rectangle_area(heights: List[int]) -> int:
+    def largestRectangleArea(heights: List[int]) -> int:
         """返回柱状图中最大矩形的面积"""
         n = len(heights)
         left_bound: List[int] = [-1] * n    # 每个柱子左侧第一个更矮柱子的下标
