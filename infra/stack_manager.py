@@ -132,20 +132,17 @@ class StackAlgoUtils:
     def maximalRectangle(matrix: List[List[str]]) -> int:
         """返回只包含 '1' 的最大矩形面积"""
         def largestRectangleArea(heights: List[int]) -> int:
-            n = len(heights)
-            left, right, stack = [-1] * n, [n] * n, []
-            for i, h in enumerate(heights):
-                while stack and h < heights[stack[-1]]:
-                    prev = stack.pop()
-                    right[prev] = i
-                if stack:
-                    left[i] = stack[-1]
-                stack.append(i)
-            max_area = 0
-            for h, l, r in zip(heights, left, right):
-                max_area = max(max_area, (r - l - 1) * h)
-            return max_area
-        
+            heights.append(-1)  # 哨兵: 强制清空栈中所有元素
+            st = [-1]           # 哨兵: 作为左边界的起点（当栈中只有一个元素时的左边界）
+            ans = 0
+            for right, h in enumerate(heights):
+                while len(st) > 1 and h <= heights[st[-1]]:
+                    i = st.pop()   # 弹出的柱子作为矩形的高
+                    left = st[-1]  # 栈顶元素是左边第一个更矮柱子的位置, 栈底 -> 栈顶递增
+                    ans = max(ans, heights[i] * (right - left - 1))
+                st.append(right)
+            return ans
+            
         n_cols = len(matrix[0])
         heights: List[int] = [0] * n_cols
         max_area = 0
