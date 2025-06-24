@@ -68,3 +68,37 @@ class GridGraphSearch:
             minutes += 1
         
         return -1 if fresh else minutes
+
+    # ░░░░░░░░░░░░░░░ LeetCode 417 —— 太平洋大西洋水流问题（BFS/DFS） ░░░░░░░░░░░░░░░
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        """寻找既可以流向太平洋又可以流向大西洋的单元格坐标"""
+       m, n = len(heights), len(heights[0])
+       
+       def bfs(starts: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+           queue = deque(starts)
+           visited = set(starts)
+           while queue:
+               x, y = queue.popleft()
+               for nx, ny in (x + 1, y), (x, y + 1), (x - 1, y), (x, y - 1):
+                   if 0 <= nx < m and 0 <= ny < n and heights[nx][ny] >= heights[x][y] and (nx, ny) not in visited:
+                       queue.append((nx, ny))
+                       visited.add((nx, ny))
+           return visited
+           
+       def search(starts: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+           visited = set()
+           def dfs(x: int, y: int) -> None:
+               if (x, y) in visited:
+                   return
+               visited.add((x, y))
+               for nx, ny in (x + 1, y), (x, y + 1), (x - 1, y), (x, y - 1):
+                   if 0 <= nx < m and 0 <= ny < n and heights[nx][ny] >= heights[x][y]:
+                       dfs(nx, ny)
+           for x, y in starts:
+               dfs(x, y)
+           return visited
+           
+       pacific = [(0, i) for i in range(n)] + [(i, 0) for i in range(1, m)]
+       atlantic = [(m - 1, i) for i in range(n - 1)] + [(i, n - 1) for i in range(m)]
+       
+       return list(map(list, bfs(pacific) & bfs(atlantic)))
