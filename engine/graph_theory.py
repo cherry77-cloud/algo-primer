@@ -24,3 +24,30 @@ class GraphToolkit:
                 if not indegrees[cur]:  # 入度为 0，可以学习该课程
                     queue.append(cur)
         return not numCourses
+
+    # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 三色标记法 ░░░░░░░░░░░░░░
+    @staticmethod
+    def canFinish_dfs(numCourses: int, prerequisites: List[List[int]]) -> bool:
+        """使用三色标记法检测有向图是否有环"""
+        g = defaultdict(list)
+        for cur, pre in prerequisites:
+            g[pre].append(cur)
+        WHITE = 0  # 白色: 未访问（未被垃圾回收器扫描）
+        GRAY = 1   # 灰色: 正在访问（正在被垃圾回收器扫描，但子节点未完全扫描）
+        BLACK = 2  # 黑色: 已访问完成（已被垃圾回收器完全扫描，包括所有子节点）
+        colors = [WHITE] * numCourses
+        
+        def dfs(x: int) -> bool:
+            colors[x] = GRAY                       # 标记为灰色，表示正在访问
+            for y in g[x]:
+                if colors[y] == GRAY:              # 遇到灰色节点，说明形成环
+                    return True
+                if colors[y] == WHITE and dfs(y):  # 白色节点继续DFS
+                    return True
+            colors[x] = BLACK                      # 标记为黑色，表示访问完成
+            return False
+        
+        for i, c in enumerate(colors):
+            if c == WHITE and dfs(i):
+                return False
+        return True
