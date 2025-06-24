@@ -14,6 +14,7 @@ class StackAlgoUtils:
         # 遍历 heights，维护右边界，同时填充左边界
         for idx, height in enumerate(heights):
             # 处理出栈: 当前高度 ≤ 栈顶对应高度 ⇒ 栈顶柱子的右边界确定为 idx
+            # 当前高度 > 栈顶高度时，不淘汰（不出栈），直接将当前元素入栈
             while stack and height <= heights[stack[-1]]:
                 prev_idx = stack.pop()
                 right_bound[prev_idx] = idx
