@@ -51,3 +51,55 @@ class GraphToolkit:
             if c == WHITE and dfs(i):
                 return False
         return True
+
+    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II（BFS版本）░░░░░░░░░░░░░░
+    @staticmethod
+    def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        """返回完成所有课程的顺序（拓扑排序序列）。如果无法完成所有课程（有环），返回空数组"""
+        g = defaultdict(list)
+        indeg = [0] * numCourses
+        for cur, pre in prerequisites:
+            g[pre].append(cur)
+            indeg[cur] += 1
+        
+        result: List[int] = []
+        queue = deque([u for u in range(numCourses) if indeg[u] == 0])
+        while queue:
+            fa = queue.popleft()
+            result.append(fa)
+            for u in g[fa]:
+                indeg[u] -= 1
+                if indeg[u] == 0:
+                    queue.append(u)
+        
+        return result if len(result) == numCourses else []
+    
+    
+    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II（DFS版本）░░░░░░░░░░░░░░
+    @staticmethod
+    def findOrder_dfs(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        """DFS版本：使用三色标记法返回拓扑序"""
+        g = defaultdict(list)
+        for cur, pre in prerequisites:
+            g[pre].append(cur)
+        
+        WHITE, GRAY, BLACK = 0, 1, 2
+        colors = [WHITE] * numCourses
+        result: List[int] = []
+        
+        def dfs(x: int) -> bool:
+            colors[x] = GRAY
+            for y in g[x]:
+                if colors[y] == GRAY:
+                    return True
+                if colors[y] == WHITE and dfs(y):
+                    return True
+            colors[x] = BLACK
+            result.append(x)  # 在标记为黑色时加入结果
+            return False
+        
+        for i, c in enumerate(colors):
+            if colors[i] == WHITE and dfs(i):
+                return []  # 有环，返回空列表
+        
+        return result[::-1]  # 反转得到正确的拓扑序
