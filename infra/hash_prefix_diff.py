@@ -27,3 +27,16 @@ class HashTableUtils:
                 y += 1
             longest = max(longest, y - x)
         return longest
+
+    # ░░░░░░░░░░░ LeetCode 560 —— 和为 K 的子数组 ░░░░░░░░░░░
+    @staticmethod
+    def subarray_sum(nums: List[int], k: int) -> int:
+        """返回数组中和为 k 的子数组个数"""
+        cnt: Dict[int, int] = defaultdict(int)
+        pre_s: int = 0
+        ans: int = 0
+        for x in nums:
+            cnt[pre_s] += 1          # 记录当前前缀和出现次数
+            pre_s += x
+            ans += cnt[pre_s - k]    # 查找是否存在前缀和 pre_s - k
+        return ans
