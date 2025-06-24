@@ -91,23 +91,22 @@ class BacktrackingToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░
     @staticmethod
     def combine(n: int, k: int) -> List[List[int]]:
-        result = []
-        path = []
-        
+        result: List[List[int]] = []
+        path: List[int] = []
         def dfs(u: int, start: int) -> None:
             if u == k:
                 result.append(path[:])
                 return
-                
-            if k - u > n - start + 1:
+
+            if k - u > n - start:
                 return
-            
-            for i in range(start, n + 1):
-                path.append(i)
+
+            for i in range(start, n):
+                path.append(i + 1)
                 dfs(u + 1, i + 1)
                 path.pop()
-        
-        dfs(0, 1)
+
+        dfs(0, 0)
         return result
     
     # ░░░░░░░░░░░░░░ LeetCode 77 · 组合（位运算版本）░░░░░░░░░░░░░░
