@@ -3,7 +3,7 @@ from typing import List, Dict
 
 
 class HashTableUtils:
-    # ░░░░░░░░░░░ LeetCode 第49题 —— 字母异位词分组 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 49 —— 字母异位词分组 ░░░░░░░░░░░
     @staticmethod
     def group_anagrams(strs: List[str]) -> List[List[str]]:
         """分组字符串数组中的字母异位词"""
@@ -13,7 +13,7 @@ class HashTableUtils:
             hashtable[key].append(s)
         return list(hashtable.values())
 
-    # ░░░░░░░░░░░ LeetCode 第128题 —— 最长连续序列 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 128 —— 最长连续序列 ░░░░░░░░░░░
     @staticmethod
     def longest_consecutive(nums: List[int]) -> int:
         """返回数组中最长连续序列的长度"""
