@@ -126,3 +126,31 @@ class StackAlgoUtils:
             width = right_bound[idx] - left_bound[idx] - 1
             max_area = max(max_area, height * width)
         return max_area
+
+    # ░░░░░░░░░░░ LeetCode 85 —— 最大矩形 ░░░░░░░░░░░
+    @staticmethod
+    def maximalRectangle(matrix: List[List[str]]) -> int:
+        """返回只包含 '1' 的最大矩形面积"""
+        def largestRectangleArea(heights: List[int]) -> int:
+            n = len(heights)
+            left, right, stack = [-1] * n, [n] * n, []
+            for i, h in enumerate(heights):
+                while stack and h < heights[stack[-1]]:
+                    prev = stack.pop()
+                    right[prev] = i
+                if stack:
+                    left[i] = stack[-1]
+                stack.append(i)
+            max_area = 0
+            for h, l, r in zip(heights, left, right):
+                max_area = max(max_area, (r - l - 1) * h)
+            return max_area
+        
+        n_cols = len(matrix[0])
+        heights: List[int] = [0] * n_cols
+        max_area = 0
+        for row in matrix:
+            for j, val in enumerate(row):
+                heights[j] = heights[j] + 1 if val == '1' else 0
+            max_area = max(max_area, largestRectangleArea(heights))
+        return max_area
