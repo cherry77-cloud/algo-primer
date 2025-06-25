@@ -1,5 +1,5 @@
 from collections import deque
-from typing import List, Deque, Tuple
+from typing import List, Deque, Tuple, Set
 
 
 class GridGraphSearch:
