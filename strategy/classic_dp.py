@@ -45,7 +45,6 @@ class MemoizationSearch:
                 take = values[i] + dfs(i - 1, c - weights[i])
                 return max(take, not_take)
             return not_take
-
         return dfs(n - 1, cap)
 
     # ░░░░░░░░░░░░░░ 完全 / 无界背包 ░░░░░░░░░░░░░░
@@ -62,7 +61,6 @@ class MemoizationSearch:
                 take = values[i] + dfs(i, c - weights[i])
                 return max(take, not_take)
             return not_take
-
         return dfs(n - 1, cap)
 
     # ░░░░░░░░░░░░░░ 二维约束背包 ░░░░░░░░░░░░░░
