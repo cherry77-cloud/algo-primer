@@ -219,3 +219,34 @@ class BacktrackingToolkit:
 
         dfs(0)
         return ans
+
+    # ░░░░░░░░░░░ LeetCode 79 —— 单词搜索 ░░░░░░░░░░░
+    @staticmethod
+    def exist(board: List[List[str]], word: str) -> bool:
+        """
+        在二维网格中搜索单词
+            1. 优化一：检查字符频率是否满足要求
+            2. 优化二：从出现次数少的一端开始搜索
+            3. DFS + 回溯：标记访问过的格子
+            4. 恢复现场：回溯时恢复原始值
+            5. 剪枝：不匹配立即返回
+        """
+        cnt = Counter(c for row in board for c in row)
+        if not cnt >= Counter(word):
+            return False
+        if cnt[word[-1]] < cnt[word[0]]:
+            word = word[::-1]
+
+        m, n = len(board), len(board[0])
+        def dfs(i: int, j: int, k: int) -> bool:
+            if board[i][j] != word[k]:  # 匹配失败
+                return False
+            if k == len(word) - 1:      # 匹配成功, 处理单字符情况
+                return True
+            board[i][j] = ''            # 标记访问过
+            for x, y in (i, j - 1), (i, j + 1), (i - 1, j), (i + 1, j):  # 相邻格子
+                if 0 <= x < m and 0 <= y < n and dfs(x, y, k + 1):
+                    return True  # 搜到了！
+            board[i][j] = word[k]  # 恢复现场
+            return False  # 没搜到
+        return any(dfs(i, j, 0) for i in range(m) for j in range(n))
