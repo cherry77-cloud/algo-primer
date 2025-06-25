@@ -87,6 +87,14 @@ class BinaryTreeUtils:
 
     # ░░░░░░░░░░░ LeetCode 144 —— 二叉树前序遍历 ░░░░░░░░░░░
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """
+        Morris前序遍历，根-左-右顺序
+            1. 利用空闲的右指针建立临时线索，实现无栈遍历
+            2. 对每个节点找其左子树的最右节点（前驱）
+            3. 第一次到达时：访问当前节点，建立线索，转向左子树
+            4. 第二次到达时：说明左子树已遍历完，恢复结构，转向右子树
+            5. 无左子树的节点直接访问后向右走
+        """
         result: List[int] = []
         cur = root
         while cur:
@@ -108,6 +116,14 @@ class BinaryTreeUtils:
 
     # ░░░░░░░░░░░ LeetCode 94 —— 二叉树中序遍历 ░░░░░░░░░░░
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """
+        Morris中序遍历，左-根-右顺序，
+            1. 利用空闲的右指针建立临时线索，实现无栈遍历
+            2. 对每个节点找其左子树的最右节点（前驱）
+            3. 第一次到达时：建立线索，转向左子树（不访问）
+            4. 第二次到达时：左子树已遍历完，访问当前节点，恢复结构，转向右子树
+            5. 无左子树的节点说明是最左侧，直接访问后向右走
+        """
         result: List[int] = []
         cur = root
         while cur:
