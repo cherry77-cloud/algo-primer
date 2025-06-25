@@ -7,8 +7,31 @@ from bisect import bisect_left
 
 class MemoizationSearch:
     """
+    记忆化搜索是一种 **空间换时间** 的动态规划优化技术，本质上通过缓存「函数参数 → 结果」键值对，消除递归中的子问题重叠
+    • 状态空间: 函数全部实参组合构成的集合  
+    • 解空间: 每个状态对应的唯一计算结果  
+    • 缓存结构: 哈希表 memo : (params_tuple) → result
+      └► 键 Key = 递归函数的入参元组  
+      └► 值 Value = 该入参对应的返回值
+    - 递归调用树: 原始递归形成的大量重复子树  
+    - 状态转移图: 去重后得到的有向无环图 
+        • 顶点: 所有可达状态  
+        • 边: 状态间依赖 (u,v) 表示求 u 先求 v  
+        • 由于递归无后效性，图必然无环，可视为动态规划拓扑序
+        
+    map<pair<int, int>, int> memo;
+    auto dfs = [&](this auto&& self, int i, int c) -> int {
+        if (i < 0 || c <= 0) return 0;
+        auto key = make_pair(i, c);
+        if (memo.contains(key)) return memo[key];
+        int not_take = self(i - 1, c);
+        int take = 0;
+        if (c >= w[i]) {
+            take = v[i] + self(i - 1, c - w[i]);
+        }
+        return memo[key] = max(take, not_take);
+    };
     """
-
     # ░░░░░░░░░░░░░░ 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_01(weights: List[int], values: List[int], cap: int) -> int:
