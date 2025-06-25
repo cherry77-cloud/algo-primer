@@ -1,6 +1,33 @@
 from typing import List
 
 
+class BinaryTemplate:
+    """
+    1. rightmost_red — 适用于 True ... True | False ... False  单调序列，返回红区最后一个 True 的下标
+    2. leftmost_blue — 适用于 False ... False | True ... True 单调序列， 返回蓝区第一个 True的下标
+    任何满足下标方向只翻转一次的布尔函数，都可直接套用
+    """
+    @staticmethod
+    def rightmost_red(left: int, right: int, is_red: Callable[[int], bool]) -> int:
+        while left < right:
+            mid = (left + right + 1) // 2      # 右中位，防死循环
+            if is_red(mid):                    # case 1 · 仍在红区
+                left = mid                     # 红区右扩
+            else:                              # case 2 · 落入蓝区
+                right = mid - 1                # 蓝区左缩
+        return left
+
+    @staticmethod
+    def leftmost_blue(left: int, right: int, is_blue: Callable[[int], bool]) -> int:
+        while left < right:
+            mid = (left + right) // 2          # 左中位
+            if is_blue(mid):                   # case 1 · 落入蓝区
+                right = mid                    # 蓝区左扩
+            else:                              # case 2 · 仍在红区
+                left = mid + 1                 # 红区右移
+        return left
+
+
 class BinarySearchUtils:
     # ░░░░░░░░░░░ LeetCode 704 —— 标准二分查找 ░░░░░░░░░░░
     @staticmethod
