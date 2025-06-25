@@ -30,7 +30,7 @@ class GraphToolkit:
                     queue.append(cur)
         return not numCourses
 
-    # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 三色标记法 ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 ░░░░░░░░░░░░░░
     @staticmethod
     def canFinish_dfs(numCourses: int, prerequisites: List[List[int]]) -> bool:
         """
@@ -65,7 +65,7 @@ class GraphToolkit:
                 return False
         return True
 
-    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II（BFS版本）░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II ░░░░░░░░░░░░░░
     @staticmethod
     def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         """返回完成所有课程的顺序（拓扑排序序列）。如果无法完成所有课程（有环），返回空数组"""
