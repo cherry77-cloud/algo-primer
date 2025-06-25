@@ -208,6 +208,7 @@ class BinaryTreeUtils:
             res.append(level_vals)
         return res
 
+    # ░░░░░░░░░░░ LeetCode 104 —— 二叉树的最大深度 ░░░░░░░░░░░
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         """
         递归计算二叉树最大深度
@@ -221,3 +222,26 @@ class BinaryTreeUtils:
         l_depth = self.maxDepth(root.left)
         r_depth = self.maxDepth(root.right)
         return max(l_depth, r_depth) + 1
+
+    # ░░░░░░░░░░░ LeetCode 543 —— 二叉树的直径 ░░░░░░░░░░░
+    @staticmethod
+    def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
+        """
+        计算二叉树的直径（最长路径的边数）
+             1. 定义链长：从当前节点向下延伸的最大边数
+             2. 空节点链长为 -1，叶子节点链长为 0
+             3. 递归计算左右子树的最大链长
+             4. 经过当前节点的最长路径 = 左链长 + 右链长 + 2
+             5. 返回给父节点的链长 = max(左链长, 右链长) + 1
+        """
+        ans: int = 0
+        def dfs(node: Optional[TreeNode]) -> int:
+            if node is None:
+                return -1  # 空节点链长为 -1
+            l_len = dfs(node.left) + 1     # 左子树最大链长 + 1
+            r_len = dfs(node.right) + 1    # 右子树最大链长 + 1
+            nonlocal ans
+            ans = max(ans, l_len + r_len)  # 更新全局最大直径
+            return max(l_len, r_len)       # 返回当前子树最大链长
+        dfs(root)
+        return ans
