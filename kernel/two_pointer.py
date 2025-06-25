@@ -80,7 +80,7 @@ class SlidingWindowUtils:
         return "" if ans_left < 0 else s[ans_left: ans_right + 1]
 
 
-class PrefixSuffixTwoPointerUtils:
+class PrefixSuffixUtils:
     # ░░░░░░░░░░░ LeetCode 42 —— 接雨水 ░░░░░░░░░░░
     @staticmethod
     def trap(height: List[int]) -> int:
@@ -170,3 +170,33 @@ class PrefixSuffixTwoPointerUtils:
                 else:
                     right -= 1
         return ans
+
+
+class TwoPointerUtils:
+    # ░░░░░░░░░░░ LeetCode 5 —— 最长回文子串 ░░░░░░░░░░░
+    @staticmethod
+    def longestPalindrome(s: str) -> str:
+        """
+        中心扩展法: 以每个字符 / 字符间隙为中心向两侧扩张, 找到最长回文
+            1. 回文定义 → 左右字符对称相等
+            2. 枚举两类中心:
+               • 奇数中心: (i, i)
+               • 偶数中心: (i, i+1)
+            3. 扩张条件: 0 ≤ left < right < n 且 s[left] == s[right]
+            4. 记录并更新最长区间 [start, end]
+        """
+        def expandAroundCenter(left: int, right: int) -> Tuple[int, int]:
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left  -= 1
+                right += 1
+            return left + 1, right - 1      # 回到合法边界
+
+        start, end = 0, 0
+        for i in range(len(s)):
+            odd_left,  odd_right  = expandAroundCenter(i, i)
+            even_left, event_right = expandAroundCenter(i, i + 1)
+            if odd_right - odd_left > end - start:
+                start, end = odd_left, odd_right
+            if event_right - even_left > end - start:
+                start, end = even_left, event_right
+        return s[start : end + 1]
