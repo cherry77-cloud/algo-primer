@@ -67,7 +67,6 @@ class BinaryTreeUtils:
              4. 否则需要先处理右子树，转向右孩子
              5. prev 指针确保每个节点只被访问一次
         """
-        if not root:  return []
         stack: List[TreeNode] = []
         res:   List[int]      = []
         node, prev = root, None
