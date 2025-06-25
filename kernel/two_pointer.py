@@ -68,11 +68,9 @@ class SlidingWindowUtils:
             cnt[c] -= 1
             if cnt[c] == 0:
                 less -= 1
-            
             while left <= right and less == 0:
                 if right - left < ans_right - ans_left:
                     ans_right, ans_left = right, left
-                
                 if cnt[s[left]] == 0:
                     less += 1
                 cnt[s[left]] += 1
