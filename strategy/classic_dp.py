@@ -9,7 +9,14 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 2 —— 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_01(volumes: List[int], values: List[int], capacity: int) -> int:
-        """求最大价值；逆序容量的一维 0-1 DP"""
+        """
+        一维滚动数组优化的 0-1 背包
+             1. 初始化 dp[j] 表示容量为 j 时的最大价值
+             2. 遍历每个物品, 从大到小枚举容量（避免重复选择）
+             3. 对每个容量 j, 比较不选当前物品和选当前物品的价值
+             4. dp[j] = max(dp[j], dp[j-vol] + val) 状态转移
+             5. 返回 dp[capacity] 即为最大价值
+        """
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
             for j in range(capacity, vol - 1, -1):
@@ -19,7 +26,14 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 3 —— 完全背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_complete(volumes: List[int], values: List[int], capacity: int) -> int:
-        """求最大价值；顺序容量的一维完全背包 DP"""
+        """
+        一维正序遍历的完全背包
+             1. 初始化 dp[j] 表示容量为 j 时的最大价值
+             2. 遍历每个物品，从小到大枚举容量（允许重复选择）
+             3. 对每个容量 j，考虑再选一个当前物品的收益
+             4. dp[j] = max(dp[j], dp[j-vol] + val) 状态转移
+             5. 返回 dp[capacity] 即为最大价值
+        """
         dp = [0] * (capacity + 1)
         for vol, val in zip(volumes, values):
             for j in range(vol, capacity + 1):
@@ -30,7 +44,14 @@ class KnapsackToolkit:
     @staticmethod
     def knapsack_2d(volumes: List[int], weights: List[int],
                     values: List[int], max_volume: int, max_weight: int) -> int:
-        """求最大价值；体积重量双维度倒序 0-1 DP"""
+        """
+        体积重量双限制的二维 0-1 背包
+             1. 初始化 dp[v][w] 表示体积 v、重量 w 限制下的最大价值
+             2. 遍历每个物品，倒序枚举体积和重量（避免重复选择）
+             3. 对每个状态 (v,w)，比较不选和选当前物品的价值
+             4. dp[v][w] = max(dp[v][w], dp[v-vol][w-wgt] + val)
+             5. 返回 dp[max_volume][max_weight] 即为最大价值
+        """
         dp = [[0] * (max_weight + 1) for _ in range(max_volume + 1)]
         for vol, wgt, val in zip(volumes, weights, values):
             for v in range(max_volume, vol - 1, -1):
@@ -38,11 +59,18 @@ class KnapsackToolkit:
                     dp[v][w] = max(dp[v][w], dp[v - vol][w - wgt] + val)
         return dp[max_volume][max_weight]
 
-    # ░░░░░░░░░░░░░░ AcWing 4 —— 多重背包（二进制拆分） ░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ AcWing 4 —— 多重背包 ░░░░░░░░░░░░░░
     @staticmethod
     def knapsack_multiple_binary(volumes: List[int], values: List[int],
                                  counts: List[int], capacity: int) -> int:
-        """求最大价值；二进制拆分转 0-1 背包"""
+        """
+        二进制拆分优化的多重背包
+             1. 将每种物品按二进制拆分成若干个新物品
+             2. 拆分策略: 1, 2, 4, ..., 2^k, 剩余部分
+             3. 这样任意数量都可以由拆分后的物品组合得到
+             4. 将拆分后的物品作为 0-1 背包问题求解
+             5. 时间复杂度从 O(n*m*s) 优化到 O(n*m*log(s))
+        """
         items: List[Tuple[int, int]] = []
         for v, w, s in zip(volumes, values, counts):
             k = 1
@@ -61,7 +89,14 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 322 —— 零钱兑换 ░░░░░░░░░░░░░░
     @staticmethod
     def coinChange(coins: List[int], amount: int) -> int:
-        """求最少硬币数；完全背包 + 记忆化 DFS"""
+        """
+        完全背包思想的硬币找零（记忆化搜索）
+             1. dfs(i, c) 表示使用前 i 种硬币凑出金额 c 的最少硬币数
+             2. 对每种硬币，可以选择不用或继续使用
+             3. 不用：dfs(i-1, c)，转向下一种硬币
+             4. 继续用：dfs(i, c-coins[i]) + 1，硬币数加一
+             5. 使用记忆化避免重复计算，返回最小值
+        """
         @cache
         def dfs(i: int, c: int) -> int:
             if i < 0:
@@ -77,7 +112,14 @@ class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 279 —— 完全平方数 ░░░░░░░░░░░░░░
     @staticmethod
     def numSquares(n: int) -> int:
-        """求最少平方数数目；完全背包转移"""
+        """
+        完全背包求最少完全平方数
+             1. f[j] 表示组成 j 的最少完全平方数个数
+             2. 枚举所有可能的平方数 i^2 (i from 1 to √n)
+             3. 对每个数 j，尝试减去一个平方数 i^2
+             4. f[j] = min(f[j], f[j-i^2] + 1) 状态转移
+             5. 返回 f[n] 即为答案
+        """
         f = [0] + [inf] * n
         for i in range(1, isqrt(n) + 1):
             for j in range(i * i, n + 1):
@@ -89,7 +131,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 120 —— 三角形最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minimumTotal(triangle: List[List[int]]) -> int:
-        """自顶向下最小路径和；记忆化 DFS"""
+        """
+        三角形自顶向下最小路径和（记忆化搜索）
+             1. dfs(i, j) 表示从位置 (i,j) 到底部的最小路径和
+             2. 到达底部时，返回当前位置的值
+             3. 否则，可以走到 (i+1,j) 或 (i+1,j+1)
+             4. 选择两条路径中的最小值，加上当前值
+             5. 使用 @cache 装饰器自动记忆化
+        """
         n = len(triangle)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -101,7 +150,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 64 —— 最小路径和 ░░░░░░░░░░░░░░
     @staticmethod
     def minPathSum(grid: List[List[int]]) -> int:
-        """右下角最小路径和；记忆化 DFS"""
+        """
+        矩阵左上到右下最小路径和（记忆化搜索）
+             1. dfs(i, j) 表示从 (0,0) 到 (i,j) 的最小路径和
+             2. 边界处理：越界返回正无穷，起点返回格子值
+             3. 每个位置可以从上方或左方到达
+             4. 选择两个方向的最小值，加上当前格子值
+             5. 最终答案为 dfs(m-1, n-1)
+        """
         m, n = len(grid), len(grid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -115,7 +171,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 931 —— 下降路径最小和 ░░░░░░░░░░░░░░
     @staticmethod
     def minFallingPathSum(matrix: List[List[int]]) -> int:
-        """任意起点下降路径最小和；三向转移 + 记忆化"""
+        """
+        矩阵下降路径最小和（三方向记忆化搜索）
+             1. dfs(r, c) 表示从第一行到 (r,c) 的最小路径和
+             2. 边界处理：列越界返回正无穷，第一行返回格子值
+             3. 每个位置可从上一行的三个位置到达：左上、正上、右上
+             4. 选择三个方向的最小值，加上当前格子值
+             5. 枚举最后一行所有位置，取最小值
+        """
         n = len(matrix)
         @cache
         def dfs(r: int, c: int) -> int:
@@ -129,7 +192,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 62 —— 不同路径 ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePaths(m: int, n: int) -> int:
-        """从左上到右下路径计数；组合数或 DFS"""
+        """
+        矩阵路径计数（记忆化搜索）
+             1. dfs(i, j) 表示从 (0,0) 到 (i,j) 的路径数量
+             2. 边界处理：越界返回 0，起点返回 1
+             3. 每个位置可以从上方或左方到达
+             4. 路径数等于两个方向路径数之和
+             5. 使用记忆化避免重复计算
+        """
         @cache
         def dfs(i: int, j: int) -> int:
             if i < 0 or j < 0:
@@ -142,7 +212,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 63 —— 不同路径 II ░░░░░░░░░░░░░░
     @staticmethod
     def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
-        """含障碍路径计数；记忆化 DFS"""
+        """
+        带障碍物的矩阵路径计数（记忆化搜索）
+             1. dfs(i, j) 表示从 (0,0) 到 (i,j) 的路径数量
+             2. 边界处理：越界或遇到障碍物返回 0
+             3. 起点处理：如果是起点且无障碍返回 1
+             4. 每个位置可以从上方或左方到达（如果无障碍）
+             5. 路径数等于两个方向路径数之和
+        """
         m, n = len(obstacleGrid), len(obstacleGrid[0])
         @cache
         def dfs(i: int, j: int) -> int:
@@ -156,7 +233,14 @@ class GridToolkit:
     # ░░░░░░░░░░░░░░ LeetCode 329 —— 矩阵中的最长递增路径 ░░░░░░░░░░░░░░
     @staticmethod
     def longestIncreasingPath(matrix: List[List[int]]) -> int:
-        """矩阵最长递增路径；四方向 DFS + 记忆化"""
+        """
+        矩阵最长递增路径（四方向 DFS + 记忆化）
+             1. dfs(i, j) 表示从 (i,j) 开始的最长递增路径长度
+             2. 尝试向四个方向扩展：上下左右
+             3. 只能走到值更小的格子（严格递减）
+             4. 取所有可行方向的最大值，加上当前格子（长度+1）
+             5. 枚举所有起点，返回全局最大值
+        """
         DIRS = [(-1, 0), (0, -1), (0, 1), (1, 0)]
         if not matrix or not matrix[0]:
             return 0
@@ -176,7 +260,14 @@ class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 300 —— 最长递增子序列 ░░░░░░░░░░░
     @staticmethod
     def lengthOfLIS(nums: List[int]) -> int:
-        """LIS 长度；贪心 + 二分 tails"""
+        """
+        贪心 + 二分查找求 LIS 长度
+             1. tails[i] 表示长度为 i+1 的递增子序列的最小末尾值
+             2. 遍历每个数字，二分查找其在 tails 中的位置
+             3. 如果大于所有元素，追加到末尾（子序列变长）
+             4. 否则更新对应位置（保持该长度的最小末尾）
+             5. tails 长度即为 LIS 长度
+        """
         tails: List[int] = []
         for x in nums:
             idx = bisect_left(tails, x)
@@ -189,7 +280,14 @@ class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 1143 —— 最长公共子序列 ░░░░░░░░░░░
     @staticmethod
     def longestCommonSubsequence(text1: str, text2: str) -> int:
-        """LCS 长度；二维状态 DFS + 记忆化"""
+        """
+        最长公共子序列 LCS（记忆化搜索）
+             1. dfs(i, j) 表示 text1[0:i+1] 和 text2[0:j+1] 的 LCS 长度
+             2. 边界: 任一索引小于 0 时返回 0
+             3. 如果当前字符相等，LCS 长度 = dfs(i-1, j-1) + 1
+             4. 如果不等，取两种情况最大值：跳过 text1[i] 或跳过 text2[j]
+             5. 使用记忆化避免重复计算
+        """
         m, n = len(text1), len(text2)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -203,7 +301,16 @@ class SubsequenceDPToolkit:
     # ░░░░░░░░░░░ LeetCode 72 —— 编辑距离 ░░░░░░░░░░░
     @staticmethod
     def minDistance(word1: str, word2: str) -> int:
-        """单词转换最少操作数；三向 DFS 记忆化"""
+        """
+        编辑距离（三种操作的记忆化搜索）
+             1. dfs(i, j) 表示 word1[0:i+1] 转换为 word2[0:j+1] 的最少操作数
+             2. 边界: i < 0 返回 j + 1（插入），j < 0 返回 i+1（删除）
+             3. 字符相等时无需操作: dfs(i-1, j-1)
+             4. 字符不等时取三种操作最小值：
+                - 删除 word1[i]: dfs(i-1, j) + 1
+                - 插入字符: dfs(i, j-1) + 1
+                - 替换 word1[i]: dfs(i-1, j-1) + 1
+        """
         m, n = len(word1), len(word2)
         @cache
         def dfs(i: int, j: int) -> int:
@@ -221,7 +328,14 @@ class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
     @staticmethod
     def maxSubArray(nums: List[int]) -> int:
-        """连续子数组最大和；Kadane 一维 DP"""
+        """
+        Kadane 算法求最大子数组和
+             1. f[i] 表示以 nums[i] 结尾的最大子数组和
+             2. 对每个位置，可以接续前面的子数组或重新开始
+             3. f[i] = max(f[i-1], 0) + nums[i]
+             4. 如果前面的和为负，不如重新开始
+             5. 答案是所有 f[i] 的最大值
+        """
         f = [0] * len(nums)
         f[0] = nums[0]
         for i in range(1, len(nums)):
