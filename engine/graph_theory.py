@@ -7,7 +7,12 @@ class GraphToolkit:
     @staticmethod
     def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
         """
-        判断是否可以完成所有课程（检测有向图是否有环）。使用拓扑排序：通过 BFS 不断移除入度为 0 的节点
+        判断是否可以完成所有课程（检测有向图是否有环）
+            1. 构建邻接表和入度数组
+            2. 将所有入度为 0 的节点加入队列
+            3. 每次取出一个节点，将其所有后继节点的入度减 1
+            4. 如果后继节点入度变为 0, 加入队列
+            5. 最后检查是否所有节点都被处理（无环）
         """
         indegrees = [0 for _ in range(numCourses)]
         adjacency = defaultdict(list)
@@ -18,17 +23,25 @@ class GraphToolkit:
         
         while queue:
             pre = queue.popleft()
-            numCourses -= 1  # 已处理一个课程
+            numCourses -= 1
             for cur in adjacency[pre]:
                 indegrees[cur] -= 1
-                if not indegrees[cur]:  # 入度为 0，可以学习该课程
+                if not indegrees[cur]:
                     queue.append(cur)
         return not numCourses
 
     # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 三色标记法 ░░░░░░░░░░░░░░
     @staticmethod
     def canFinish_dfs(numCourses: int, prerequisites: List[List[int]]) -> bool:
-        """使用三色标记法检测有向图是否有环"""
+        """
+        使用三色标记法检测有向图是否有环
+            1. 白色: 未访问的节点
+            2. 灰色: 正在访问的节点（在当前 DFS 路径上）
+            3. 黑色: 已访问完成的节点（包括其所有子节点）
+        核心思想
+            - 如果在 DFS 过程中遇到灰色节点，说明形成了环
+            - 因为灰色表示正在当前路径上，再次访问说明回到了起点
+        """
         g = defaultdict(list)
         for cur, pre in prerequisites:
             g[pre].append(cur)
@@ -74,11 +87,10 @@ class GraphToolkit:
         
         return result if len(result) == numCourses else []
     
-    
-    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II（DFS版本）░░░░░░░░░░░░░░
+    # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II ░░░░░░░░░░░░░░
     @staticmethod
     def findOrder_dfs(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        """DFS版本：使用三色标记法返回拓扑序"""
+        """使用三色标记法返回逆拓扑序"""
         g = defaultdict(list)
         for cur, pre in prerequisites:
             g[pre].append(cur)
@@ -97,9 +109,8 @@ class GraphToolkit:
             colors[x] = BLACK
             result.append(x)  # 在标记为黑色时加入结果
             return False
-        
         for i, c in enumerate(colors):
             if colors[i] == WHITE and dfs(i):
                 return []  # 有环，返回空列表
         
-        return result[::-1]  # 反转得到正确的拓扑序
+        return result[::-1]  # DFS 是深度优先，先访问的是依赖链的末端
