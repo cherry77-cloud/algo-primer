@@ -85,7 +85,7 @@ class BinaryTreeUtils:
                 node = node.right            # 转向右子树
         return res
 
-    # ░░░░░░░░░░░ LeetCode 144 —— 二叉树前序遍历 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 144 —— Morris 前序遍历 ░░░░░░░░░░░
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         Morris前序遍历，根-左-右顺序
@@ -114,7 +114,7 @@ class BinaryTreeUtils:
                     cur = cur.right
         return result
 
-    # ░░░░░░░░░░░ LeetCode 94 —— 二叉树中序遍历 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 94 —— Morris 中序遍历 ░░░░░░░░░░░
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         Morris中序遍历，左-根-右顺序，
@@ -141,6 +141,44 @@ class BinaryTreeUtils:
                     predecessor.right = None
                     result.append(cur.val)    # inorder 在回溯时访问根
                     cur = cur.right
+        return result
+
+    # ░░░░░░░░░░░ LeetCode 145 —— Morris 后序遍历 ░░░░░░░░░░░
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    """
+    Morris后序遍历，左-右-根顺序
+         1. 对每个节点找其左子树的最右节点（前驱）
+         2. 第二次到达前驱时：逆序添加从当前节点左孩子到前驱的路径
+         3. 使用切片反转避免手动交换
+         4. 最后处理从根到最右节点的路径
+         5. 无需虚拟节点，直接处理原树
+    """
+        def add_path(node: TreeNode) -> None:
+            """添加右边界路径（逆序）"""
+            path = []
+            while node:
+                path.append(node.val)
+                node = node.right
+            result.extend(reversed(path))
+    
+        result: List[int] = []
+        cur = root
+        while cur:
+            predecessor = cur.left
+            if predecessor:                     # 有左子树
+                while predecessor.right and predecessor.right is not cur:
+                    predecessor = predecessor.right
+                if not predecessor.right:       # 第一次到达
+                    predecessor.right = cur
+                    cur = cur.left
+                else:                           # 第二次到达
+                    predecessor.right = None
+                    add_path(cur.left)
+                    cur = cur.right
+            else:                               # 无左子树
+                cur = cur.right
+    
+        add_path(root)                          # 处理整棵树的右边界
         return result
 
     # ░░░░░░░░░░░ LeetCode 102 —— 二叉树层序遍历 ░░░░░░░░░░░
