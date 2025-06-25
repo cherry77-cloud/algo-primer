@@ -91,7 +91,14 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
     @staticmethod
     def dailyTemperatures(temperatures: List[int]) -> List[int]:
-        """返回距离下一次更高温度的天数，若不存在则为 0"""
+        """
+        单调递减栈求等待天数
+             1. 维护单调递减栈，存储还未找到更高温度的日期
+             2. 遍历每天温度，如果比栈顶温度高，栈顶找到答案
+             3. 答案是当前日期减去栈顶日期（等待的天数）
+             4. 持续弹栈并记录答案，直到栈顶温度 ≥ 当前温度
+             5. 当前日期入栈，等待找到更高温度
+        """
         n = len(temperatures)
         ans: List[int] = [0] * n
         stack: List[int] = []  # 下标栈，自底→顶温度递减
@@ -105,7 +112,14 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 84 —— 柱状图中最大的矩形 ░░░░░░░░░░░
     @staticmethod
     def largestRectangleArea(heights: List[int]) -> int:
-        """返回柱状图中最大矩形的面积"""
+        """
+        单调递增栈求最大矩形面积
+             1. 对每个柱子，找左右两侧第一个更矮的柱子作为边界
+             2. 维护单调递增栈，遍历时同时确定左右边界
+             3. 当前柱子 ≤ 栈顶时，栈顶柱子的右边界确定（就是当前位置）
+             4. 弹栈后，新栈顶是当前柱子的左边界
+             5. 遍历结束后，计算每个柱子为高的最大矩形面积
+        """
         n = len(heights)
         left_bound: List[int] = [-1] * n    # 每个柱子左侧第一个更矮柱子的下标
         right_bound: List[int] = [n]  * n   # 每个柱子右侧第一个更矮柱子的下标
@@ -130,7 +144,14 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 85 —— 最大矩形 ░░░░░░░░░░░
     @staticmethod
     def maximalRectangle(matrix: List[List[str]]) -> int:
-        """返回只包含 '1' 的最大矩形面积"""
+        """
+        单调栈 + 柱状图求二维最大矩形
+             1. 逐行将二维矩阵转化为柱状图问题
+             2. heights[j] 表示第 j 列向上连续 '1' 的个数
+             3. 对每一行，更新 heights 数组（遇 '0' 归零，遇 '1' 累加）
+             4. 将每行的 heights 作为柱状图，求最大矩形面积
+             5. 使用哨兵技巧简化边界处理
+        """
         def largestRectangleArea(heights: List[int]) -> int:
             heights.append(-1)  # 哨兵: 强制清空栈中所有元素
             st = [-1]           # 哨兵: 作为左边界的起点（当栈中只有一个元素时的左边界）
@@ -155,7 +176,14 @@ class StackAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 221 —— 最大正方形 ░░░░░░░░░░░
     @staticmethod
     def maximalSquare(matrix: List[List[str]]) -> int:
-        """返回只包含 '1' 的最大正方形面积"""
+        """
+        单调栈求二维最大正方形
+             1. 类似最大矩形，逐行转化为柱状图问题
+             2. 对每个可能的矩形，正方形边长 = min(高度, 宽度)
+             3. 使用单调栈找到每个柱子能扩展的最大宽度
+             4. 计算以每个柱子为高的最大正方形边长
+             5. 返回最大边长的平方作为面积
+        """
         def largestSquareEdge(heights: List[int]) -> int:
             heights.append(0)  # 哨兵：强制清空栈
             stack: List[int] = [-1]  # 哨兵：左边界起点
