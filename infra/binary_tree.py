@@ -60,29 +60,6 @@ class BinaryTreeUtils:
     @staticmethod
     def postorder(root: Optional[TreeNode]) -> List[int]:
         """
-        双栈后序遍历，左-右-根顺序
-             1. 第一个栈用于遍历，第二个栈用于反序
-             2. 类似前序遍历，但先压左孩子，再压右孩子
-             3. 这样得到根-右-左的访问顺序
-             4. 将访问的节点压入第二个栈
-             5. 最后反序输出第二个栈，得到左-右-根
-        """
-        if not root:  return []
-        stack1: List[TreeNode] = [root]
-        stack2: List[TreeNode] = []
-        while stack1:
-            node = stack1.pop()
-            stack2.append(node)
-            if node.left:
-                stack1.append(node.left)
-            if node.right:
-                stack1.append(node.right)
-        return [node.val for node in reversed(stack2)
-
-    # ░░░░░░░░░░░ LeetCode 145 —— 二叉树后序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def postorder(root: Optional[TreeNode]) -> List[int]:
-        """
         单栈后序遍历，左-右-根顺序
              1. 使用 prev 指针记录上一个访问的节点
              2. 一路向左压栈，到达最左节点
@@ -107,6 +84,48 @@ class BinaryTreeUtils:
             else:
                 node = node.right            # 转向右子树
         return res
+
+    # ░░░░░░░░░░░ LeetCode 144 —— 二叉树前序遍历 ░░░░░░░░░░░
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        result: List[int] = []
+        cur = root
+        while cur:
+            if cur.left is None:              # 无左子树，直接访问，然后向右走
+                result.append(cur.val)
+                cur = cur.right
+            else:                             # 找左子树的最右节点（前驱）
+                predecessor = cur.left
+                while predecessor.right and predecessor.right is not cur:
+                    predecessor = predecessor.right
+                if predecessor.right is None: # 第一次到达前驱：建立线索并访问当前节点
+                    result.append(cur.val)    # preorder 先访问根
+                    predecessor.right = cur   # 线索化
+                    cur = cur.left
+                else:                         # 第二次到达前驱：恢复结构，转向右子树
+                    predecessor.right = None
+                    cur = cur.right
+        return result
+
+    # ░░░░░░░░░░░ LeetCode 94 —— 二叉树中序遍历 ░░░░░░░░░░░
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        result: List[int] = []
+        cur = root
+        while cur:
+            if cur.left is None:              # 无左子树，直接访问，然后向右走
+                result.append(cur.val)
+                cur = cur.right
+            else:                             # 找左子树的最右节点（前驱）
+                predecessor = cur.left
+                while predecessor.right and predecessor.right is not cur:
+                    predecessor = predecessor.right
+                if predecessor.right is None: # 第一次到达前驱：建立线索，转向左子树
+                    predecessor.right = cur
+                    cur = cur.left
+                else:                         # 第二次到达前驱：恢复结构并访问当前节点
+                    predecessor.right = None
+                    result.append(cur.val)    # inorder 在回溯时访问根
+                    cur = cur.right
+        return result
 
     # ░░░░░░░░░░░ LeetCode 102 —— 二叉树层序遍历 ░░░░░░░░░░░
     @staticmethod
