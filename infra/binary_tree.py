@@ -21,16 +21,17 @@ class BinaryTreeUtils:
              4. 这样保证左孩子先被处理，符合根-左-右顺序
              5. 重复直到栈为空，遍历完成
         """
-        if not root:  return []
-        stack: List[TreeNode] = [root]
-        res:   List[int]      = []
-        while stack:
-            node = stack.pop()
-            res.append(node.val)
-            if node.right:
-                stack.append(node.right)
-            if node.left:
-                stack.append(node.left)
+        stack: List[TreeNode] = []   # 仅存放右子节点
+        res: List[int] = []
+        node = root
+        while stack or node:
+            while node:                    # 沿左链一路访问
+                res.append(node.val)       # 访问根
+                if node.right:             # 右子树留到之后处理
+                    stack.append(node.right)
+                node = node.left           # 转向左子树
+            if stack:                      # 左侧到底，弹出下一个右子树根
+                node = stack.pop()
         return res
 
     # ░░░░░░░░░░░ LeetCode 94 —— 二叉树中序遍历 ░░░░░░░░░░░
@@ -45,7 +46,7 @@ class BinaryTreeUtils:
              5. 重复过程，实现左-根-右的访问顺序
         """
         stack: List[TreeNode] = []
-        res:   List[int]      = []
+        res: List[int] = []
         node = root
         while stack or node:
             while node:                    # 不断向左下探
@@ -68,7 +69,7 @@ class BinaryTreeUtils:
              5. prev 指针确保每个节点只被访问一次
         """
         stack: List[TreeNode] = []
-        res:   List[int]      = []
+        res: List[int] = []
         node, prev = root, None
         while stack or node:
             while node:                      # 一路压左孩子
@@ -138,7 +139,7 @@ class BinaryTreeUtils:
              5. 每层的值作为一个列表，最终返回二维列表
         """
         if not root:  return []
-        q: deque[TreeNode]   = deque([root])
+        q: deque[TreeNode] = deque([root])
         res: List[List[int]] = []
         while q:
             level_size = len(q)
