@@ -128,8 +128,13 @@ class KnapsackToolkit:
 
     # ░░░░░░░░░░░░░░ AcWing 8 —— 二维 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
-    def knapsack_2d(volumes: List[int], weights: List[int],
-                    values: List[int], max_volume: int, max_weight: int) -> int:
+    def knapsack_2d(
+        volumes: List[int],
+        weights: List[int],
+        values: List[int],
+        max_volume: int,
+        max_weight: int
+    ) -> int:
         """
         体积重量双限制的二维 0-1 背包
              1. 初始化 dp[v][w] 表示体积 v、重量 w 限制下的最大价值
@@ -147,8 +152,12 @@ class KnapsackToolkit:
 
     # ░░░░░░░░░░░░░░ AcWing 4 —— 多重背包 ░░░░░░░░░░░░░░
     @staticmethod
-    def knapsack_multiple_binary(volumes: List[int], values: List[int],
-                                 counts: List[int], capacity: int) -> int:
+    def knapsack_multiple(
+        volumes: List[int],
+        values: List[int],
+        counts: List[int],
+        capacity: int
+    ) -> int:
         """
         二进制拆分优化的多重背包
              1. 将每种物品按二进制拆分成若干个新物品
