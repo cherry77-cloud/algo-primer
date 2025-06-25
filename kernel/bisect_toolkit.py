@@ -3,28 +3,48 @@ from typing import List
 
 class BinaryTemplate:
     """
-    1. rightmost_red — 适用于 True ... True | False ... False  单调序列，返回红区最后一个 True 的下标
-    2. leftmost_blue — 适用于 False ... False | True ... True 单调序列， 返回蓝区第一个 True的下标
-    任何满足下标方向只翻转一次的布尔函数，都可直接套用
+    1. rightmost_red — 适用于 True ... True | False ... False 模式
+       - 序列前半部分都是 True（红区），后半部分都是 False（蓝区）
+       - 返回最后一个 True 的位置
+    
+    2. leftmost_blue — 适用于 False ... False | True ... True 模式
+       - 序列前半部分都是 False（红区），后半部分都是 True（蓝区）
+       - 返回第一个 True 的位置
+    核心思想：任何满足"单调性"的布尔函数都可以使用
     """
     @staticmethod
     def rightmost_red(left: int, right: int, is_red: Callable[[int], bool]) -> int:
+        """
+        示例序列:  [T, T, T, T, F, F, F]
+                            ↑
+                        返回这个位置
+        使用右中位数: (left + right + 1) // 2, 避免死循环
+        case 1: mid 位置仍在红区, 更新 left = mid，保留 mid 作为候选答案
+        case 2: mid 位置已经在蓝区, 更新 right = mid - 1，排除 mid
+        """
         while left < right:
-            mid = (left + right + 1) // 2      # 右中位，防死循环
-            if is_red(mid):                    # case 1 · 仍在红区
-                left = mid                     # 红区右扩
-            else:                              # case 2 · 落入蓝区
-                right = mid - 1                # 蓝区左缩
+            mid = (left + right + 1) // 2
+            if is_red(mid):
+                left = mid
+            else:
+                right = mid - 1
         return left
-
+    
     @staticmethod
     def leftmost_blue(left: int, right: int, is_blue: Callable[[int], bool]) -> int:
+        """
+        示例序列:  [F, F, F, T, T, T, T]
+                            ↑
+                        返回这个位置
+        # case 1: mid 位置已经在蓝区, 说明答案在 mid 或 mid 左边, 更新 right = mid，保留 mid 作为候选答案
+        # case 2: mid 位置仍在红区, 说明答案一定在 mid 右边, 更新 left = mid + 1，排除 mid
+        """
         while left < right:
-            mid = (left + right) // 2          # 左中位
-            if is_blue(mid):                   # case 1 · 落入蓝区
-                right = mid                    # 蓝区左扩
-            else:                              # case 2 · 仍在红区
-                left = mid + 1                 # 红区右移
+            mid = (left + right) // 2
+            if is_blue(mid):
+                right = mid
+            else:
+                left = mid + 1
         return left
 
 
