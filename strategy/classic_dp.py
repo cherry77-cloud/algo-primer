@@ -409,6 +409,39 @@ class SubsequenceDPToolkit:
             return min(dfs(i - 1, j), dfs(i, j - 1), dfs(i - 1, j - 1)) + 1
         return dfs(m - 1, n - 1)
 
+    # ░░░░░░░░░░░ LeetCode 10 —— 正则表达式匹配 ░░░░░░░░░░░
+    @staticmethod
+    def isMatch(s: str, p: str) -> bool:
+        """
+        正则表达式匹配（支持 . 和 * 的记忆化搜索）
+             1. dfs(i, j) 判断 s[0:i+1] 与 p[0:j+1] 是否匹配
+             2. 边界: 模式串耗尽时，字符串也必须耗尽
+             3. 字符串耗尽时，模式串只能是 x*y*z* 形式
+             4. 遇到 '*' 时有两种选择：
+                - 跳过 "x*" 两个字符（匹配 0 次）
+                - 若前一字符匹配，消费 s[i]，继续停在 '*'（匹配多次）
+             5. 普通字符或 '.' 必须精确匹配才能继续
+        """
+        m, n = len(s), len(p)
+        @cache
+        def dfs(i: int, j: int) -> bool:
+            if j < 0:                      # 模式串已耗尽
+                return i < 0
+            if i < 0:                      # s 耗尽，只能匹配形如 a*b*c*...
+                return p[j] == '*' and dfs(i, j - 2)
+            if p[j] == '*':
+                # 1) 跳过 "x*" 两字符
+                if dfs(i, j - 2):
+                    return True
+                # 2) 若当前字符可匹配，则消费 s[i]，仍停在 '*' 处继续匹配
+                if p[j - 1] in {s[i], '.'}:
+                    return dfs(i - 1, j)
+                return False
+            else:
+                if p[j] in {s[i], '.'}:
+                    return dfs(i - 1, j - 1)
+                return False
+        return dfs(m - 1, n - 1)
 
 class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
