@@ -5,6 +5,69 @@ from typing import List, Tuple
 from bisect import bisect_left
 
 
+class MemoizationSearch:
+    """
+    """
+
+    # ░░░░░░░░░░░░░░ 0-1 背包 ░░░░░░░░░░░░░░
+    @staticmethod
+    def knapsack_01(weights: List[int], values: List[int], cap: int) -> int:
+        n = len(weights)
+        @cache
+        def dfs(i: int, c: int) -> int:
+            if i < 0 or c <= 0:
+                return 0
+            not_take = dfs(i - 1, c)
+            if c >= weights[i]:
+                take = values[i] + dfs(i - 1, c - weights[i])
+                return max(take, not_take)
+            return not_take
+
+        return dfs(n - 1, cap)
+
+    # ░░░░░░░░░░░░░░ 完全 / 无界背包 ░░░░░░░░░░░░░░
+    @staticmethod
+    def knapsack_unbounded(weights: List[int], values: List[int], cap: int) -> int:
+        n = len(weights)
+        @cache
+        def dfs(i: int, c: int) -> int:
+            if i < 0 or c <= 0:
+                return 0
+            not_take = dfs(i - 1, c)
+            if c >= weights[i]:
+                # 取当前物品后 i 不变，可再次选择
+                take = values[i] + dfs(i, c - weights[i])
+                return max(take, not_take)
+            return not_take
+
+        return dfs(n - 1, cap)
+
+    # ░░░░░░░░░░░░░░ 二维约束背包 ░░░░░░░░░░░░░░
+    @staticmethod
+    def knapsack_2d(
+        weights: List[int],
+        volumes: List[int],
+        values: List[int],
+        max_w: int,
+        max_v: int,
+    ) -> int:
+        n = len(weights)
+        @cache
+        def dfs(i: int, w_rem: int, v_rem: int) -> int:
+            if i < 0 or w_rem <= 0 or v_rem <= 0:
+                return 0
+            not_take = dfs(i - 1, w_rem, v_rem)
+            if w_rem >= weights[i] and v_rem >= volumes[i]:
+                take = values[i] + dfs(
+                    i - 1,
+                    w_rem - weights[i],
+                    v_rem - volumes[i],
+                )
+                return max(take, not_take)
+            return not_take
+        return dfs(n - 1, max_w, max_v)
+
+
 class KnapsackToolkit:
     # ░░░░░░░░░░░░░░ AcWing 2 —— 0-1 背包 ░░░░░░░░░░░░░░
     @staticmethod
