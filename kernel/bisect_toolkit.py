@@ -29,7 +29,7 @@ class BinaryTemplate:
 
 
 class BinarySearchUtils:
-    # ░░░░░░░░░░░ LeetCode 704 —— 标准二分查找 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 704 —— 二分查找 ░░░░░░░░░░░
     @staticmethod
     def search(nums: List[int], target: int) -> int:
         """
@@ -45,7 +45,7 @@ class BinarySearchUtils:
                 right = mid - 1
         return left if nums[left] == target else -1
 
-    # ░░░░░░░░░░░ LeetCode 33/81 —— 旋转升序数组查找 ░░░░░░░░░░░
+    # ░░░░░░░░░░░ LeetCode 33 —— 搜索旋转排序数组 ░░░░░░░░░░░
     @staticmethod
     def search_rotated(nums: List[int], target: int) -> int:
         """
