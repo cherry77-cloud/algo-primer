@@ -1,5 +1,5 @@
 from collections import deque
-from typing import Deque, List
+from typing import Deque, List, Tuple
 
 
 class QueueAlgoUtils:
@@ -34,8 +34,12 @@ class QueueAlgoUtils:
 
     # ░░░░░░░░░░░░░░ AcWing 4 进阶 —— 多重背包 ░░░░░░░░░░░░░░
     @staticmethod
-    def knapsack_multiple_queue(volumes: List[int], values: List[int],
-                                counts: List[int], capacity: int) -> int:
+    def knapsack_multiple_queue(
+        volumes: List[int],
+        values: List[int],
+        counts: List[int],
+        capacity: int
+    ) -> int:
         """
         单调队列优化多重背包: 求最大价值
             1. 多重背包的朴素 DP: O(n*capacity*count)
