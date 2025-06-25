@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from collections import Counter, defaultdict
 
 
@@ -172,7 +172,7 @@ class PrefixSuffixUtils:
         return ans
 
 
-class TwoPointerUtils:
+class PointerParadigms:
     # ░░░░░░░░░░░ LeetCode 5 —— 最长回文子串 ░░░░░░░░░░░
     @staticmethod
     def longestPalindrome(s: str) -> str:
