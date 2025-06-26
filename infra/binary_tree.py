@@ -222,6 +222,24 @@ class BinaryTreeUtils:
             return p is q
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
+    # ░░░░░░░░░░░ LeetCode 101 —— 对称二叉树 ░░░░░░░░░░░
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        """
+        判断二叉树是否对称（镜像）
+            1. 定义递归函数 dfs(p, q) 检查两节点是否镜像
+            2. 终止条件：若二者有一个为空，则判断二者是否都为空
+            3. 若都非空，比较当前节点值是否相等
+            4. 递归比较外侧子树 (p.left, q.right)
+            5. 递归比较内侧子树 (p.right, q.left)
+            6. 根节点对称 = 值相等 且 外侧对称 且 内侧对称
+        """
+        def dfs(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+            if p is None or q is None:
+                return p is q
+            return p.val == q.val and dfs(p.left, q.right) and dfs(p.right, q.left)
+
+    return dfs(root.left, root.right)
+
     # ░░░░░░░░░░░ LeetCode 104 —— 二叉树的最大深度 ░░░░░░░░░░░
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         """
