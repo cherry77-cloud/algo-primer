@@ -45,7 +45,7 @@ class BacktrackingToolkit:
             # E. child call has returned; restore state
             path.pop()                       # Action 3: undo the choice
     
-        # F. all options explored for this frame; return to the caller
+        # F. all options explored for this frame; 收集所有解 | 统计方案数 | 布尔短路
     """
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
