@@ -22,6 +22,30 @@ class BacktrackingToolkit:
     ▎6. 兄弟节点 (Siblings): 同一父节点产生的多个子节点，时间上顺序执行，空间上复用相同栈位置
       • 执行时机: 父函数for循环中，兄弟A返回后栈帧弹出，才创建兄弟B的栈帧
       • 共享风险: 兄弟栈帧不同时存在，但共享父栈帧的可变对象(如path)，需撤销修改防止污染
+
+    ▎7. 递归结构形态 (Recursion Structures): 递归执行过程形成的逻辑拓扑，由子问题分解模式和重叠程度决定
+      • 递归链 (Recursion Chain): 每层仅派生 1 个子调用，执行路径呈线性链表；深度 = 调用次数，时间复杂度 O(n) ┆ 阶乘
+      • 递归树 (Recursion Tree): 每层可派生 ≥2 个子调用，执行结构呈树形；节点数 ≈ 分支ᵈ，常带指数复杂度 ┆ 朴素斐波那契、全排列
+      • 递归 DAG (Memoized Recursion): 备忘录共享重复子问题，将树压缩为有向无环图；节点数 ≤ 状态数，复杂度降为多项式 ┆ 记忆化斐波那契
+
+    function backtrack(path, choices):
+        # A. stack frame created; `path` is inherited from the parent call
+        if goalReached(path):
+            results.append(copy(path))       # copy is essential!
+            return
+    
+        # B. iterate over every available option (horizontal expansion)
+        for each choice in choices:
+            # C. about to mutate shared state
+            path.append(choice)              # Action 1: make a choice
+    
+            # D. state updated; descend to next level
+            backtrack(path, nextChoices(choice, path))  # Action 2: recurse
+    
+            # E. child call has returned; restore state
+            path.pop()                       # Action 3: undo the choice
+    
+        # F. all options explored for this frame; return to the caller
     """
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
