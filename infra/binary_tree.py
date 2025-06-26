@@ -208,6 +208,20 @@ class BinaryTreeUtils:
             res.append(level_vals)
         return res
 
+    # ░░░░░░░░░░░ LeetCode 100 —— 相同的树 ░░░░░░░░░░░
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        """
+        递归判断两棵二叉树是否相同
+            1. 基本情况：如果有一个为空，判断两者是否都为空
+            2. 如果都不为空，比较当前节点值是否相等
+            3. 递归比较左子树是否相同
+            4. 递归比较右子树是否相同
+            5. 当前节点相同 = 值相等 且 左子树相同 且 右子树相同
+        """
+        if p is None or q is None:
+            return p is q
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
     # ░░░░░░░░░░░ LeetCode 104 —— 二叉树的最大深度 ░░░░░░░░░░░
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         """
