@@ -28,24 +28,20 @@ class BacktrackingToolkit:
       • 递归树 (Recursion Tree): 每层可派生 ≥2 个子调用，执行结构呈树形；节点数 ≈ 分支ᵈ，常带指数复杂度 ┆ 朴素斐波那契、全排列
       • 递归 DAG (Memoized Recursion): 备忘录共享重复子问题，将树压缩为有向无环图；节点数 ≤ 状态数，复杂度降为多项式 ┆ 记忆化斐波那契
 
-    function backtrack(path, choices):
-        # A. stack frame created; `path` is inherited from the parent call
-        if goalReached(path):
-            results.append(copy(path))       # copy is essential!
+    def backtrack(path, choices):
+        # A. 栈帧创建；path 继承自父调用
+        if 满足目标条件(path):
+            results.append(copy(path))       # 必须复制！
             return
-    
-        # B. iterate over every available option (horizontal expansion)
-        for each choice in choices:
-            # C. about to mutate shared state
-            path.append(choice)              # Action 1: make a choice
-    
-            # D. state updated; descend to next level
-            backtrack(path, nextChoices(choice, path))  # Action 2: recurse
-    
-            # E. child call has returned; restore state
-            path.pop()                       # Action 3: undo the choice
-    
-        # F. all options explored for this frame; 收集所有解 | 统计方案数 | 布尔短路
+        # B. 遍历每个可用选项（横向扩展）
+        for choice in choices:
+            # C. 即将修改共享状态
+            path.append(choice)              # 动作1：做出选择
+            # D. 状态已更新；递归到下一层
+            backtrack(path, 获取下一步选择(choice, path))  # 动作2：递归
+            # E. 子调用已返回；恢复状态
+            path.pop()                       # 动作3：撤销选择
+        # F. 该层所有选项已探索完毕；收集所有解 | 统计方案数 | 布尔短路
     """
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
@@ -307,3 +303,33 @@ class BacktrackingToolkit:
             board[i][j] = word[k]  # 恢复现场
             return False  # 没搜到
         return any(dfs(i, j, 0) for i in range(m) for j in range(n))
+
+    # ░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░
+    @staticmethod
+    def partition(s: str) -> List[List[str]]:
+        """
+        将字符串分割成若干回文子串
+            1. 回溯框架：枚举每个分割位置
+            2. 选择空间：从当前位置到字符串末尾的所有子串
+            3. 剪枝条件：只有回文串才继续递归
+            4. 终止条件：指针到达字符串末尾
+            5. 回溯恢复：path.pop() 撤销选择
+        """
+        n = len(s)
+        ans = []
+        path = []
+    
+        def dfs(i: int) -> None:
+            if i == n:                    # 分割完毕
+                ans.append(path.copy())   # 必须复制！
+                return
+            
+            for j in range(i, n):         # 枚举分割位置
+                t = s[i:j+1]              # 候选子串
+                if t == t[::-1]:          # 是回文串
+                    path.append(t)        # 做出选择
+                    dfs(j + 1)            # 递归剩余部分
+                    path.pop()            # 撤销选择
+        
+        dfs(0)
+        return ans
