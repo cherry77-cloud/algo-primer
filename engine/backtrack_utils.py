@@ -63,6 +63,7 @@ class BacktrackingToolkit:
             if u == n:
                 subsets.append(path[:])
                 return
+                
             dfs(u + 1)
             path.append(nums[u])
             dfs(u + 1)
@@ -115,6 +116,7 @@ class BacktrackingToolkit:
             if u == n:
                 result.append(path[:])
                 return
+                
             for i in range(n):
                 if not visited[i]:
                     visited[i] = True
@@ -143,6 +145,7 @@ class BacktrackingToolkit:
             if u == n:
                 result.append(path[:])
                 return
+                
             for i in range(n):
                 if not (mask & (1 << i)):
                     path.append(nums[i])
@@ -167,8 +170,10 @@ class BacktrackingToolkit:
             if u == k:
                 result.append(path[:])
                 return
+                
             if k - u > n - start:
                 return
+                
             for i in range(start, n):
                 path.append(i + 1)
                 dfs(u + 1, i + 1)
@@ -191,14 +196,18 @@ class BacktrackingToolkit:
         def dfs(u: int, cnt: int, mask: int) -> None:
             if cnt + n - u < k:
                 return
+                
             if cnt == k:
                 path = []
                 for i in range(n):
                     if mask & (1 << i):
                         path.append(i + 1)
                 result.append(path)
-                return   
-            if u == n:  return
+                return
+                
+            if u == n:  
+                return
+                
             dfs(u + 1, cnt + 1, mask | (1 << u))
             dfs(u + 1, cnt, mask)
         
@@ -224,10 +233,12 @@ class BacktrackingToolkit:
             if i == n * 2:
                 ans.append(''.join(chosen))
                 return
+                
             if open_count < n:
                 chosen.append('(')
                 dfs(i + 1, open_count + 1)
                 chosen.pop()
+                
             if i - open_count < open_count:
                 chosen.append(')')
                 dfs(i + 1, open_count)
@@ -256,6 +267,7 @@ class BacktrackingToolkit:
             if i == len(digits):
                 ans.append(''.join(chosen))
                 return
+                
             idx = ord(digits[i]) - ord('0')
             for ch in MAPPING[idx]:  # 尝试该数字对应的所有字母
                 chosen.append(ch)
