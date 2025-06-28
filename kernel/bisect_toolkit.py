@@ -47,6 +47,24 @@ class BinaryTemplate:
                 left = mid + 1
         return left
 
+    @staticmethod
+    def float_binary_search(
+        left: float, 
+        right: float, 
+        check: Callable[[float], bool], 
+        eps: float = 1e-9) -> float:
+    """
+    浮点数二分查找模板 - 寻找满足条件的最小值
+    在连续区间 [left, right] 中找到满足 check(x) = True 的最小 x
+    """
+    while right - left > eps:
+        mid = (left + right) / 2
+        if check(mid):
+            right = mid  # mid 满足条件，答案在 [left, mid]
+        else:
+            left = mid   # mid 不满足条件，答案在 [mid, right]
+    return left  # 或 return right，差值小于 eps
+
 
 class BinarySearchUtils:
     # ░░░░░░░░░░░ LeetCode 704 —— 二分查找 ░░░░░░░░░░░
