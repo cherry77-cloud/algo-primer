@@ -76,6 +76,7 @@ class BinaryHeapToolkit:
             self.tot -= 1
             self._sift_up(pos)
             self._sift_down(pos)
+            
         def change(self, k: int, x: int) -> None:
             """修改第k个插入的元素的值"""
             pos = self.ph[k]
@@ -100,9 +101,7 @@ class BinaryHeapToolkit:
             self.right = []  # 小根堆，保存较大的一半
         
         def addNum(self, num: int) -> None:
-            """
-            添加数字的核心逻辑: 不能直接插入目标堆！必须先经过另一个堆"过滤"
-            """
+            """ 添加数字的核心逻辑: 不能直接插入目标堆！必须先经过另一个堆"过滤" """
             if len(self.left) == len(self.right):
                 # 两堆相等，新元素要进左堆
                 # num先进右堆，弹出最小值，该值 ≤ 右堆所有元素
