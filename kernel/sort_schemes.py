@@ -49,6 +49,7 @@ class SortUtils:
                 merged.append(arr[i]); i += 1
             else:
                 merged.append(arr[j]); j += 1
+        
         merged.extend(arr[i:mid + 1])
         merged.extend(arr[j:right + 1])
         arr[left:right + 1] = merged
