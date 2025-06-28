@@ -109,8 +109,9 @@ class GraphToolkit:
             colors[x] = BLACK
             result.append(x)  # 在标记为黑色时加入结果
             return False
+            
         for i, c in enumerate(colors):
             if colors[i] == WHITE and dfs(i):
-                return []  # 有环，返回空列表
+                return []    # 有环，返回空列表
         
         return result[::-1]  # DFS 是深度优先，先访问的是依赖链的末端
