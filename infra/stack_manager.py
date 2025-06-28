@@ -88,6 +88,25 @@ class MonotonicStackTemplates:
 
 
 class StackAlgoUtils:
+    # ░░░░░░░░░░░░░░ LeetCode 20 —— 有效的括号 ░░░░░░░░░░░░░░
+    def isValid(self, s: str) -> bool:
+        """
+        括号匹配验证
+            1. 左括号入栈对应的右括号
+            2. 遇到右括号时，栈顶应该匹配
+            3. 最后栈应该为空
+        """
+        if len(s) % 2:
+            return False
+        pairs = {'(': ')', '[': ']', '{': '}'}
+        stack: List[str] = []
+        for c in s:
+            if c in pairs:
+                stack.append(pairs[c])
+            elif not stack or stack.pop() != c:
+                return False
+        return not stack
+
     # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
     @staticmethod
     def dailyTemperatures(temperatures: List[int]) -> List[int]:
