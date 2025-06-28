@@ -55,6 +55,7 @@ class BacktrackingToolkit:
         n = len(nums)
         subsets = []
         path = []
+        
         def dfs(u: int) -> None:
             if u == n:
                 subsets.append(path[:])
@@ -79,6 +80,7 @@ class BacktrackingToolkit:
         """
         n = len(nums)
         subsets = []
+        
         def dfs(u: int, mask: int) -> None:
             if u == n:
                 subset = []
@@ -162,6 +164,7 @@ class BacktrackingToolkit:
         """
         result: List[List[int]] = []
         path: List[int] = []
+        
         def dfs(u: int, start: int) -> None:
             if u == k:
                 result.append(path[:])
@@ -188,7 +191,7 @@ class BacktrackingToolkit:
             3. 按顺序考虑每个数字，选或不选
             4. 剪枝: 剩余数字+已选数字 < k 时返回
         """
-        result = []
+        result: List[int] = []
         def dfs(u: int, cnt: int, mask: int) -> None:
             if cnt + n - u < k:
                 return
@@ -291,6 +294,7 @@ class BacktrackingToolkit:
             word = word[::-1]
 
         m, n = len(board), len(board[0])
+        
         def dfs(i: int, j: int, k: int) -> bool:
             if board[i][j] != word[k]:  # 匹配失败
                 return False
@@ -302,6 +306,7 @@ class BacktrackingToolkit:
                     return True  # 搜到了！
             board[i][j] = word[k]  # 恢复现场
             return False  # 没搜到
+            
         return any(dfs(i, j, 0) for i in range(m) for j in range(n))
 
     # ░░░░░░░░░░░ LeetCode 131 —— 分割回文串 ░░░░░░░░░░░
