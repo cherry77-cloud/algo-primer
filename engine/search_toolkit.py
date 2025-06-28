@@ -28,21 +28,6 @@ class BacktrackingToolkit:
       • 递归链 (Recursion Chain): 每层仅派生 1 个子调用，执行路径呈线性链表；深度 = 调用次数，时间复杂度 O(n) ┆ 阶乘
       • 递归树 (Recursion Tree): 每层可派生 ≥2 个子调用，执行结构呈树形；节点数 ≈ 分支ᵈ，常带指数复杂度 ┆ 朴素斐波那契、全排列
       • 递归 DAG (Memoized Recursion): 备忘录共享重复子问题，将树压缩为有向无环图；节点数 ≤ 状态数，复杂度降为多项式 ┆ 记忆化斐波那契
-
-    def backtrack(path, choices):
-        # A. 栈帧创建；path 继承自父调用
-        if 满足目标条件(path):
-            results.append(copy(path))       # 必须复制！
-            return
-        # B. 遍历每个可用选项（横向扩展）
-        for choice in choices:
-            # C. 即将修改共享状态
-            path.append(choice)              # 动作1：做出选择
-            # D. 状态已更新；递归到下一层
-            backtrack(path, 获取下一步选择(choice, path))  # 动作2：递归
-            # E. 子调用已返回；恢复状态
-            path.pop()                       # 动作3：撤销选择
-        # F. 该层所有选项已探索完毕；收集所有解 | 统计方案数 | 布尔短路
     """
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
