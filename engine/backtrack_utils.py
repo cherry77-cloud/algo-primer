@@ -66,7 +66,7 @@ class BacktrackingToolkit:
             path.pop()
         
         dfs(0)
-        return subsets   
+        return subsets
     
     # ░░░░░░░░░░░░░░ LeetCode 78 · 子集 ░░░░░░░░░░░░░░
     @staticmethod
