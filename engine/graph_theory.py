@@ -28,6 +28,7 @@ class GraphToolkit:
                 indegrees[cur] -= 1
                 if not indegrees[cur]:
                     queue.append(cur)
+        
         return not numCourses
 
     # ░░░░░░░░░░░░░░ LeetCode 207 · 课程表 ░░░░░░░░░░░░░░
@@ -63,6 +64,7 @@ class GraphToolkit:
         for i, c in enumerate(colors):
             if c == WHITE and dfs(i):
                 return False
+                
         return True
 
     # ░░░░░░░░░░░░░░ LeetCode 210 · 课程表 II ░░░░░░░░░░░░░░
