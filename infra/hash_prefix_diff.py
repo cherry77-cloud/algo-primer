@@ -111,3 +111,18 @@ class PrefixDiffToolkit:
             区域和 = (A + B + C + *) - (A+C) - (A+B) + A = *
             """
             return self.s[r2 + 1][c2 + 1] - self.s[r2 + 1][c1] - self.s[r1][c2 + 1] + self.s[r1][c1]
+
+    # ░░░░░░░░░░░░░░ LeetCode 1094 —— 拼车 ░░░░░░░░░░░░░░
+    @staticmethod
+    def carPooling(trips: List[List[int]], capacity: int) -> bool:
+        """
+        差分数组应用 - 区间加减操作
+            差分数组定义：diff[i] = nums[i] - nums[i-1]
+            区间[l,r]加val：diff[l] += val, diff[r+1] -= val
+            还原：nums[i] = diff[0] + diff[1] + ... + diff[i]
+        """
+        diff = [0] * 1001
+        for num_passengers, from_loc, to_loc in trips:
+            diff[from_loc] += num_passengers      # 上车
+            diff[to_loc] -= num_passengers        # 下车
+        return all(passengers <= capacity for passengers in accumulate(diff))
