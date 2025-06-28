@@ -1,7 +1,7 @@
 from typing import List
 
 
-class SortUtils:
+class SortingToolkit:
     # ░░░░░░░░░░░░░░ AcWing 785 —— 快速排序 ░░░░░░░░░░░░░░
     def quickSort(self, arr: List[int], left: int, right: int) -> None:
         """
@@ -55,7 +55,8 @@ class SortUtils:
         arr[left:right + 1] = merged
 
     # ░░░░░░░░░░░░░░ LeetCode 215 —— 数组中的第K个最大元素 ░░░░░░░░░░░░░░
-    def findKthLargest(self, nums: List[int], k: int) -> int:
+    @staticmethod
+    def findKthLargest(nums: List[int], k: int) -> int:
         """ 
         使用快速选择算法查找第 k 大元素
             1. 基于快速排序的分区思想
@@ -80,3 +81,36 @@ class SortUtils:
 
         n = len(nums)
         return quickselect(0, n - 1, n - k)
+
+    
+    # ░░░░░░░░░░░░░░ AcWing 788 —— 逆序对的数量 ░░░░░░░░░░░░░░
+    def reversePairs(self, nums: List[int], left: int, right: int) -> int:
+        """
+        归并分治:
+            1. 递归地将区间 [left, right] 分成左右两半：[left, mid] 与 [mid+1, right]
+            2. 分别统计左右两半内部的逆序对数量。
+            3. 在“归并”两个有序子数组的过程中，再统计跨越左右两半的逆序对：
+                   当 nums[i] > nums[j] 时（其中 i 属于左半区间，j 属于右半区间）
+                   则 nums[i..mid] 全都大于 nums[j]，贡献 (mid - i + 1) 个逆序对
+            4. 将左右两半归并成有序序列，保证上层递归可以正常比较
+            5. 返回左右内部 + 合并阶段的逆序对之和
+        """
+        if left >= right:  return 0
+    
+        mid = (left + right) // 2
+        inv_cnt = self.reversePairs(nums, left,  mid) + self.reversePairs(nums, mid + 1, right)
+    
+        merged, i, j = [], left, mid + 1
+        while i <= mid and j <= right:
+            if nums[i] <= nums[j]:
+                merged.append(nums[i])
+                i += 1
+            else:
+                merged.append(nums[j])
+                j += 1
+                inv_cnt += (mid - i + 1)     # 左侧剩余元素均大于 nums[j]
+    
+        merged.extend(nums[i:mid + 1])
+        merged.extend(nums[j:right + 1])
+        nums[left:right + 1] = merged
+        return inv_cnt
