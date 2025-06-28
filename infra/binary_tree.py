@@ -237,8 +237,8 @@ class BinaryTreeUtils:
             if p is None or q is None:
                 return p is q
             return p.val == q.val and dfs(p.left, q.right) and dfs(p.right, q.left)
-
-    return dfs(root.left, root.right)
+            
+        return dfs(root.left, root.right)
 
     # ░░░░░░░░░░░ LeetCode 104 —— 二叉树的最大深度 ░░░░░░░░░░░
     def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -250,7 +250,8 @@ class BinaryTreeUtils:
              4. 当前节点的深度 = max(左深度, 右深度) + 1
              5. 返回根节点的深度即为整棵树的最大深度
         """
-        if not root:  return 0
+        if not root:
+            return 0
         l_depth = self.maxDepth(root.left)
         r_depth = self.maxDepth(root.right)
         return max(l_depth, r_depth) + 1
