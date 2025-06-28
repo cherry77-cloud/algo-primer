@@ -41,6 +41,7 @@ class GridGraphSearch:
                 if grid[i][j] == '1':
                     islands += 1
                     bfs(i, j)
+                    
         return islands
 
     # ░░░░░░░░░░░░░░░ LeetCode 994 —— 腐烂的橘子（BFS） ░░░░░░░░░░░░░░░
