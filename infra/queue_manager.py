@@ -5,7 +5,7 @@ from typing import Deque, List, Tuple
 class QueueAlgoUtils:
     # ░░░░░░░░░░░ LeetCode 239 —— 滑动窗口最大值 ░░░░░░░░░░░
     @staticmethod
-    def max_sliding_window(nums: List[int], k: int) -> List[int]:
+    def maxSlidingWindow(nums: List[int], k: int) -> List[int]:
         """
         单调队列: 返回每个长度为 k 的滑动窗口中的最大值
             1. 维护一个单调递减队列（存储索引）
@@ -19,8 +19,8 @@ class QueueAlgoUtils:
             - 队尾（右端）: 最近加入的元素
             - 保证了 O(1) 时间获取窗口最大值
         """
-        ans : List[int] = []
-        mono_q : Deque[int] = deque()
+        ans: List[int] = []
+        mono_q: Deque[int] = deque()
 
         for i, x in enumerate(nums):
             while mono_q and nums[mono_q[-1]] <= x:
