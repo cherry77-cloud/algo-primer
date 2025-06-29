@@ -105,13 +105,27 @@ class XORTrie:
         return max_xor
 
 
+# ░░░░░░░░░░░░░░ AcWing 144 - 树上最大异或路径 ░░░░░░░░░░░░░░
 class TreeMaxXorPath:
-     """
-    树上最大异或路径问题
-       1. DFS 计算每个节点到根的异或距离
-       2. 两点间路径的异或值 = d[u] ^ d[v]（LCA性质）
-       3. 问题转化为：找两个数使其异或值最大
-       4. 使用 Trie 树解决最大异或对问题
+    """
+    树上最大异或路径问题: 给定一棵 n 个节点的树，每条边有权值 w[i]. 求树上任意两点路径的最大异或值
+    
+    1. DFS 计算每个节点到根的异或距离
+      - 定义 dist[u] = 从根节点到 u 的路径上所有边权的异或值
+      - 通过 DFS 遍历，dist[v] = dist[u] ^ w(u,v)
+   
+    2. 两点间路径的异或值 = dist[u] ^ dist[v]（LCA性质）
+       证明：设 u, v 的最近公共祖先为 lca
+       - u 到 v 的路径 = (u → lca) + (lca → v)
+       - dist[u] = (root → lca) ^ (lca → u)
+       - dist[v] = (root → lca) ^ (lca → v)
+       - dist[u] ^ dist[v] = (root → lca) ^ (lca → u) ^ (root → lca) ^ (lca → v)
+                           = (lca → u) ^ (lca → v)  [root → lca 异或两次抵消]
+                           = u 到 v 路径的异或值
+    3. 问题转化为：在 dist 数组中找两个数使其异或值最大
+       - 原问题：max{path_xor(u,v)} for all u,v
+       - 转化后：max{dist[i] ^ dist[j]} for all i,j
+       - 使用贪心+哈希的方法解决最大异或对问题
     """
     @staticmethod
     def findMaximumXOR(nums: List[int]) -> int:
