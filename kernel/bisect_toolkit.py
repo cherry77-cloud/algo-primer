@@ -67,6 +67,23 @@ class BinaryTemplate:
 
 
 class BinarySearchUtils:
+    # ░░░░░░░░░░░░░░ LeetCode 35 —— 搜索插入位置 ░░░░░░░░░░░░░░
+    @staticmethod
+    def searchInsert(nums: List[int], target: int) -> int:
+        """
+        寻找 target 的插入位置，使数组保持有序
+        红区: nums[mid] < target  —— target 应该插在 mid 右侧
+        蓝区: nums[mid] >= target —— target 应该插在 mid 或 mid 左侧
+        """
+        left, right = 0, len(nums)
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] >= target:
+                right = mid
+            else:
+                left = mid + 1
+        return left
+
     # ░░░░░░░░░░░ LeetCode 704 —— 二分查找 ░░░░░░░░░░░
     @staticmethod
     def search(nums: List[int], target: int) -> int:
