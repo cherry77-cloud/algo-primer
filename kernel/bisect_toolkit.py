@@ -1,7 +1,4 @@
-from typing import List
-
-
-class BinaryTemplate:
+class BinarySearchTemplate:
     """
     1. rightmost_red — 适用于 True ... True | False ... False 模式
        - 序列前半部分都是 True（红区），后半部分都是 False（蓝区）
