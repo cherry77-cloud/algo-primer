@@ -1,10 +1,3 @@
-from collections import deque
-from functools import cache
-from math import inf, isqrt
-from typing import List, Tuple
-from bisect import bisect_left
-
-
 class MemoizationSearch:
     """
     记忆化搜索是一种 **空间换时间** 的动态规划优化技术，本质上通过缓存「函数参数 → 结果」键值对，消除递归中的子问题重叠
@@ -162,7 +155,6 @@ class KnapsackToolkit:
              2. 拆分策略: 1, 2, 4, ..., 2^k, 剩余部分
              3. 这样任意数量都可以由拆分后的物品组合得到
              4. 将拆分后的物品作为 0-1 背包问题求解
-             5. 时间复杂度从 O(n*m*s) 优化到 O(n*m*log(s))
         """
         items: List[Tuple[int, int]] = []
         for v, w, s in zip(volumes, values, counts):
@@ -259,47 +251,6 @@ class GridToolkit:
             if i == 0 and j == 0:
                 return grid[0][0]
             return min(dfs(i - 1, j), dfs(i, j - 1)) + grid[i][j]
-        return dfs(m - 1, n - 1)
-
-    # ░░░░░░░░░░░░░░ LeetCode 931 —— 下降路径最小和 ░░░░░░░░░░░░░░
-    @staticmethod
-    def minFallingPathSum(matrix: List[List[int]]) -> int:
-        """
-        矩阵下降路径最小和（三方向记忆化搜索）
-             1. dfs(r, c) 表示从第一行到 (r,c) 的最小路径和
-             2. 边界处理：列越界返回正无穷，第一行返回格子值
-             3. 每个位置可从上一行的三个位置到达：左上、正上、右上
-             4. 选择三个方向的最小值，加上当前格子值
-             5. 枚举最后一行所有位置，取最小值
-        """
-        n = len(matrix)
-        @cache
-        def dfs(r: int, c: int) -> int:
-            if c < 0 or c >= n:
-                return inf
-            if r == 0:
-                return matrix[0][c]
-            return min(dfs(r - 1, c - 1), dfs(r - 1, c), dfs(r - 1, c + 1)) + matrix[r][c]
-        return min(dfs(n - 1, col) for col in range(n))
-
-    # ░░░░░░░░░░░░░░ LeetCode 62 —— 不同路径 ░░░░░░░░░░░░░░
-    @staticmethod
-    def uniquePaths(m: int, n: int) -> int:
-        """
-        矩阵路径计数（记忆化搜索）
-             1. dfs(i, j) 表示从 (0,0) 到 (i,j) 的路径数量
-             2. 边界处理：越界返回 0，起点返回 1
-             3. 每个位置可以从上方或左方到达
-             4. 路径数等于两个方向路径数之和
-             5. 使用记忆化避免重复计算
-        """
-        @cache
-        def dfs(i: int, j: int) -> int:
-            if i < 0 or j < 0:
-                return 0
-            if i == 0 and j == 0:
-                return 1
-            return dfs(i - 1, j) + dfs(i, j - 1)
         return dfs(m - 1, n - 1)
 
     # ░░░░░░░░░░░░░░ LeetCode 63 —— 不同路径 II ░░░░░░░░░░░░░░
@@ -449,6 +400,7 @@ class SubsequenceDPToolkit:
                     return dfs(i - 1, j - 1)
                 return False
         return dfs(m - 1, n - 1)
+
 
 class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
