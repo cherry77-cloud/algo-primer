@@ -41,6 +41,45 @@ class Trie:
         return True           # 只要顺利遍历完前缀即表示存在该前缀
 
 
+# ░░░░░░░░░░░░░░ AcWing 142 - 前缀统计 ░░░░░░░░░░░░░░
+class TriePrefixCounter:
+    """
+    前缀统计 - 统计以某个字符串为前缀的单词数量
+    1. 将所有字符串插入 Trie 树
+    2. 在每个单词结尾节点记录出现次数
+    3. 查询时累加路径上所有结尾节点的计数
+    """
+    class TrieNode:
+        __slots__ = ("children", "count")
+        def __init__(self) -> None:
+            self.children = {}
+            self.count: int = 0
+
+    def __init__(self) -> None:
+        """初始化根节点"""
+        self.root = self.TrieNode()
+
+    def insert(self, word: str) -> None:
+        """将单词插入 Trie 树，并在结尾节点累加计数"""
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = self.TrieNode()
+            node = node.children[char]
+        node.count += 1
+
+    def query(self, prefix: str) -> int:
+        """ 查询有多少个单词以 prefix 为前缀: 累加从根到 prefix 路径上各节点的 count 值 """
+        node = self.root
+        total = 0
+        for char in prefix:
+            if char not in node.children:
+                return total
+            node = node.children[char]
+            total += node.count
+        return total
+
+
 # ░░░░░░░░░░░░░░ AcWing 835 - Trie 字符串统计 ░░░░░░░░░░░░░░
 class TrieWithCount:
     """带计数功能的前缀树 - 统计每个字符串出现的次数. 使用字典存储子节点，支持任意字符"""
