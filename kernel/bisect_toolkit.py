@@ -67,39 +67,34 @@ class BinaryTemplate:
 
 
 class BinarySearchUtils:
-    # ░░░░░░░░░░░░░░ LeetCode 35 —— 搜索插入位置 ░░░░░░░░░░░░░░
-    @staticmethod
-    def searchInsert(nums: List[int], target: int) -> int:
-        """
-        寻找 target 的插入位置，使数组保持有序
-        红区: nums[mid] < target  —— target 应该插在 mid 右侧
-        蓝区: nums[mid] >= target —— target 应该插在 mid 或 mid 左侧
-        """
-        left, right = 0, len(nums)
-        while left < right:
-            mid = (left + right) // 2
-            if nums[mid] >= target:
-                right = mid
-            else:
-                left = mid + 1
-        return left
-
-    # ░░░░░░░░░░░ LeetCode 704 —— 二分查找 ░░░░░░░░░░░
-    @staticmethod
-    def search(nums: List[int], target: int) -> int:
-        """
-        红区: nums[mid] <= target —— mid 可能在目标左侧或就是目标  
-        蓝区: nums[mid] > target  —— mid 一定在目标右侧
-        """
-        left, right = 0, len(nums) - 1
-        while left < right:
-            mid = (left + right + 1) // 2
-            if nums[mid] <= target:      # case 1：红区→向右扩
-                left = mid
-            else:                        # case 2：蓝区→向左收
-                right = mid - 1
-        return left if nums[left] == target else -1
-
+    # ░░░░░░░░░░░░░░ LeetCode 34 —— 在排序数组中查找元素的第一个和最后一个位置 ░░░░░░░░░░░░░░
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        """ 使用两次二分：找最后一个红区元素 和 第一个蓝区元素 """
+        def find_last_red(left: int = 0, right: int = len(nums) - 1) -> int:
+            """ 找最后一个 <= target 的位置 """
+            while left < right:
+                mid = (left + right + 1) // 2
+                if nums[mid] <= target:
+                    left = mid
+                else:
+                    right = mid - 1
+            return left
+        
+        def find_first_blue(left: int = 0, right: int = len(nums) - 1) -> int:
+            """ 找第一个 >= target 的位置 """
+            while left < right:
+                mid = (left + right) // 2
+                if nums[mid] >= target:
+                    right = mid
+                else:
+                    left = mid + 1
+            return left
+        
+        l1, l2 = find_last_red(0, len(nums) - 1), find_first_blue(0, len(nums) - 1)
+        if not nums or nums[l1] != target:
+            return [-1, -1]
+        return [l2, l1]
+        
     # ░░░░░░░░░░░ LeetCode 33 —— 搜索旋转排序数组 ░░░░░░░░░░░
     @staticmethod
     def search_rotated(nums: List[int], target: int) -> int:
