@@ -1,6 +1,3 @@
-from typing import List
-
-
 class SortingToolkit:
     # ░░░░░░░░░░░░░░ AcWing 785 —— 快速排序 ░░░░░░░░░░░░░░
     def quickSort(self, arr: List[int], left: int, right: int) -> None:
@@ -46,9 +43,11 @@ class SortingToolkit:
         merged, i, j = [], left, mid + 1
         while i <= mid and j <= right:
             if arr[i] <= arr[j]:
-                merged.append(arr[i]); i += 1
+                merged.append(arr[i])
+                i += 1
             else:
-                merged.append(arr[j]); j += 1
+                merged.append(arr[j])
+                j += 1
         
         merged.extend(arr[i:mid + 1])
         merged.extend(arr[j:right + 1])
