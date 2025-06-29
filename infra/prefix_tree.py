@@ -103,3 +103,53 @@ class XORTrie:
             else:
                 node = node.children[bit]
         return max_xor
+
+
+class TreeMaxXorPath:
+     """
+    树上最大异或路径问题
+       1. DFS 计算每个节点到根的异或距离
+       2. 两点间路径的异或值 = d[u] ^ d[v]（LCA性质）
+       3. 问题转化为：找两个数使其异或值最大
+       4. 使用 Trie 树解决最大异或对问题
+    """
+    @staticmethod
+    def findMaximumXOR(nums: List[int]) -> int:
+        """LeetCode 421: 位掩码 + 哈希集合 求数组最大异或对"""
+        ans = mask = 0
+        high_bit = max(nums).bit_length() - 1
+        for i in range(high_bit, -1, -1):
+            mask |= 1 << i
+            candidate = ans | (1 << i)
+            seen = set()
+            for x in nums:
+                x &= mask
+                if candidate ^ x in seen:
+                    ans = candidate
+                    break
+                seen.add(x)
+        return ans
+
+    def __init__(self) -> None:
+        self.graph: DefaultDict[int, List[Tuple[int, int]]] = defaultdict(list)
+        self.dist: Dict[int, int] = {}
+        self.vis: Set[int] = set()
+
+    def add_edge(self, u: int, v: int, w: int) -> None:
+        self.graph[u].append((v, w))
+        self.graph[v].append((u, w))
+
+    def dfs(self, u: int, xor_dist: int = 0) -> None:
+        self.vis.add(u)
+        self.dist[u] = xor_dist
+        for v, w in self.graph[u]:
+            if v not in self.vis:
+                self.dfs(v, xor_dist ^ w)
+
+    def solve(self, n: int, edges: List[Tuple[int, int, int]]) -> int:
+        """返回树上最大异或路径值"""
+        for u, v, w in edges:
+            self.add_edge(u, v, w)
+        self.dfs(0)
+        arr = [self.dist[i] for i in range(n)]
+        return self.findMaximumXOR(arr)
