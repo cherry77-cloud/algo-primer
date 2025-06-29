@@ -9,7 +9,7 @@ class TreeNode:
         self.right = right
 
 
-class BinaryTreeUtils:
+class BinaryTreeTraversal:
     # ░░░░░░░░░░░ LeetCode 144 —— 二叉树前序遍历 ░░░░░░░░░░░
     @staticmethod
     def preorder(root: Optional[TreeNode]) -> List[int]:
@@ -208,6 +208,8 @@ class BinaryTreeUtils:
             res.append(level_vals)
         return res
 
+
+class BinaryTreeUtils
     # ░░░░░░░░░░░ LeetCode 100 —— 相同的树 ░░░░░░░░░░░
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         """
@@ -250,12 +252,13 @@ class BinaryTreeUtils:
              4. 当前节点的深度 = max(左深度, 右深度) + 1
              5. 返回根节点的深度即为整棵树的最大深度
         """
-        if not root:
-            return 0
+        if not root:  return 0
         l_depth = self.maxDepth(root.left)
         r_depth = self.maxDepth(root.right)
         return max(l_depth, r_depth) + 1
 
+
+class BinaryTreeDPEngine:
     # ░░░░░░░░░░░ LeetCode 543 —— 二叉树的直径 ░░░░░░░░░░░
     @staticmethod
     def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
