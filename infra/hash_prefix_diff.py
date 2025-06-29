@@ -63,55 +63,57 @@ class HashTableUtils:
         return ans
 
 
+# ░░░░░░░░░░░░░░ LeetCode 303 —— 区域和检索 - 数组不可变 ░░░░░░░░░░░░░░
+class NumArray:
+    """
+    一维前缀和 - 支持O(1)查询区间和
+        前缀和定义：s[i] = nums[0] + nums[1] + ... + nums[i-1]
+        区间和查询：sumRange(left, right) = s[right+1] - s[left]
+    """
+    def __init__(self, nums: List[int]):
+        s = [0] * (len(nums) + 1)
+        for i, x in enumerate(nums):
+            s[i + 1] = s[i] + x
+        self.s = s
+    
+    def sumRange(self, left: int, right: int) -> int:
+        return self.s[right + 1] - self.s[left]
+
+
+# ░░░░░░░░░░░░░░ LeetCode 304 —— 二维区域和检索 - 矩阵不可变 ░░░░░░░░░░░░░░
+class NumMatrix:
+    def __init__(self, matrix: List[List[int]]):
+        """
+        前缀和定义：s[i][j] 表示从左上角 (0,0) 到右下角 (i-1,j-1) 的矩形区域和
+        递推公式（容斥原理）：
+            s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + matrix[i-1][j-1]
+        """
+        m, n = len(matrix), len(matrix[0])
+        s = [[0] * (n + 1) for _ in range(m + 1)]
+        
+        for i, row in enumerate(matrix):
+            for j, x in enumerate(row):
+                s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + matrix[i][j]
+        self.s = s
+        
+    def sumRegion(self, r1: int, c1: int, r2: int, c2: int) -> int:
+        """
+        查询从 (r1,c1) 到 (r2,c2) 的矩形区域和
+        区域和 = s[r2+1][c2+1] - s[r2+1][c1] - s[r1][c2+1] + s[r1][c1]
+        
+        图示（查询区域用 * 标记）：
+        +-------+-------+
+        |   A   |   B   |
+        +-------+-------+
+        |   C   |  ***  |
+        +-------+-------+
+        
+        区域和 = (A + B + C + *) - (A+C) - (A+B) + A = *
+        """
+        return self.s[r2 + 1][c2 + 1] - self.s[r2 + 1][c1] - self.s[r1][c2 + 1] + self.s[r1][c1]
+
+
 class PrefixDiffToolkit:
-    # ░░░░░░░░░░░░░░ LeetCode 303 —— 区域和检索 - 数组不可变 ░░░░░░░░░░░░░░
-    class NumArray:
-        """
-        一维前缀和 - 支持O(1)查询区间和
-            前缀和定义：s[i] = nums[0] + nums[1] + ... + nums[i-1]
-            区间和查询：sumRange(left, right) = s[right+1] - s[left]
-        """
-        def __init__(self, nums: List[int]):
-            s = [0] * (len(nums) + 1)
-            for i, x in enumerate(nums):
-                s[i + 1] = s[i] + x
-            self.s = s
-        
-        def sumRange(self, left: int, right: int) -> int:
-            return self.s[right + 1] - self.s[left]
-
-    # ░░░░░░░░░░░░░░ LeetCode 304 —— 二维区域和检索 - 矩阵不可变 ░░░░░░░░░░░░░░
-    class NumMatrix:
-        def __init__(self, matrix: List[List[int]]):
-            """
-            前缀和定义：s[i][j] 表示从左上角 (0,0) 到右下角 (i-1,j-1) 的矩形区域和
-            递推公式（容斥原理）：
-                s[i][j] = s[i-1][j] + s[i][j-1] - s[i-1][j-1] + matrix[i-1][j-1]
-            """
-            m, n = len(matrix), len(matrix[0])
-            s = [[0] * (n + 1) for _ in range(m + 1)]
-            
-            for i, row in enumerate(matrix):
-                for j, x in enumerate(row):
-                    s[i + 1][j + 1] = s[i + 1][j] + s[i][j + 1] - s[i][j] + matrix[i][j]
-            self.s = s
-        
-        def sumRegion(self, r1: int, c1: int, r2: int, c2: int) -> int:
-            """
-            查询从 (r1,c1) 到 (r2,c2) 的矩形区域和
-            区域和 = s[r2+1][c2+1] - s[r2+1][c1] - s[r1][c2+1] + s[r1][c1]
-            
-            图示（查询区域用 * 标记）：
-            +-------+-------+
-            |   A   |   B   |
-            +-------+-------+
-            |   C   |  ***  |
-            +-------+-------+
-            
-            区域和 = (A + B + C + *) - (A+C) - (A+B) + A = *
-            """
-            return self.s[r2 + 1][c2 + 1] - self.s[r2 + 1][c1] - self.s[r1][c2 + 1] + self.s[r1][c1]
-
     # ░░░░░░░░░░░░░░ LeetCode 1094 —— 拼车 ░░░░░░░░░░░░░░
     @staticmethod
     def carPooling(trips: List[List[int]], capacity: int) -> bool:
