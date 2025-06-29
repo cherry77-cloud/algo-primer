@@ -125,7 +125,7 @@ class BinarySearchUtils:
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
     @staticmethod
-    def h_index(citations: List[int]) -> int:
+    def hIndex(citations: List[int]) -> int:
         """
         二分答案：最大 h 使得“引用次数 ≥ h”的论文数 ≥ h
         红区: cnt ≥ h  —— 当前 h 可行，尝试更大  
