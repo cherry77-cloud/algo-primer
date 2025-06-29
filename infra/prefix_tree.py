@@ -41,6 +41,37 @@ class Trie:
         return True           # 只要顺利遍历完前缀即表示存在该前缀
 
 
+# ░░░░░░░░░░░░░░ AcWing 835 - Trie 字符串统计 ░░░░░░░░░░░░░░
+class TrieWithCount:
+    """带计数功能的前缀树 - 统计每个字符串出现的次数. 使用字典存储子节点，支持任意字符"""
+    class TrieNode:
+        __slots__ = ('children', 'count')
+        def __init__(self) -> None:
+            self.children: dict[str, "TrieWithCount.TrieNode"] = {}   # children: 键为字符，值为 TrieNode 实例
+            self.count: int = 0
+
+    def __init__(self) -> None:
+        self.root = self.TrieNode()
+
+    def insert(self, word: str) -> None:
+        """插入字符串，如果已存在则计数加一"""
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = self.TrieNode()
+            node = node.children[char]
+        node.count += 1
+
+    def query(self, word: str) -> int:
+        """查询字符串出现的次数"""
+        node = self.root
+        for char in word:
+            node = node.children.get(char)
+            if node is None:
+                return 0
+        return node.count
+
+
 # ░░░░░░░░░░░░░░ LeetCode 421 - 数组中两个数的最大异或值 ░░░░░░░░░░░░░░
 class XORTrie:
     class TrieNode:
