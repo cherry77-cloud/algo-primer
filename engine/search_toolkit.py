@@ -327,7 +327,7 @@ class BacktrackingToolkit:
 
     # ░░░░░░░░░░░░░░ LeetCode 39 —— 组合总和 ░░░░░░░░░░░░░░
     @staticmethod
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+    def combinationSum(candidates: List[int], target: int) -> List[List[int]]:
        """
        组合总和 - 完全背包问题
            1. 每个数字可以无限制重复使用
@@ -360,7 +360,7 @@ class BacktrackingToolkit:
 
     # ░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░
     @staticmethod
-    def solveNQueens(self, n: int) -> List[List[str]]:
+    def solveNQueens(n: int) -> List[List[str]]:
         """
         N 皇后问题 - 经典回溯算法
             1. 逐行放置：每行必须且只能放一个皇后
@@ -475,7 +475,8 @@ class GridGraphToolKit:
         return -1 if fresh else minutes
 
     # ░░░░░░░░░░░░░░░ LeetCode 417 —— 太平洋大西洋水流问题（BFS/DFS） ░░░░░░░░░░░░░░░
-    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+    @staticmethod
+    def pacificAtlantic(heights: List[List[int]]) -> List[List[int]]:
         """
         多源 BFS/DFS: 寻找既可以流向太平洋又可以流向大西洋的单元格
             1. 正向思考: 从每个点出发看能否到达两个大洋（复杂）
