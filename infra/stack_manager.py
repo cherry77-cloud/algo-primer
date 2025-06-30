@@ -87,6 +87,34 @@ class MonotonicStackTemplates:
         return result
 
 
+# ░░░░░░░░░░░ LeetCode 155 —— 最小栈 ░░░░░░░░░░░
+class MinStack:
+    """
+    支持 O(1) 时间获取最小值的栈
+        - 使用辅助栈同步维护每个状态对应的最小值
+        - 初始化时加入哨兵 float('inf')，避免空栈判断
+        - push 时：辅助栈压入 min(当前值, 栈顶最小值)
+        - pop 时：两个栈同步弹出
+    """
+    def __init__(self):
+        self.stack = []
+        self.min_stack = [float('inf')]  # 哨兵：避免空栈判断
+    
+    def push(self, val: int) -> None:
+        self.stack.append(val)
+        self.min_stack.append(min(val, self.min_stack[-1]))
+    
+    def pop(self) -> None:
+        self.stack.pop()
+        self.min_stack.pop()
+    
+    def top(self) -> int:
+        return self.stack[-1]
+    
+    def getMin(self) -> int:
+        return self.min_stack[-1]
+
+
 class StackAlgoUtils:
     # ░░░░░░░░░░░░░░ LeetCode 20 —— 有效的括号 ░░░░░░░░░░░░░░
     @staticmethod
