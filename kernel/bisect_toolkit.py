@@ -65,7 +65,8 @@ class BinarySearchTemplate:
 
 class BinarySearchUtils:
     # ░░░░░░░░░░░░░░ LeetCode 34 —— 在排序数组中查找元素的第一个和最后一个位置 ░░░░░░░░░░░░░░
-    def searchRange(self, nums: List[int], target: int) -> List[int]:
+    @staticmethod
+    def searchRange(nums: List[int], target: int) -> List[int]:
         """ 使用两次二分：找最后一个红区元素 和 第一个蓝区元素 """
         def find_last_red(left: int = 0, right: int = len(nums) - 1) -> int:
             """ 找最后一个 <= target 的位置 """
