@@ -89,7 +89,8 @@ class MonotonicStackTemplates:
 
 class StackAlgoUtils:
     # ░░░░░░░░░░░░░░ LeetCode 20 —— 有效的括号 ░░░░░░░░░░░░░░
-    def isValid(self, s: str) -> bool:
+    @staticmethod
+    def isValid(s: str) -> bool:
         """
         括号匹配验证
             1. 左括号入栈对应的右括号
@@ -106,6 +107,33 @@ class StackAlgoUtils:
             elif not stack or stack.pop() != c:
                 return False
         return not stack
+
+    # ░░░░░░░░░░░ LeetCode 32 —— 最长有效括号 ░░░░░░░░░░░
+    @staticmethod
+    def longestValidParentheses(s: str) -> int:
+        """
+            1. 用栈存放索引，初始压入 -1 作为哨兵
+            2. 遍历字符串：
+               - 遇到 '('，将当前索引压入栈
+               - 遇到 ')'，先 pop 栈顶：
+                 • 若栈空：说明没有匹配的 '('，将当前索引 i 作为新的哨兵压入
+                 • 否则：当前有效子串长度 = i - stack[-1]，更新 max_len
+            3. 返回 max_len
+        """
+        max_len = 0
+        stack: List[int] = [-1]  # 哨兵：有效子串起点前的位置
+        
+        for i, ch in enumerate(s):
+            if ch == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if not stack:        # 遇到多余的 ')'，重置哨兵
+                    stack.append(i)
+                else:                # 以当前 ')' 为结尾的有效子串长度
+                    max_len = max(max_len, i - stack[-1])
+        
+        return max_len
 
     # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
     @staticmethod
