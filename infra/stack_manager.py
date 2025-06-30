@@ -163,6 +163,32 @@ class StackAlgoUtils:
         
         return max_len
 
+    # ░░░░░░░░░░░░░░ LeetCode 394 —— 字符串解码 ░░░░░░░░░░░░░░
+    @staticmethod
+    def decodeString(s: str) -> str:
+        """
+        使用栈解码编码字符串
+        栈保存: (外层字符串, 重复次数) - 每次遇到 '[' 时保存当前状态
+            1. 遇到数字: 累积重复次数
+            2. 遇到 '[': 将当前状态压栈，重置变量处理内层
+            3. 遇到 ']': 弹栈恢复外层状态，将内层结果重复后拼接
+            4. 遇到字母: 直接添加到当前字符串
+        """
+        stack, multi, res = [], 0, ""
+        for c in s:
+            if c == '[':
+                stack.append((res, multi))
+                multi, res = 0, ""
+            elif c == ']':
+                last_res, cur_multi = stack.pop()
+                res = last_res + res * cur_multi
+            elif '0' <= c <= '9':
+                multi = multi * 10 + int(c)
+            else:
+                res += c
+        
+        return res
+
     # ░░░░░░░░░░░ LeetCode 739 —— 每日温度 ░░░░░░░░░░░
     @staticmethod
     def dailyTemperatures(temperatures: List[int]) -> List[int]:
