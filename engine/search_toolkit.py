@@ -326,6 +326,7 @@ class BacktrackingToolkit:
         return ans
 
     # ░░░░░░░░░░░░░░ LeetCode 39 —— 组合总和 ░░░░░░░░░░░░░░
+    @staticmethod
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
        """
        组合总和 - 完全背包问题
@@ -356,6 +357,41 @@ class BacktrackingToolkit:
        
        dfs(0, target)
        return ans
+
+    # ░░░░░░░░░░░░░░ LeetCode 51 —— N 皇后 ░░░░░░░░░░░░░░
+    @staticmethod
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        """
+        N 皇后问题 - 经典回溯算法
+            1. 逐行放置：每行必须且只能放一个皇后
+            2. 剪枝条件：检查列和两条对角线是否被占用
+            3. 对角线规律：
+               - 主对角线(↘)：r + c 相同
+               - 副对角线(↙)：r - c 相同（加偏移避免负数）
+            4. 状态记录：用布尔数组记录占用情况，避免重复计算
+        """
+        ans = []
+        board = [['.' for _ in range(n)] for _ in range(n)]
+        col = [False] * n
+        diag1 = [False] * (n * 2 - 1)
+        diag2 = [False] * (n * 2 - 1)
+
+        def dfs(r: int):
+            if r == n:
+                ans.append([''.join(row) for row in board])
+                return
+            
+            # 在 (r,c) 放皇后
+            for c, ok in enumerate(col):
+                if not ok and not diag1[r + c] and not diag2[r - c]:   # 判断能否放皇后
+                    board[r][c] = 'Q'
+                    col[c] = diag1[r + c] = diag2[r - c] = True        # 皇后占用了 c 列和两条斜线
+                    dfs(r + 1)
+                    board[r][c] = '.'
+                    col[c] = diag1[r + c] = diag2[r - c] = False       # 恢复现场
+        
+        dfs(0)
+        return ans
 
 
 class GridGraphToolKit:
