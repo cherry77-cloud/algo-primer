@@ -86,7 +86,8 @@ class BinaryTreeTraversal:
         return res
 
     # ░░░░░░░░░░░ LeetCode 144 —— Morris 前序遍历 ░░░░░░░░░░░
-    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    @staticmethod
+    def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
         """
         Morris前序遍历，根-左-右顺序
             1. 利用空闲的右指针建立临时线索，实现无栈遍历
@@ -115,7 +116,8 @@ class BinaryTreeTraversal:
         return result
 
     # ░░░░░░░░░░░ LeetCode 94 —— Morris 中序遍历 ░░░░░░░░░░░
-    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    @staticmethod
+    def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
         """
         Morris中序遍历，左-根-右顺序，
             1. 利用空闲的右指针建立临时线索，实现无栈遍历
@@ -144,7 +146,8 @@ class BinaryTreeTraversal:
         return result
 
     # ░░░░░░░░░░░ LeetCode 145 —— Morris 后序遍历 ░░░░░░░░░░░
-    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    @staticmethod
+    def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
         """
         Morris后序遍历，左-右-根顺序
              1. 对每个节点找其左子树的最右节点（前驱）
@@ -225,7 +228,8 @@ class BinaryTreeUtils
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
     # ░░░░░░░░░░░ LeetCode 101 —— 对称二叉树 ░░░░░░░░░░░
-    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+    @staticmethod
+    def isSymmetric(root: Optional[TreeNode]) -> bool:
         """
         判断二叉树是否对称（镜像）
             1. 定义递归函数 dfs(p, q) 检查两节点是否镜像
