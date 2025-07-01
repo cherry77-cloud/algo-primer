@@ -11,8 +11,7 @@ class TreeNode:
 
 class BinaryTreeTraversal:
     # ░░░░░░░░░░░ LeetCode 144 —— 二叉树前序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def preorder(root: Optional[TreeNode]) -> List[int]:
+    def preorder(self, root: Optional[TreeNode]) -> List[int]:
         """
         迭代前序遍历，根-左-右顺序
              1. 使用栈模拟递归过程，根节点入栈
@@ -22,21 +21,20 @@ class BinaryTreeTraversal:
              5. 重复直到栈为空，遍历完成
         """
         stack: List[TreeNode] = []   # 仅存放右子节点
-        res: List[int] = []
+        result: List[int] = []
         node = root
         while stack or node:
             while node:                    # 沿左链一路访问
-                res.append(node.val)       # 访问根
+                result.append(node.val)    # 访问根
                 if node.right:             # 右子树留到之后处理
                     stack.append(node.right)
                 node = node.left           # 转向左子树
             if stack:                      # 左侧到底，弹出下一个右子树根
                 node = stack.pop()
-        return res
+        return result
 
     # ░░░░░░░░░░░ LeetCode 94 —— 二叉树中序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def inorder(root: Optional[TreeNode]) -> List[int]:
+    def inorder(self, root: Optional[TreeNode]) -> List[int]:
         """
         迭代中序遍历，左-根-右顺序
              1. 使用栈和指针配合，先一路向左走到底
@@ -46,20 +44,19 @@ class BinaryTreeTraversal:
              5. 重复过程，实现左-根-右的访问顺序
         """
         stack: List[TreeNode] = []
-        res: List[int] = []
+        result: List[int] = []
         node = root
         while stack or node:
             while node:                    # 不断向左下探
                 stack.append(node)
                 node = node.left
             node = stack.pop()             # 到达最左，开始回溯
-            res.append(node.val)           # 访问根
+            result.append(node.val)        # 访问根
             node = node.right              # 转向右子树
-        return res
+        return result
 
     # ░░░░░░░░░░░ LeetCode 145 —— 二叉树后序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def postorder(root: Optional[TreeNode]) -> List[int]:
+    def postorder(self, root: Optional[TreeNode]) -> List[int]:
         """
         单栈后序遍历，左-右-根顺序
              1. 使用 prev 指针记录上一个访问的节点
@@ -69,7 +66,7 @@ class BinaryTreeTraversal:
              5. prev 指针确保每个节点只被访问一次
         """
         stack: List[TreeNode] = []
-        res: List[int] = []
+        result: List[int] = []
         node, prev = root, None
         while stack or node:
             while node:                      # 一路压左孩子
@@ -78,16 +75,15 @@ class BinaryTreeTraversal:
             node = stack[-1]                 # 查看栈顶
             if not node.right or node.right is prev:
                 stack.pop()
-                res.append(node.val)         # 访问根
+                result.append(node.val)      # 访问根
                 prev = node                  # 记录已访问
                 node = None                  # 回溯继续
             else:
                 node = node.right            # 转向右子树
-        return res
+        return result
 
     # ░░░░░░░░░░░ LeetCode 144 —— Morris 前序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         Morris前序遍历，根-左-右顺序
             1. 利用空闲的右指针建立临时线索，实现无栈遍历
@@ -116,8 +112,7 @@ class BinaryTreeTraversal:
         return result
 
     # ░░░░░░░░░░░ LeetCode 94 —— Morris 中序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         Morris中序遍历，左-根-右顺序，
             1. 利用空闲的右指针建立临时线索，实现无栈遍历
@@ -146,8 +141,7 @@ class BinaryTreeTraversal:
         return result
 
     # ░░░░░░░░░░░ LeetCode 145 —— Morris 后序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         """
         Morris后序遍历，左-右-根顺序
              1. 对每个节点找其左子树的最右节点（前驱）
@@ -185,8 +179,7 @@ class BinaryTreeTraversal:
         return result
 
     # ░░░░░░░░░░░ LeetCode 102 —— 二叉树层序遍历 ░░░░░░░░░░░
-    @staticmethod
-    def level_order(root: Optional[TreeNode]) -> List[List[int]]:
+    def level_order(self, root: Optional[TreeNode]) -> List[List[int]]:
         """
         BFS 层序遍历，逐层访问节点
              1. 使用队列存储当前层的所有节点
@@ -197,7 +190,7 @@ class BinaryTreeTraversal:
         """
         if not root:  return []
         q: deque[TreeNode] = deque([root])
-        res: List[List[int]] = []
+        result: List[List[int]] = []
         while q:
             level_size = len(q)
             level_vals: List[int] = []
@@ -208,11 +201,11 @@ class BinaryTreeTraversal:
                     q.append(node.left)
                 if node.right:
                     q.append(node.right)
-            res.append(level_vals)
-        return res
+            result.append(level_vals)
+        return result
 
 
-class BinaryTreeUtils
+class BinaryTreeUtils:
     # ░░░░░░░░░░░ LeetCode 100 —— 相同的树 ░░░░░░░░░░░
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         """
@@ -228,8 +221,7 @@ class BinaryTreeUtils
         return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
     # ░░░░░░░░░░░ LeetCode 101 —— 对称二叉树 ░░░░░░░░░░░
-    @staticmethod
-    def isSymmetric(root: Optional[TreeNode]) -> bool:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         """
         判断二叉树是否对称（镜像）
             1. 定义递归函数 dfs(p, q) 检查两节点是否镜像
@@ -264,8 +256,7 @@ class BinaryTreeUtils
 
 class BinaryTreeDPEngine:
     # ░░░░░░░░░░░ LeetCode 543 —— 二叉树的直径 ░░░░░░░░░░░
-    @staticmethod
-    def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         """
         计算二叉树的直径（最长路径的边数）
              1. 定义链长：从当前节点向下延伸的最大边数
