@@ -249,6 +249,25 @@ class BinaryTreeUtils:
         r_depth = self.maxDepth(root.right)
         return max(l_depth, r_depth) + 1
 
+    # ░░░░░░░░░░░ LeetCode 226 —— 翻转二叉树 ░░░░░░░░░░░
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        """
+        翻转二叉树（镜像翻转）
+             1. 递归地翻转每个节点的左右子树
+             2. 交换当前节点的左右子节点
+             3. 返回翻转后的根节点
+        """
+        if root is None:
+            return None
+        # 递归翻转左右子树
+        left = self.invertTree(root.left)    # 翻转左子树
+        right = self.invertTree(root.right)  # 翻转右子树
+        # 交换左右子节点
+        root.left = right
+        root.right = left
+        
+        return root
+
 
 class BinaryTreeDPEngine:
     # ░░░░░░░░░░░ LeetCode 543 —— 二叉树的直径 ░░░░░░░░░░░
