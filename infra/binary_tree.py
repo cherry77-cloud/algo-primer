@@ -272,3 +272,31 @@ class BinaryTreeDPEngine:
             return max(l_len, r_len)       # 返回当前子树最大链长
         dfs(root)
         return ans
+
+    # ░░░░░░░░░░░ LeetCode 124 —— 二叉树中的最大路径和 ░░░░░░░░░░░
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        """
+        计算二叉树中的最大路径和
+             1. 路径定义：从任意节点出发，到任意节点结束的路径
+             2. 路径至少包含一个节点，不需要经过根节点
+             3. 递归计算左右子树的最大贡献值（向上延伸的最大和）
+             4. 经过当前节点的最大路径和 = 左贡献 + 右贡献 + 节点值
+             5. 返回给父节点的贡献值 = max(左贡献, 右贡献) + 节点值
+             6. 如果贡献值为负，则不选择该路径（返回0）
+        """
+        ans = float('-inf')
+        def dfs(node: Optional[TreeNode]) -> int:
+            if node is None:
+                return 0  # 空节点贡献值为 0
+            
+            # 递归计算左右子树的最大贡献值（负数则不选）
+            l_val = max(0, dfs(node.left))   # 左子树最大贡献值
+            r_val = max(0, dfs(node.right))  # 右子树最大贡献值
+            nonlocal ans
+            ans = max(ans, l_val + r_val + node.val)
+            
+            # 返回当前节点的最大贡献值（只能选一边）
+            return max(l_val, r_val) + node.val
+        
+        dfs(root)
+        return ans
