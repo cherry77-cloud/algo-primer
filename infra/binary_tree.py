@@ -1,7 +1,3 @@
-from collections import deque
-from typing import Optional, List
-
-
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -102,11 +98,11 @@ class BinaryTreeTraversal:
                 predecessor = cur.left
                 while predecessor.right and predecessor.right is not cur:
                     predecessor = predecessor.right
-                if predecessor.right is None: # 第一次到达前驱：建立线索并访问当前节点
-                    result.append(cur.val)    # preorder 先访问根
-                    predecessor.right = cur   # 线索化
+                if predecessor.right is None:   # 第一次到达前驱：建立线索并访问当前节点
+                    result.append(cur.val)      # preorder 先访问根
+                    predecessor.right = cur     # 线索化
                     cur = cur.left
-                else:                         # 第二次到达前驱：恢复结构，转向右子树
+                else:                           # 第二次到达前驱：恢复结构，转向右子树
                     predecessor.right = None
                     cur = cur.right
         return result
