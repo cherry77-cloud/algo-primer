@@ -194,3 +194,30 @@ class PointerParadigms:
             if event_right - even_left > end - start:
                 start, end = even_left, event_right
         return s[start : end + 1]
+
+    # ░░░░░░░░░░░ LeetCode 287 —— 寻找重复数 ░░░░░░░░░░░
+    @staticmethod
+    def findDuplicate(nums: List[int]) -> int:
+        """
+        Floyd 环检测算法（快慢指针）
+            1. 将数组下标视为链表结点，下标 i 指向 nums[i]
+            2. 由于存在重复数，链表必定形成环
+            3. 使用快慢指针找到环中相遇点
+            4. 从头结点和相遇点同步前进，相遇处即为环的入口（即重复数）
+        """
+        def next(i: int) -> int:
+            """返回下一个结点，链表指针由 nums[i] 决定"""
+            return nums[i]
+    
+        slow = fast = 0
+        while True:
+            slow = next(slow)
+            fast = next(next(fast))
+            if slow == fast:
+                break
+    
+        head = 0
+        while head != slow:
+            slow = next(slow)
+            head = next(head)
+        return slow
