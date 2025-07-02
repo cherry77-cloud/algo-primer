@@ -75,6 +75,26 @@ class SlidingWindowUtils:
 
 
 class PrefixSuffixUtils:
+    # ░░░░░░░░░░░ LeetCode 238 —— 除自身以外数组的乘积 ░░░░░░░░░░░
+    @staticmethod
+    def productExceptSelf(nums: List[int]) -> List[int]:
+        """
+        计算除自身以外数组的乘积（不使用除法）
+             1. 前缀积：pre[i] = nums[0] * nums[1] * ... * nums[i-1]
+             2. 后缀积：suf[i] = nums[i+1] * nums[i+2] * ... * nums[n-1]
+             3. 结果：result[i] = pre[i] * suf[i]
+        """
+        n = len(nums)
+        pre = [1] * n
+        for i in range(1, n):
+            pre[i] = pre[i - 1] * nums[i - 1]
+            
+        suf = [1] * n
+        for i in range(n - 2, -1, -1):
+            suf[i] = suf[i + 1] * nums[i + 1]
+
+        return [p * s for p, s in zip(pre, suf)]
+        
     # ░░░░░░░░░░░ LeetCode 42 —— 接雨水 ░░░░░░░░░░░
     @staticmethod
     def trap(height: List[int]) -> int:
