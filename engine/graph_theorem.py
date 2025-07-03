@@ -111,6 +111,7 @@ class GraphTheoremToolkit:
             colors[x] = BLACK
             result.append(x)  # 在标记为黑色时加入结果
             return False
+            
         for i, c in enumerate(colors):
             if colors[i] == WHITE and dfs(i):
                 return []    # 有环，返回空列表
