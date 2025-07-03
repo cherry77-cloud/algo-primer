@@ -92,7 +92,28 @@ class BinarySearchUtils:
         if not nums or nums[l1] != target:
             return [-1, -1]
         return [l2, l1]
-        
+
+    # ░░░░░░░░░░░ LeetCode 153 —— 寻找旋转排序数组中的最小值 ░░░░░░░░░░░
+    @staticmethod
+    def findMin(nums: List[int]) -> int:
+        """
+        旋转排序数组中的最小值
+             1. 旋转数组特点：存在一个断点，左边部分 > 右边部分
+             2. 二分查找：比较 mid 和末尾元素
+             3. 如果 nums[mid] <= nums[-1]，说明 mid 在右半部分，最小值在 mid 或左边
+             4. 如果 nums[mid] > nums[-1]，说明 mid 在左半部分，最小值在右边
+             5. 收缩区间直到找到最小值
+        时间复杂度：O(log n)，空间复杂度：O(1)
+        """
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] <= nums[-1]:
+                right = mid      # mid 可能是最小值，保留
+            else:
+                left = mid + 1   # mid 在左半部分，最小值在右边
+        return nums[left]
+
     # ░░░░░░░░░░░ LeetCode 33 —— 搜索旋转排序数组 ░░░░░░░░░░░
     @staticmethod
     def search_rotated(nums: List[int], target: int) -> int:
