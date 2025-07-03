@@ -319,3 +319,34 @@ class BinaryTreeDPEngine:
         
         dfs(root)
         return ans
+
+    # ░░░░░░░░░░░ LeetCode 437 —— 路径总和 III ░░░░░░░░░░░
+    def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        """
+        路径总和 III - 任意路径和等于目标值   前缀和 + 回溯
+             1. 使用前缀和思想：记录从根到当前节点的路径和
+             2. cnt[s] 表示前缀和为 s 的路径数量
+             3. 对于当前节点，如果存在前缀和 s - targetSum，则找到一条路径
+             5. 维护从根节点到当前节点的路径和，利用哈希表记录每个前缀和出现的次数
+             6. 通过 当前和 - 目标和 查找是否存在满足条件的子路径。回溯时要恢复状态，避免影响其他分支
+        """
+        ans = 0
+        cnt = defaultdict(int)
+        cnt[0] = 1  # 空路径的前缀和为0
+        
+        def dfs(node: Optional[TreeNode], s: int) -> None:
+            if node is None:
+                return
+            
+            nonlocal ans
+            s += node.val
+            # 如果存在前缀和 s - targetSum，说明找到了和为 targetSum 的路径
+            ans += cnt[s - targetSum]
+            
+            cnt[s] += 1         # 记录当前前缀和
+            dfs(node.left, s)   # 遍历左子树
+            dfs(node.right, s)  # 遍历右子树
+            cnt[s] -= 1         # 回溯：移除当前路径的影响
+        
+        dfs(root, 0)
+        return ans
