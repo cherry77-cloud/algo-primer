@@ -75,6 +75,7 @@ class BacktrackingToolkit:
                         subset.append(nums[i])
                 subsets.append(subset)
                 return
+                
             dfs(u + 1, mask)
             dfs(u + 1, mask | (1 << u))
         
@@ -242,7 +243,8 @@ class BacktrackingToolkit:
             3. 对每个数字，尝试其对应的所有字母
             4. 递归生成所有可能的组合
         """
-        if not digits:  return []
+        if not digits:
+            return []
             
         MAPPING = "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
         ans: List[str] = []
