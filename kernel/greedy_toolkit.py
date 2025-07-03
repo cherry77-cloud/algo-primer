@@ -29,7 +29,6 @@ class GreedyToolkit:
                 - 如果当前区间与结果集最后一个区间重叠，则合并
                 - 否则直接加入结果集
              3. 两个区间 [a,b] 和 [c,d] 重叠的条件是：c <= b
-        时间复杂度：O(nlogn)，空间复杂度：O(1)
         """
         intervals.sort(key=lambda p: p[0])  # 按照左端点从小到大排序
         ans = []
