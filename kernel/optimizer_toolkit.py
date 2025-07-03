@@ -396,3 +396,24 @@ class SubarrayDPToolkit:
         for i in range(1, len(nums)):
             f[i] = max(f[i - 1], 0) + nums[i]
         return max(f)
+
+
+class StateMachineToolkit:
+    # ░░░░░░░░░░░░░░ LeetCode 121 —— 买卖股票的最佳时机 ░░░░░░░░░░░░░░
+    @staticmethod
+    def maxProfit(prices: List[int]) -> int:
+        """
+        买卖股票的最佳时机 - 只能买卖一次
+             1. 从左到右枚举卖出价格 prices[i]
+             2. 维护第 i 天之前的最低买入价格（prices[0] 到 prices[i-1] 的最小值）
+             3. 计算当前卖出价格与最低买入价格的差值，维护最大利润
+             4. pre_min 维护的是 prices[i] 左侧元素的最小值
+        """
+        pre_min = inf  # 维护当前位置之前的最低价格
+        ans = 0        # 维护最大利润
+        
+        for price in prices:
+            pre_min = min(pre_min, price)        # 更新最低买入价格
+            ans = max(ans, price - pre_min)      # 更新最大利润
+            
+        return ans
