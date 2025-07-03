@@ -5,7 +5,7 @@ from typing import List, Dict
 class HashTableUtils:
     # ░░░░░░░░░░░ LeetCode 49 —— 字母异位词分组 ░░░░░░░░░░░
     @staticmethod
-    def group_anagrams(strs: List[str]) -> List[List[str]]:
+    def groupAnagrams(strs: List[str]) -> List[List[str]]:
         """
         哈希表分组，排序字符作为键
              1. 创建哈希表，键为排序后的字符元组，值为原字符串列表
@@ -22,7 +22,7 @@ class HashTableUtils:
 
     # ░░░░░░░░░░░ LeetCode 128 —— 最长连续序列 ░░░░░░░░░░░
     @staticmethod
-    def longest_consecutive(nums: List[int]) -> int:
+    def longestConsecutive(nums: List[int]) -> int:
         """
         哈希集合 + 贪心搜索最长序列
              1. 将所有数字放入哈希集合，实现 O(1) 查找
@@ -44,7 +44,7 @@ class HashTableUtils:
 
     # ░░░░░░░░░░░ LeetCode 560 —— 和为 K 的子数组 ░░░░░░░░░░░
     @staticmethod
-    def subarray_sum(nums: List[int], k: int) -> int:
+    def subarraySum(nums: List[int], k: int) -> int:
         """
         前缀和 + 哈希表计数
              1. 维护前缀和 pre_s 和哈希表 cnt 记录前缀和出现次数
