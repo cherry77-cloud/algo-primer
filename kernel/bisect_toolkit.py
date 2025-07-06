@@ -160,6 +160,30 @@ class BinarySearchUtils:
                 right = mid - 1
         return matrix[left // n][left % n] == target
 
+    # ░░░░░░░░░░░ LeetCode 240 —— 搜索二维矩阵 II ░░░░░░░░░░░
+    @staticmethod
+    def searchMatrixII(matrix: List[List[int]], target: int) -> bool:
+        """
+        搜索二维矩阵 II（每行递增，每列递增）, 核心思想是Z字形搜索
+             1. 从左下角或右上角开始（这里选择左下角）
+             2. 当前元素比 target 小：只能向右移动（j++）
+             3. 当前元素比 target 大：只能向上移动（i--）
+             4. 每次比较可以排除一行或一列，类似 BST 的查找
+        """
+        m, n = len(matrix), len(matrix[0])
+        i, j = m - 1, 0  # 从左下角开始
+        
+        while i >= 0 and j < n:
+            x = matrix[i][j]
+            if x < target:
+                j += 1   # 当前值太小，向右移动
+            elif x > target:
+                i -= 1   # 当前值太大，向上移动
+            else:
+                return True
+                
+        return False
+
 
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
