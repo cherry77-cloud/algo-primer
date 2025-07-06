@@ -140,6 +140,26 @@ class BinarySearchUtils:
                 right = mid - 1
         return left if nums[left] == target else -1
 
+    # ░░░░░░░░░░░ LeetCode 74 —— 搜索二维矩阵 ░░░░░░░░░░░
+    @staticmethod
+    def searchMatrix(matrix: List[List[int]], target: int) -> bool:
+        """
+        搜索二维矩阵（每行递增，下一行首元素大于上一行末元素）
+             1. 将二维矩阵视为一维有序数组
+             2. 坐标转换：一维下标 i → 二维坐标 (i//n, i%n)
+             3. 使用标准二分查找，找到最后一个 <= target 的位置
+             4. 检查该位置的值是否等于 target
+        """
+        m, n = len(matrix), len(matrix[0])
+        left, right = 0, m * n - 1
+        while left < right:
+            mid = (left + right + 1) // 2
+            if matrix[mid // n][mid % n] <= target:
+                left = mid
+            else:
+                right = mid - 1
+        return matrix[left // n][left % n] == target
+
 
 class BinaryAnswerUtils:
     # ░░░░░░░░░░░ LeetCode 274 —— H 指数 ░░░░░░░░░░░
