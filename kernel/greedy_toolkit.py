@@ -53,3 +53,33 @@ class GreedyToolkit:
                 attended += 1
         
         return attended
+
+    # ░░░░░░░░░░░░░░ LeetCode 1353 —— 最多可以参加的会议数目（并查集解法） ░░░░░░░░░░░░░░
+    @staticmethod
+    def maxEvents_UnionFind(events: List[List[int]]) -> int:
+        """
+        最多可以参加的会议数目（并查集优化）
+             1. 贪心策略：按结束时间排序，每个会议分配最早的可用天
+             2. 并查集优化：fa[i] 指向第 i 天及之后的第一个空闲天
+             3. 对每个会议 [start, end]：
+                - 找到 start 及之后的第一个空闲天
+                - 如果该天 <= end，则安排会议并更新并查集
+             4. 路径压缩优化查找效率
+        """
+        events.sort(key=lambda e: e[1])  # 按结束时间排序
+        mx = events[-1][1]
+        fa = list(range(mx + 2))  # fa[i] = i 表示第 i 天空闲
+        
+        def find(x: int) -> int:
+            if fa[x] != x:
+                fa[x] = find(fa[x])  # 路径压缩
+            return fa[x]
+        
+        attended = 0
+        for start_day, end_day in events:
+            x = find(start_day)  # 找到 start_day 及之后的第一个空闲天
+            if x <= end_day:     # 如果在会议期间内
+                attended += 1
+                fa[x] = x + 1    # 第 x 天被占用，指向下一天
+        
+        return attended
