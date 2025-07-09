@@ -18,3 +18,34 @@ class GeneralToolkit:
             cnt += (1 if num == candidate else -1)
             
         return candidate
+
+    # ░░░░░░░░░░░ LeetCode 41 —— 缺失的第一个正数 ░░░░░░░░░░░
+    @staticmethod
+    def firstMissingPositive(nums: List[int]) -> int:
+        """
+        原地哈希法: 将数字放到"应该在"的位置上实现 O(1) 空间查找
+            1. 核心思想 → 把值 x 放到索引 x-1 的位置
+            2. 座位类比:
+               • 学生 = 数字值
+               • 座位 = 数组索引
+               • 目标 = 学号为 i 的学生坐在第 i-1 个座位
+            3. 交换条件: 1 ≤ nums[i] ≤ n 且 nums[i] ≠ nums[nums[i]-1]
+            4. 两轮扫描:
+               • 第一轮: 持续交换直到每个位置稳定
+               • 第二轮: 找第一个"学号≠座位号+1"的位置
+        """
+        n = len(nums)
+        for i in range(n):
+            # 如果当前学生的学号在 [1,n] 中，但（真身）没有坐在正确的座位上
+            while 1 <= nums[i] <= n and nums[i] != nums[nums[i] - 1]:
+                # 那么就交换 nums[i] 和 nums[j]，其中 j 是 i 的学号
+                j = nums[i] - 1  # 减一是因为数组下标从 0 开始
+                nums[i], nums[j] = nums[j], nums[i]
+        
+        # 找第一个学号与座位编号不匹配的学生
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+        
+        # 所有学生都坐在正确的座位上
+        return n + 1
