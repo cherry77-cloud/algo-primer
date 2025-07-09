@@ -241,3 +241,24 @@ class PointerParadigms:
             slow = next(slow)
             head = next(head)
         return slow
+
+    # ░░░░░░░░░░░ LeetCode 189 —— 轮转数组 ░░░░░░░░░░░
+    @staticmethod
+    def rotate(nums: List[int], k: int) -> None:
+        """
+        三次翻转法: 通过局部翻转实现整体轮转
+            1. 轮转定义 → 右移 k 位等价于将后 k 个元素移到前面
+            2. 双指针翻转: 从两端向中间交换
+            3. 边界处理: k %= n 防止 k > n 的情况
+        """
+        def reverse(_from: int, _to: int) -> None:
+            while _from < _to:
+                nums[_from], nums[_to] = nums[_to], nums[_from]
+                _from += 1
+                _to -= 1
+        
+        n = len(nums)
+        k %= n
+        reverse(0, n - 1)    # 整体翻转
+        reverse(0, k - 1)    # 前 k 个翻转
+        reverse(k, n - 1)    # 后 n-k 个翻转
