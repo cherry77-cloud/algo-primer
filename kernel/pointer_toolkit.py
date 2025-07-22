@@ -19,6 +19,31 @@ class SlidingWindowUtils:
             ans = max(ans, right - left + 1)
         return ans
 
+    # ░░░░░░░░░░░ LeetCode 135 —— 分发糖果 ░░░░░░░░░░░
+    @staticmethod
+    def candy(ratings: List[int]) -> int:
+        """
+        分发糖果问题
+            1. 从左到右遍历，保证右边评分高的孩子比左边的多
+            2. 从右到左遍历，保证左边评分高的孩子比右边的多
+        """
+        n = len(ratings)
+        left = [1] * n
+        right = [1] * n
+        
+        for i in range(1, n):
+            if ratings[i] > ratings[i - 1]:
+                left[i] = left[i - 1] + 1
+        
+        for i in range(n - 2, -1, -1):
+            if ratings[i] > ratings[i + 1]:
+                right[i] = right[i + 1] + 1
+                
+        ans = 0
+        for l, r in zip(left, right):
+            ans += max(l, r)
+        return ans
+
     # ░░░░░░░░░░░ LeetCode 438 · 找到字符串中所有字母异位词 ░░░░░░░░░░░
     @staticmethod
     def findAnagrams(s: str, p: str) -> List[int]:
