@@ -49,3 +49,32 @@ class GeneralToolkit:
         
         # 所有学生都坐在正确的座位上
         return n + 1
+        
+    # ░░░░░░░░░░░ LeetCode 54 —— 螺旋矩阵 ░░░░░░░░░░░
+    @staticmethod
+    def spiralOrder(matrix: List[List[int]]) -> List[int]:
+        """
+        螺旋遍历矩阵: 按照螺旋顺序返回矩阵中的所有元素
+        核心思想: 使用方向数组控制遍历方向，遇到边界或已访问元素时转向
+            1. 定义四个方向：右→下→左→上
+            2. 遍历每个位置，标记为已访问（设为None）
+            3. 尝试按当前方向前进，如果越界或遇到已访问元素则转向
+            4. 继续遍历直到访问完所有元素
+        """
+        DIRS = (0, 1), (1, 0), (0, -1), (-1, 0)  # 右，下，左，上
+        m, n = len(matrix), len(matrix[0])
+        ans: List[int] = []
+        i = j = di = 0  # 当前位置(i,j)和方向索引di
+        
+        for _ in range(m * n):
+            ans.append(matrix[i][j])
+            matrix[i][j] = None  # 标记为已访问
+            x, y = i + DIRS[di][0], j + DIRS[di][1]
+            if x < 0 or x >= m or y < 0 or y >= n or matrix[x][y] is None:
+                di = (di + 1) % 4  # 转向下一个方向
+            
+            # 更新位置
+            i += DIRS[di][0]
+            j += DIRS[di][1]
+            
+        return ans
