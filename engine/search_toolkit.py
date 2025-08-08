@@ -139,6 +139,32 @@ class BacktrackingToolkit:
         
         dfs(0, 0)
         return result
+
+    # ░░░░░░░░░░░░░░ LeetCode 47 · 全排列 II（有重复） ░░░░░░░░░░░░░░
+    @staticmethod
+    def permuteUnique(nums: List[int]) -> List[List[int]]:
+        """
+        计数 + 回溯：Counter 记录剩余次数，天然去重
+        """
+        cnt = Counter(nums)
+        n = len(nums)
+        res: List[List[int]] = []
+        on_path = [0] * n  # 预分配
+
+        def dfs(i: int) -> None:
+            if i == n:
+                res.append(on_path.copy())
+                return
+            for x in cnt:
+                if cnt[x] == 0:
+                    continue
+                cnt[x] -= 1
+                on_path[i] = x
+                dfs(i + 1)
+                cnt[x] += 1
+
+        dfs(0)
+        return res
     
     # ░░░░░░░░░░░░░░ LeetCode 77 · 组合 ░░░░░░░░░░░░░░
     @staticmethod
