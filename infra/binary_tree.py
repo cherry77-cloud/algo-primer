@@ -229,6 +229,25 @@ class BinaryTreeTraversal:
                     ans.append(node.val)
         return ans
 
+    # ░░░░░░░░░░░ LeetCode 230 —— 二叉搜索树中第 K 小的元素 ░░░░░░░░░░░
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        """
+        利用 BST 的中序遍历特性（有序性）：
+            1. 用栈模拟中序遍历
+            2. 遍历过程中递减 k
+            3. 当 k == 0 时返回当前节点值
+        """
+        stack: List[TreeNode] = []
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            k -= 1
+            if k == 0:
+                return root.val
+            root = root.right
+
 
 class BinaryTreeUtils:
     # ░░░░░░░░░░░ LeetCode 100 —— 相同的树 ░░░░░░░░░░░
