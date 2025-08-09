@@ -200,6 +200,35 @@ class BinaryTreeTraversal:
             result.append(level_vals)
         return result
 
+    # ░░░░░░░░░░░ LeetCode 199 —— 二叉树的右视图 ░░░░░░░░░░░
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        """ 深度优先：优先访问右子树，首次到达每一层时记录节点值 """
+        ans: List[int] = []
+        def dfs(node: Optional[TreeNode], depth: int) -> None:
+            if node is None:
+                return
+            if depth == len(ans):
+                ans.append(node.val)
+            dfs(node.right, depth + 1)
+            dfs(node.left, depth + 1)
+        dfs(root, 0)
+        return ans
+
+    def rightSideView_bfs(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        q: deque[TreeNode] = deque([root])
+        ans: List[int] = []
+        while q:
+            n = len(q)
+            for i in range(n):
+                node = q.popleft()
+                if node.left:  q.append(node.left)
+                if node.right: q.append(node.right)
+                if i == n - 1:         # 本层最后弹出的即最右
+                    ans.append(node.val)
+        return ans
+
 
 class BinaryTreeUtils:
     # ░░░░░░░░░░░ LeetCode 100 —— 相同的树 ░░░░░░░░░░░
