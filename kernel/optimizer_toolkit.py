@@ -378,6 +378,28 @@ class SubsequenceDPToolkit:
                 return False
         return dfs(m - 1, n - 1)
 
+    # ░░░░░░░░░░░ LeetCode 139 —— 单词拆分（DP） ░░░░░░░░░░░
+    @staticmethod
+    def wordBreak(s: str, wordDict: List[str]) -> bool:
+        """
+        动态规划：
+            1. f[i] 表示 s[:i] 是否可由字典组成
+            2. 只需回看长度 ≤ max_len 的前缀
+            3. 若存在 j < i 使得 f[j] = True 且 s[j:i] 在字典中，则 f[i] = True
+        """
+        max_len = max(map(len, wordDict))
+        words = set(wordDict)
+
+        n = len(s)
+        f = [True] + [False] * n
+        for i in range(len(s) + 1):
+            start = max(0, i - max_len)
+            for j in range(start, i):
+                if s[j: i] in words and f[j]:
+                    f[i] = True
+                    break
+        return f[n]
+
 
 class SubarrayDPToolkit:
     # ░░░░░░░░░░░ LeetCode 53 —— 最大子数组和 ░░░░░░░░░░░
