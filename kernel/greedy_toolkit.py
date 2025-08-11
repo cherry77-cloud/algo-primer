@@ -1,4 +1,27 @@
 class GreedyToolkit:
+    # ░░░░░░░░░░░░░░ LeetCode 1005 —— K 次取反后最大和 ░░░░░░░░░░░░░░
+    @staticmethod
+    def largestSumAfterKNegations(nums: List[int], k: int) -> int:
+        """
+        贪心策略：
+             1. 先对数组排序（从小到大）
+             2. 从左到右把负数尽量翻成正数，直到用完 k 或没有负数
+             3. 计算总和；若 k 仍为奇数，则再对“绝对值最小”的元素取反一次
+        说明：保持与你给出的实现一致，不改动核心代码/变量命名
+        """
+        nums.sort()
+        i = 0
+        while i < len(nums) and k > 0 and nums[i] < 0:
+            nums[i] = -nums[i]
+            i += 1
+            k -= 1
+    
+        total = sum(nums)
+        min_abs = min(nums, key=abs)
+        if k % 2 == 1:
+            total -= 2 * min_abs
+        return total
+        
     # ░░░░░░░░░░░░░░ LeetCode 56 —— 合并区间 ░░░░░░░░░░░░░░
     @staticmethod
     def merge(intervals: List[List[int]]) -> List[List[int]]:
